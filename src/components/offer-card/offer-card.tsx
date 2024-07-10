@@ -1,4 +1,4 @@
-function OfferCard(): JSX.Element {
+function OfferCard() {
   return (
     <article className="cities__card place-card">
       <div className="place-card__mark">

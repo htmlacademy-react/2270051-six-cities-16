@@ -5,7 +5,7 @@ type AppPageProps = {
   cardsCount: number;
 }
 
-function App({offersCount, cardsCount }: AppPageProps): JSX.Element {
+function App({offersCount, cardsCount }: AppPageProps) {
   return (
     <MainPage offersCount={offersCount} cardsCount={cardsCount} />
   );

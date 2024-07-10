@@ -2,7 +2,7 @@ type LocationItemProps = {
   city: string;
 }
 
-function LocationItem(props: LocationItemProps): JSX.Element {
+function LocationItem(props: LocationItemProps) {
   return (
     <li className="locations__item">
       <a className="locations__item-link tabs__item" href="#">

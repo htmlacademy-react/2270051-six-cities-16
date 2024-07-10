@@ -7,7 +7,7 @@ type MainPageProps = {
   cardsCount: number;
 }
 
-function MainPage({offersCount, cardsCount}: MainPageProps): JSX.Element {
+function MainPage({offersCount, cardsCount}: MainPageProps) {
   return (
     <div className="page page--gray page--main">
       <Header />

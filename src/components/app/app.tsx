@@ -1,0 +1,14 @@
+import MainPage from '../../pages/main-page/main-page';
+
+type AppPageProps = {
+  offersCount: number;
+  cardsCount: number;
+}
+
+function App({offersCount, cardsCount }: AppPageProps) {
+  return (
+    <MainPage offersCount={offersCount} cardsCount={cardsCount} />
+  );
+}
+
+export default App;

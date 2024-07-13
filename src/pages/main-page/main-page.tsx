@@ -6,10 +6,9 @@ import {offers} from '../../mocks/offers';
 
 type MainPageProps = {
   offersCount: number;
-  cardsCount: number;
 }
 
-function MainPage({offersCount, cardsCount}: MainPageProps) {
+function MainPage({offersCount}: MainPageProps) {
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -46,7 +45,7 @@ function MainPage({offersCount, cardsCount}: MainPageProps) {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {offers.slice(0, cardsCount).map((offer) => (
+                {offers.map((offer) => (
                   <OfferCard key={offer.id} offer={offer} />
                 ))}
               </div>

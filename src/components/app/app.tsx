@@ -10,17 +10,16 @@ import PrivateRoute from '../private-route/private-route';
 
 type AppPageProps = {
   offersCount: number;
-  cardsCount: number;
 }
 
-function App({ offersCount, cardsCount }: AppPageProps) {
+function App({ offersCount }: AppPageProps) {
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
           <Route
             path={AppRoute.Root}
-            element={<MainPage offersCount={offersCount} cardsCount={cardsCount} />}
+            element={<MainPage offersCount={offersCount} />}
           />
           <Route
             path={AppRoute.Login}

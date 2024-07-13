@@ -1,9 +1,14 @@
-import { Link } from 'react-router-dom';
+import {Helmet} from 'react-helmet-async';
+import {Link} from 'react-router-dom';
 import Header from '../../components/header/header';
 
 function NotFoundPage() {
   return (
     <div className="page page--favorites-empty">
+      <Helmet>
+        <title>6 cities: page not found</title>
+      </Helmet>
+
       <Header />
 
       <main className="page__main page__main--favorites page__main--favorites-empty">

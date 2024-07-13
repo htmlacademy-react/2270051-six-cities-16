@@ -1,5 +1,6 @@
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import {HelmetProvider} from 'react-helmet-async';
+import {AppRoute} from '../../const';
 import MainPage from '../../pages/main-page/main-page';
 import LoginPage from '../../pages/login-page/login-page';
 import FavoritesPage from '../../pages/favorites-page/favorites-page';
@@ -17,11 +18,26 @@ function App({ offersCount, cardsCount }: AppPageProps) {
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<MainPage offersCount={offersCount} cardsCount={cardsCount} />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/favorites" element={<PrivateRoute><FavoritesPage /></PrivateRoute>} />
-          <Route path="/offer/:id" element={<OfferPage />} />
-          <Route path="*" element={<NotFoundPage />} />
+          <Route
+            path={AppRoute.Root}
+            element={<MainPage offersCount={offersCount} cardsCount={cardsCount} />}
+          />
+          <Route
+            path={AppRoute.Login}
+            element={<LoginPage />}
+          />
+          <Route
+            path={AppRoute.Favorites}
+            element={<PrivateRoute><FavoritesPage /></PrivateRoute>}
+          />
+          <Route
+            path={AppRoute.Offer}
+            element={<OfferPage />}
+          />
+          <Route
+            path="*"
+            element={<NotFoundPage />}
+          />
         </Routes>
       </BrowserRouter>
     </HelmetProvider>

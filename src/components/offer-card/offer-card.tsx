@@ -1,15 +1,5 @@
 import {Link} from 'react-router-dom';
-
-type Offer = {
-  id: string;
-  title: string;
-  type: string;
-  price: number;
-  previewImage: string;
-  isFavorite: boolean;
-  isPremium: boolean;
-  rating: number;
-}
+import {Offer} from '../../lib/types';
 
 type OfferCardProps = {
   offer: Offer;

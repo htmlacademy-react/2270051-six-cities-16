@@ -2,7 +2,7 @@ import {Helmet} from 'react-helmet-async';
 import Header from '../../components/header/header';
 import LocationList from '../../components/location-list/location-list';
 import OfferCard from '../../components/offer-card/offer-card';
-import {offers} from '../../mocks/offers';
+import {OFFERS} from '../../mocks/offers';
 
 type MainPageProps = {
   offersCount: number;
@@ -45,7 +45,7 @@ function MainPage({offersCount}: MainPageProps) {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {offers.map((offer) => (
+                {OFFERS.map((offer) => (
                   <OfferCard key={offer.id} offer={offer} />
                 ))}
               </div>

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Navigate, useLocation} from 'react-router-dom';
+import {Navigate} from 'react-router-dom';
 
 type PrivateRouteProps = {
   children: React.ReactNode;
@@ -7,10 +7,9 @@ type PrivateRouteProps = {
 
 function PrivateRoute({children}: PrivateRouteProps) {
   const [isAuthenticated] = useState(false); // Пока что пользователь всегда не авторизован
-  const location = useLocation();
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" state={{from: location}} />;
+    return <Navigate to="/login" />;
   }
 
   return children;

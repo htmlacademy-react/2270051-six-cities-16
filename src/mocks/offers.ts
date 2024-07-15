@@ -1,4 +1,6 @@
-export const OFFERS = [
+import {Offer} from '../lib/types';
+
+export const OFFERS: Offer[] = [
   {
     'id': 'e3dd5f8d-91f0-4977-9a21-868c1e355b18',
     'title': 'House in countryside',
@@ -18,7 +20,7 @@ export const OFFERS = [
       'longitude': 2.342499,
       'zoom': 16
     },
-    'isFavorite': false,
+    'isFavorite': true,
     'isPremium': false,
     'rating': 2.9
   },
@@ -52,7 +54,7 @@ export const OFFERS = [
     'price': 289,
     'previewImage': 'https://16.design.htmlacademy.pro/static/hotel/20.jpg',
     'city': {
-      'name': 'Paris',
+      'name': 'Cologne',
       'location': {
         'latitude': 48.85661,
         'longitude': 2.351499,
@@ -64,7 +66,7 @@ export const OFFERS = [
       'longitude': 2.335499,
       'zoom': 16
     },
-    'isFavorite': false,
+    'isFavorite': true,
     'isPremium': true,
     'rating': 3.9
   },
@@ -98,7 +100,7 @@ export const OFFERS = [
     'price': 425,
     'previewImage': 'https://16.design.htmlacademy.pro/static/hotel/1.jpg',
     'city': {
-      'name': 'Paris',
+      'name': 'Cologne',
       'location': {
         'latitude': 48.85661,
         'longitude': 2.351499,
@@ -110,9 +112,8 @@ export const OFFERS = [
       'longitude': 2.375499,
       'zoom': 16
     },
-    'isFavorite': false,
+    'isFavorite': true,
     'isPremium': false,
     'rating': 3.6
   },
 ];
-

@@ -1,8 +1,10 @@
-export const REVIEWS = [
+import {Review} from '../lib/types';
+
+export const REVIEWS: Review[] = [
   {
     'id': '0bb236de-8b1c-4b70-85ca-27d847738d1f',
     'comment': 'This villa is perfect in every way: the view on mountains and waterfalls, the hot tub and the villa itself. The evening here became a great continuation of our journeys over country.',
-    'date': '2024-06-24T21:00:00.511Z',
+    'date': '2024-03-24T21:00:00.511Z',
     'rating': 1,
     'user': {
       'name': 'Jack',
@@ -23,8 +25,8 @@ export const REVIEWS = [
   },
   {
     'id': '58bdcfb7-9f64-4a38-9a34-ead44f4451b2',
-    'comment': 'This villa is perfect in every way: the view on mountains and waterfalls, the hot tub and the villa itself. The evening here became a great continuation of our journeys over country.',
-    'date': '2024-06-22T21:00:00.511Z',
+    'comment': 'This villa is perfect in every way: the view on mountains and waterfalls, the hot tub and the villa itself.',
+    'date': '2023-11-22T21:00:00.511Z',
     'rating': 3,
     'user': {
       'name': 'Isaac',

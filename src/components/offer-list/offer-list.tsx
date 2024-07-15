@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {Fragment, useState} from 'react';
 import OfferCard from '../offer-card/offer-card';
 import {Offer} from '../../lib/types';
 
@@ -13,13 +13,13 @@ function OfferList({ offers }: OfferListProps) {
   return (
     <div className="cities__places-list places__list tabs__content">
       {offers.map((offer) => (
-        <div
+        <Fragment
           key={offer.id}
           onMouseEnter={() => setActiveOfferId(offer.id)}
           onMouseLeave={() => setActiveOfferId(null)}
         >
           <OfferCard offer={offer} />
-        </div>
+        </Fragment>
       ))}
     </div>
   );

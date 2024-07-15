@@ -2,7 +2,7 @@ import ReviewItem from '../review-item/review-item';
 import {REVIEWS} from '../../mocks/reviews';
 
 function ReviewList() {
-  const sortedReviews = REVIEWS.sort((a, b) => new Date(b.date) - new Date(a.date));
+  const sortedReviews = REVIEWS.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   const limitedReviews = sortedReviews.slice(0, 10);
 
   return (

@@ -1,6 +1,7 @@
 import {Helmet} from 'react-helmet-async';
 import Header from '../../components/header/header';
 import LocationList from '../../components/location-list/location-list';
+import Map from '../../components/map/map';
 import OfferList from '../../components/offer-list/offer-list';
 import {Offer} from '../../lib/types';
 
@@ -48,7 +49,7 @@ function MainPage({offersCount, offers}: MainPageProps) {
               <OfferList offers={offers} />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <Map />
             </div>
           </div>
         </div>

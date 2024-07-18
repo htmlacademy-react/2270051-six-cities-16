@@ -3,7 +3,7 @@ import Header from '../../components/header/header';
 import LocationList from '../../components/location-list/location-list';
 import Map from '../../components/map/map';
 import OfferList from '../../components/offer-list/offer-list';
-import {Offer} from '../../lib/types';
+import {Offer} from '../../lib/types/offer';
 
 type MainPageProps = {
   offersCount: number;

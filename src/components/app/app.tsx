@@ -7,7 +7,7 @@ import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
-import {Offer} from '../../lib/types';
+import {Offer} from '../../lib/types/offer';
 
 type AppPageProps = {
   offersCount: number;
@@ -15,6 +15,8 @@ type AppPageProps = {
 }
 
 function App({ offersCount, offers }: AppPageProps) {
+  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
+
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -31,7 +33,7 @@ function App({ offersCount, offers }: AppPageProps) {
             path={AppRoute.Favorites}
             element={
               <PrivateRoute>
-                <FavoritesPage favorites={offers.filter((offer) => offer.isFavorite)}/>
+                <FavoritesPage favorites={favoriteOffers}/>
               </PrivateRoute>
             }
           />

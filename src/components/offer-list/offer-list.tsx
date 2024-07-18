@@ -1,13 +1,12 @@
 import {useState} from 'react';
 import OfferCard from '../offer-card/offer-card';
-import {Offer} from '../../lib/types';
+import {Offer} from '../../lib/types/offer';
 
 type OfferListProps = {
   offers: Offer[];
 }
 
 function OfferList({ offers }: OfferListProps) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
 
   return (
@@ -16,8 +15,8 @@ function OfferList({ offers }: OfferListProps) {
         <OfferCard
           key={offer.id}
           offer={offer}
-          onMouseEnter={() => setActiveOfferId(offer.id)}
-          onMouseLeave={() => setActiveOfferId(null)}
+          onSelect={setActiveOfferId}
+          isActive={activeOfferId === offer.id}
         />
       ))}
     </div>

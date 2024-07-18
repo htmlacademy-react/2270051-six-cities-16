@@ -1,21 +1,15 @@
 import {Helmet} from 'react-helmet-async';
 import {Link} from 'react-router-dom';
 import Header from '../../components/header/header';
-import {Offer} from '../../lib/types';
+import {Offer} from '../../lib/types/offer';
+import {groupFavorites} from './utils';
 
 type FavoritesPageProps = {
   favorites: Offer[];
 }
 
 function FavoritesPage({favorites}: FavoritesPageProps) {
-  const groupedFavorites = favorites.reduce((acc, offer) => {
-    const cityName = offer.city.name;
-    if (!acc[cityName]) {
-      acc[cityName] = [];
-    }
-    acc[cityName].push(offer);
-    return acc;
-  }, {} as Record<string, Offer[]>);
+  const groupedFavorites = groupFavorites(favorites);
 
   return (
     <div className="page">

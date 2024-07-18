@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import Rating from './rating';
 
 function CommentForm() {
   const [formData, setFormData] = useState({
@@ -17,32 +18,9 @@ function CommentForm() {
   return (
     <form className="reviews__form form" action="#" method="post">
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
-      <div className="reviews__rating-form form__rating">
-        {[5, 4, 3, 2, 1].map((value) => (
-          <React.Fragment key={value}>
-            <input
-              className="form__rating-input visually-hidden"
-              name="rating"
-              value={value}
-              id={`${value}-stars`}
-              type="radio"
-              onChange={handleInputChange}
-              checked={formData.rating === value.toString()}
-              key={`input-${value}`}
-            />
-            <label
-              htmlFor={`${value}-stars`}
-              className="reviews__rating-label form__rating-label"
-              title={['perfect', 'good', 'not bad', 'badly', 'terribly'][5 - value]}
-              key={`label-${value}`}
-            >
-              <svg className="form__star-image" width="37" height="33">
-                <use xlinkHref="#icon-star"></use>
-              </svg>
-            </label>
-          </React.Fragment>
-        ))}
-      </div>
+
+      <Rating rating={formData.rating} handleRatingChange={handleInputChange} />
+
       <textarea
         className="reviews__textarea form__textarea"
         id="review"

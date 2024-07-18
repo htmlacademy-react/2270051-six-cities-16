@@ -4,6 +4,7 @@ import LocationList from '../../components/location-list/location-list';
 import Map from '../../components/map/map';
 import OfferList from '../../components/offer-list/offer-list';
 import {Offer} from '../../lib/types/offer';
+import {CITY} from '../../mocks/city';
 
 type MainPageProps = {
   offersCount: number;
@@ -49,7 +50,7 @@ function MainPage({offersCount, offers}: MainPageProps) {
               <OfferList offers={offers} />
             </section>
             <div className="cities__right-section">
-              <Map />
+              <Map city={CITY} />
             </div>
           </div>
         </div>

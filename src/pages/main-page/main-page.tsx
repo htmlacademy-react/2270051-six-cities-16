@@ -1,14 +1,16 @@
 import {Helmet} from 'react-helmet-async';
 import Header from '../../components/header/header';
 import LocationList from '../../components/location-list/location-list';
-import OfferCard from '../../components/offer-card/offer-card';
-import {OFFERS} from '../../mocks/offers';
+import Map from '../../components/map/map';
+import OfferList from '../../components/offer-list/offer-list';
+import {Offer} from '../../lib/types/offer';
 
 type MainPageProps = {
   offersCount: number;
+  offers: Offer[];
 }
 
-function MainPage({offersCount}: MainPageProps) {
+function MainPage({offersCount, offers}: MainPageProps) {
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -44,14 +46,10 @@ function MainPage({offersCount}: MainPageProps) {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                {OFFERS.map((offer) => (
-                  <OfferCard key={offer.id} offer={offer} />
-                ))}
-              </div>
+              <OfferList offers={offers} />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <Map />
             </div>
           </div>
         </div>

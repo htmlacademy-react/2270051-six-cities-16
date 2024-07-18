@@ -7,19 +7,23 @@ import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
+import {Offer} from '../../lib/types/offer';
 
 type AppPageProps = {
   offersCount: number;
+  offers: Offer[];
 }
 
-function App({ offersCount }: AppPageProps) {
+function App({ offersCount, offers }: AppPageProps) {
+  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
+
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
           <Route
             path={AppRoute.Root}
-            element={<MainPage offersCount={offersCount} />}
+            element={<MainPage offersCount={offersCount} offers={offers} />}
           />
           <Route
             path={AppRoute.Login}
@@ -27,7 +31,11 @@ function App({ offersCount }: AppPageProps) {
           />
           <Route
             path={AppRoute.Favorites}
-            element={<PrivateRoute><FavoritesPage /></PrivateRoute>}
+            element={
+              <PrivateRoute>
+                <FavoritesPage favorites={favoriteOffers}/>
+              </PrivateRoute>
+            }
           />
           <Route
             path={AppRoute.Offer}

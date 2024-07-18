@@ -1,13 +1,20 @@
 import {Link} from 'react-router-dom';
-import {Offer} from '../../lib/types';
+import {Offer} from '../../lib/types/offer';
 
 type OfferCardProps = {
   offer: Offer;
+  onSelect: (selectedId: string | null) => void;
+  isActive: boolean;
 }
 
-function OfferCard({ offer }: OfferCardProps) {
+function OfferCard({ offer, onSelect, isActive }: OfferCardProps) {
   return (
-    <article className="cities__card place-card">
+    <article
+      className="cities__card place-card"
+      onMouseEnter={() => onSelect(offer.id)}
+      onMouseLeave={() => onSelect(null)}
+      data-active={isActive ? 'true' : undefined}
+    >
       {offer.isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>

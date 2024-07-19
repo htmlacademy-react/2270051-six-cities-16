@@ -3,6 +3,8 @@ import {Link} from 'react-router-dom';
 import Header from '../../components/header/header';
 import CommentForm from '../../components/comment-form/comment-form';
 import ReviewList from '../../components/review-list/review-list';
+import {CITY} from '../../mocks/city';
+import Map from '../../components/map/map';
 
 function OfferPage() {
   return (
@@ -140,7 +142,9 @@ function OfferPage() {
               </section>
             </div>
           </div>
-          <section className="offer__map map"></section>
+          <section className="offer__map map">
+            <Map city={CITY} />
+          </section>
         </section>
         <div className="container">
           <section className="near-places places">

@@ -5,6 +5,6 @@ export const CITY: City = {
   location: {
     latitude: 52.3702,
     longitude: 4.8952,
-    zoom: 13,
+    zoom: 12,
   },
 };

@@ -5,6 +5,7 @@ import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/use-map';
 import {OFFERS} from '../../mocks/offers';
 import {URL_MARKER_DEFAULT} from '../../const';
+import {filterOffersByCity} from './utils';
 
 type MapProps = {
   city: City;
@@ -22,9 +23,9 @@ function Map({ city }: MapProps) {
 
   useEffect(() => {
     if (map) {
-      const amsterdamOffers = OFFERS.filter((offer) => offer.city.name === 'Amsterdam');
+      const cityOffers = filterOffersByCity(OFFERS, city.name);
 
-      amsterdamOffers.forEach((offer) => {
+      cityOffers.forEach((offer) => {
         const marker = new leaflet.Marker([offer.location.latitude, offer.location.longitude], {
           icon: defaultCustomIcon
         });

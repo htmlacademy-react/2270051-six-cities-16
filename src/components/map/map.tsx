@@ -11,7 +11,7 @@ type MapProps = {
 };
 
 function Map({ city }: MapProps) {
-  const mapRef = useRef<HTMLElement | null>(null);
+  const mapRef = useRef<HTMLDivElement | null>(null);
   const map = useMap(mapRef, city);
 
   const defaultCustomIcon = leaflet.icon({

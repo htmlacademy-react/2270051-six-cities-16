@@ -50,7 +50,9 @@ function MainPage({offersCount, offers}: MainPageProps) {
               <OfferList offers={offers} />
             </section>
             <div className="cities__right-section">
-              <Map city={CITY} />
+              <section className="cities__map map">
+                <Map city={CITY} />
+              </section>
             </div>
           </div>
         </div>

@@ -34,12 +34,11 @@ function Map({ city }: MapProps) {
   }, [map, city, defaultCustomIcon]);
 
   return (
-    <section
-      className="cities__map map"
+    <div
       ref={mapRef}
       style={{ height: '100%', width: '100%' }}
     >
-    </section>
+    </div>
   );
 }
 

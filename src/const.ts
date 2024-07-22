@@ -1,3 +1,5 @@
+import leaflet from 'leaflet';
+
 export const CITIES: string[] = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
 export const REVIEWS_COUNT: number = 10;
@@ -14,6 +16,14 @@ export const AppRoute = {
   Offer: '/offer/:id',
 } as const;
 
-export const URL_MARKER_DEFAULT = 'img/pin.svg';
+export const defaultCustomIcon = leaflet.icon({
+  iconUrl: 'img/pin.svg',
+  iconSize: [30, 40],
+  iconAnchor: [15, 40],
+});
 
-export const URL_MARKER_CURRENT = 'img/pin-active.svg';
+export const activeCustomIcon = leaflet.icon({
+  iconUrl: 'img/pin-active.svg',
+  iconSize: [30, 40],
+  iconAnchor: [15, 40],
+});

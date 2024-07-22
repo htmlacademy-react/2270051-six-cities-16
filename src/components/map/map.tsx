@@ -4,8 +4,8 @@ import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/use-map';
 import {OFFERS} from '../../mocks/offers';
-import {URL_MARKER_DEFAULT} from '../../const';
 import {filterOffersByCity} from './utils';
+import {defaultCustomIcon} from '../../const';
 
 type MapProps = {
   city: City;
@@ -14,12 +14,6 @@ type MapProps = {
 function Map({ city }: MapProps) {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const map = useMap(mapRef, city);
-
-  const defaultCustomIcon = leaflet.icon({
-    iconUrl: URL_MARKER_DEFAULT,
-    iconSize: [30, 40],
-    iconAnchor: [15, 40],
-  });
 
   useEffect(() => {
     if (map) {
@@ -32,7 +26,7 @@ function Map({ city }: MapProps) {
         marker.addTo(map);
       });
     }
-  }, [map, city, defaultCustomIcon]);
+  }, [map, city]);
 
   return (
     <div

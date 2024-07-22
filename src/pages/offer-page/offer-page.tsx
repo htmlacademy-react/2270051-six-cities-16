@@ -5,7 +5,7 @@ import ReviewList from '../../components/review-list/review-list';
 import {CITY} from '../../mocks/city';
 import Map from '../../components/map/map';
 import NearOfferList from '../../components/near-offer-list/near-offer-list';
-import {OFFERS} from '../../mocks/offers';
+import {NEAR_OFFERS} from '../../mocks/near-offers';
 
 function OfferPage() {
   return (
@@ -144,13 +144,13 @@ function OfferPage() {
             </div>
           </div>
           <section className="offer__map map">
-            <Map city={CITY} />
+            <Map city={CITY} offers={NEAR_OFFERS} />
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <NearOfferList offers={OFFERS.slice(0,3)} />
+            <NearOfferList offers={NEAR_OFFERS} />
           </section>
         </div>
       </main>

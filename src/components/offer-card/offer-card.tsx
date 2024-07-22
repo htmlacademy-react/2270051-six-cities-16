@@ -5,12 +5,13 @@ type OfferCardProps = {
   offer: Offer;
   onSelect: (selectedId: string | null) => void;
   isActive: boolean;
+  className?: string;
 }
 
-function OfferCard({ offer, onSelect, isActive }: OfferCardProps) {
+function OfferCard({ offer, onSelect, isActive, className = 'cities__card' }: OfferCardProps) {
   return (
     <article
-      className="cities__card place-card"
+      className={`${className} place-card`}
       onMouseEnter={() => onSelect(offer.id)}
       onMouseLeave={() => onSelect(null)}
       data-active={isActive ? 'true' : undefined}
@@ -20,7 +21,9 @@ function OfferCard({ offer, onSelect, isActive }: OfferCardProps) {
           <span>Premium</span>
         </div>
       )}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div
+        className={`${className && className.includes('near-places') ? 'near-places__image-wrapper' : 'cities__image-wrapper'} place-card__image-wrapper`}
+      >
         <Link to={`/offer/${offer.id}`}>
           <img
             className="place-card__image"
@@ -37,11 +40,14 @@ function OfferCard({ offer, onSelect, isActive }: OfferCardProps) {
             <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
+          <button
+            className={`place-card__bookmark-button button${offer.isFavorite ? ' place-card__bookmark-button--active' : ''}`}
+            type="button"
+          >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
-            <span className="visually-hidden">To bookmarks</span>
+            <span className="visually-hidden">{offer.isFavorite ? 'In bookmarks' : 'To bookmarks'}</span>
           </button>
         </div>
         <div className="place-card__rating rating">

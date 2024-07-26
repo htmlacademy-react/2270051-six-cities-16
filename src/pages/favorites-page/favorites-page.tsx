@@ -1,11 +1,11 @@
 import {Helmet} from 'react-helmet-async';
 import {Link} from 'react-router-dom';
 import Header from '../../components/header/header';
-import {Offer} from '../../lib/types/offer';
+import {BaseOffer} from '../../lib/types/offer';
 import {groupFavorites} from './utils';
 
 type FavoritesPageProps = {
-  favorites: Offer[];
+  favorites: BaseOffer[];
 }
 
 function FavoritesPage({favorites}: FavoritesPageProps) {

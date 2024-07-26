@@ -1,6 +1,6 @@
-import {Offer} from '../../lib/types/offer';
+import {BaseOffer} from '../../lib/types/offer';
 
-export function groupFavorites(favorites: Offer[]): Record<string, Offer[]> {
+export function groupFavorites(favorites: BaseOffer[]): Record<string, BaseOffer[]> {
   return favorites.reduce((acc, offer) => {
     const cityName = offer.city.name;
     if (!acc[cityName]) {
@@ -8,5 +8,5 @@ export function groupFavorites(favorites: Offer[]): Record<string, Offer[]> {
     }
     acc[cityName].push(offer);
     return acc;
-  }, {} as Record<string, Offer[]>);
+  }, {} as Record<string, BaseOffer[]>);
 }

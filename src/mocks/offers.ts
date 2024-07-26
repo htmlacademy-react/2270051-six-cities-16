@@ -1,6 +1,6 @@
-import {Offer} from '../lib/types/offer';
+import {BaseOffer} from '../lib/types/offer';
 
-export const OFFERS: Offer[] = [
+export const OFFERS: BaseOffer[] = [
   {
     'id': 'e3dd5f8d-91f0-4977-9a21-868c1e355b18',
     'title': 'House in countryside',

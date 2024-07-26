@@ -1,9 +1,9 @@
 import {useState} from 'react';
 import OfferCard from '../offer-card/offer-card';
-import {Offer} from '../../lib/types/offer';
+import {BaseOffer} from '../../lib/types/offer';
 
 type OfferListProps = {
-  offers: Offer[];
+  offers: BaseOffer[];
 }
 
 function OfferList({ offers }: OfferListProps) {

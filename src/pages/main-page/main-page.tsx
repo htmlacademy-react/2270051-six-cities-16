@@ -3,15 +3,18 @@ import Header from '../../components/header/header';
 import LocationList from '../../components/location-list/location-list';
 import Map from '../../components/map/map';
 import OfferList from '../../components/offer-list/offer-list';
-import {Offer} from '../../lib/types/offer';
+import {BaseOffer} from '../../lib/types/offer';
 import {CITY} from '../../mocks/city';
+import {getLocations} from '../../lib/utils/utils';
 
 type MainPageProps = {
   offersCount: number;
-  offers: Offer[];
+  offers: BaseOffer[];
 }
 
 function MainPage({offersCount, offers}: MainPageProps) {
+  const locations = getLocations(offers);
+
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -51,7 +54,7 @@ function MainPage({offersCount, offers}: MainPageProps) {
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map city={CITY} />
+                <Map city={CITY} locations={locations} />
               </section>
             </div>
           </div>

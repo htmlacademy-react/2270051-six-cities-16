@@ -5,9 +5,15 @@ import ReviewList from '../../components/review-list/review-list';
 import {CITY} from '../../mocks/city';
 import Map from '../../components/map/map';
 import NearOfferList from '../../components/near-offer-list/near-offer-list';
-import {OFFERS} from '../../mocks/offers';
+import {NEAR_OFFERS} from '../../mocks/near-offers';
+import OfferGallery from '../../components/offer-gallery/offer-gallery';
+import OfferFeatures from '../../components/offer-features/offer-features';
+import OfferInsideList from '../../components/offer-inside-list/offer-inside-list';
+import {getLocations} from '../../lib/utils/utils';
 
 function OfferPage() {
+  const locations = getLocations(NEAR_OFFERS);
+
   return (
     <div className="page">
       <Helmet>
@@ -19,26 +25,7 @@ function OfferPage() {
       <main className="page__main page__main--offer">
         <section className="offer">
           <div className="offer__gallery-container container">
-            <div className="offer__gallery">
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/room.jpg" alt="Photo studio"/>
-              </div>
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/apartment-01.jpg" alt="Photo studio"/>
-              </div>
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/apartment-02.jpg" alt="Photo studio"/>
-              </div>
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/apartment-03.jpg" alt="Photo studio"/>
-              </div>
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/studio-01.jpg" alt="Photo studio"/>
-              </div>
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/apartment-01.jpg" alt="Photo studio"/>
-              </div>
-            </div>
+            <OfferGallery />
           </div>
           <div className="offer__container container">
             <div className="offer__wrapper">
@@ -63,55 +50,14 @@ function OfferPage() {
                 </div>
                 <span className="offer__rating-value rating__value">4.8</span>
               </div>
-              <ul className="offer__features">
-                <li className="offer__feature offer__feature--entire">
-                  Apartment
-                </li>
-                <li className="offer__feature offer__feature--bedrooms">
-                  3 Bedrooms
-                </li>
-                <li className="offer__feature offer__feature--adults">
-                  Max 4 adults
-                </li>
-              </ul>
+              <OfferFeatures />
               <div className="offer__price">
                 <b className="offer__price-value">&euro;120</b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
-                <ul className="offer__inside-list">
-                  <li className="offer__inside-item">
-                    Wi-Fi
-                  </li>
-                  <li className="offer__inside-item">
-                    Washing machine
-                  </li>
-                  <li className="offer__inside-item">
-                    Towels
-                  </li>
-                  <li className="offer__inside-item">
-                    Heating
-                  </li>
-                  <li className="offer__inside-item">
-                    Coffee machine
-                  </li>
-                  <li className="offer__inside-item">
-                    Baby seat
-                  </li>
-                  <li className="offer__inside-item">
-                    Kitchen
-                  </li>
-                  <li className="offer__inside-item">
-                    Dishwasher
-                  </li>
-                  <li className="offer__inside-item">
-                    Cabel TV
-                  </li>
-                  <li className="offer__inside-item">
-                    Fridge
-                  </li>
-                </ul>
+                <OfferInsideList />
               </div>
               <div className="offer__host">
                 <h2 className="offer__host-title">Meet the host</h2>
@@ -144,13 +90,13 @@ function OfferPage() {
             </div>
           </div>
           <section className="offer__map map">
-            <Map city={CITY} />
+            <Map city={CITY} locations={locations} />
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <NearOfferList offers={OFFERS.slice(0,3)} />
+            <NearOfferList offers={NEAR_OFFERS} />
           </section>
         </div>
       </main>

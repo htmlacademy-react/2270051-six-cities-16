@@ -1,8 +1,8 @@
-import {Offer} from '../../lib/types/offer';
+import {BaseOffer} from '../../lib/types/offer';
 import OfferCard from '../offer-card/offer-card';
 
 type NearOfferCardProps = {
-  offer: Offer;
+  offer: BaseOffer;
   onSelect: (selectedId: string | null) => void;
   isActive: boolean;
 }

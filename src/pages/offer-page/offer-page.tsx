@@ -9,8 +9,11 @@ import {NEAR_OFFERS} from '../../mocks/near-offers';
 import OfferGallery from '../../components/offer-gallery/offer-gallery';
 import OfferFeatures from '../../components/offer-features/offer-features';
 import OfferInsideList from '../../components/offer-inside-list/offer-inside-list';
+import {getLocations} from '../../lib/utils/utils';
 
 function OfferPage() {
+  const locations = getLocations(NEAR_OFFERS);
+
   return (
     <div className="page">
       <Helmet>
@@ -87,7 +90,7 @@ function OfferPage() {
             </div>
           </div>
           <section className="offer__map map">
-            <Map city={CITY} offers={NEAR_OFFERS} />
+            <Map city={CITY} locations={locations} />
           </section>
         </section>
         <div className="container">

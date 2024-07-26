@@ -1,5 +1,5 @@
 import {useRef, useEffect} from 'react';
-import {City, Offer} from '../../lib/types/offer';
+import {City, Location} from '../../lib/types/offer';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/use-map';
@@ -7,25 +7,25 @@ import {defaultCustomIcon} from '../../const';
 
 type MapProps = {
   city: City;
-  offers: Offer[];
+  locations: Location[];
 };
 
-function Map({ city, offers }: MapProps) {
+function Map({ city, locations }: MapProps) {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const map = useMap(mapRef, city);
 
   useEffect(() => {
     if (map) {
-      offers.forEach((offer) => {
+      locations.forEach((location) => {
         const marker = new leaflet.Marker(
-          [offer.location.latitude, offer.location.longitude],
+          [location.latitude, location.longitude],
           {
             icon: defaultCustomIcon
           });
         marker.addTo(map);
       });
     }
-  }, [map, offers]);
+  }, [map, locations]);
 
   return (
     <div

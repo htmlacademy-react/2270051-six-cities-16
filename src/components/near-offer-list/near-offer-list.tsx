@@ -1,9 +1,9 @@
 import {useState} from 'react';
 import NearOfferCard from '../near-offer-card/near-offer-card';
-import {Offer} from '../../lib/types/offer';
+import {BaseOffer} from '../../lib/types/offer';
 
 type NearOfferListProps = {
-  offers: Offer[];
+  offers: BaseOffer[];
 }
 
 function NearOfferList({offers}: NearOfferListProps) {

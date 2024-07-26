@@ -3,7 +3,7 @@ export type City = {
   location: Location;
 };
 
-type Location = {
+export type Location = {
   latitude: number;
   longitude: number;
   zoom: number;
@@ -15,21 +15,24 @@ type Host = {
   avatarUrl: string;
 };
 
-export type Offer = {
+export type BaseOffer = {
   id: string;
   title: string;
-  description?: string;
   type: string;
   price: number;
-  previewImage?: string;
-  images?: string[];
   city: City;
   location: Location;
-  goods?: string[];
-  host?: Host;
   isFavorite: boolean;
   isPremium: boolean;
   rating: number;
-  bedrooms?: number;
-  maxAdults?: number;
+  previewImage?: string;
+};
+
+export type Offer = BaseOffer & {
+  description: string;
+  images: string[];
+  goods: string[];
+  host: Host;
+  bedrooms: number;
+  maxAdults: number;
 };

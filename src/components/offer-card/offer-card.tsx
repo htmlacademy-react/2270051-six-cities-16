@@ -1,8 +1,8 @@
 import {Link} from 'react-router-dom';
-import {Offer} from '../../lib/types/offer';
+import {BaseOffer} from '../../lib/types/offer';
 
 type OfferCardProps = {
-  offer: Offer;
+  offer: BaseOffer;
   onSelect: (selectedId: string | null) => void;
   isActive: boolean;
   className?: string;

@@ -1,19 +1,23 @@
 import {Helmet} from 'react-helmet-async';
+import {useSelector} from 'react-redux';
 import Header from '../../components/header/header';
 import LocationList from '../../components/location-list/location-list';
 import Map from '../../components/map/map';
 import OfferList from '../../components/offer-list/offer-list';
 import {BaseOffer} from '../../lib/types/offer';
-import {CITY} from '../../mocks/city';
+import {State} from '../../lib/types/state';
 import {getLocations} from '../../lib/utils/utils';
+import {CITY} from '../../mocks/city';
 
 type MainPageProps = {
-  offersCount: number;
   offers: BaseOffer[];
 }
 
-function MainPage({offersCount, offers}: MainPageProps) {
+function MainPage({offers}: MainPageProps) {
+  const activeCity = useSelector((state: State) => state.offers.city);
   const locations = getLocations(offers);
+  const filteredOffers = offers.filter((offer) => offer.city.name === activeCity);
+  const offersCount = filteredOffers.length;
 
   return (
     <div className="page page--gray page--main">
@@ -34,7 +38,7 @@ function MainPage({offersCount, offers}: MainPageProps) {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offersCount} places to stay in Amsterdam</b>
+              <b className="places__found">{offersCount} places to stay in {activeCity}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>

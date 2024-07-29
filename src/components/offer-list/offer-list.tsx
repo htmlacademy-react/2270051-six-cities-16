@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import OfferCard from '../offer-card/offer-card';
 import {BaseOffer} from '../../lib/types/offer';
+import {useAppSelector} from '../../hooks';
 
 type OfferListProps = {
   offers: BaseOffer[];
@@ -8,10 +9,13 @@ type OfferListProps = {
 
 function OfferList({ offers }: OfferListProps) {
   const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
+  const selectedCity = useAppSelector((state) => state.offers.city);
+
+  const filteredOffers = offers.filter((offer) => offer.city.name === selectedCity);
 
   return (
     <div className="cities__places-list places__list tabs__content">
-      {offers.map((offer) => (
+      {filteredOffers.map((offer) => (
         <OfferCard
           key={offer.id}
           offer={offer}

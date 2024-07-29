@@ -1,8 +1,8 @@
 import {useRef, useEffect} from 'react';
-import {City, Location} from '../../lib/types/offer';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/use-map';
+import {City, Location} from '../../lib/types/offer';
 import {defaultCustomIcon} from '../../const';
 
 type MapProps = {

@@ -10,11 +10,10 @@ import PrivateRoute from '../private-route/private-route';
 import {BaseOffer} from '../../lib/types/offer';
 
 type AppPageProps = {
-  offersCount: number;
   offers: BaseOffer[];
 }
 
-function App({ offersCount, offers }: AppPageProps) {
+function App({ offers }: AppPageProps) {
   const favoriteOffers = offers.filter((offer) => offer.isFavorite);
 
   return (
@@ -23,7 +22,7 @@ function App({ offersCount, offers }: AppPageProps) {
         <Routes>
           <Route
             path={AppRoute.Root}
-            element={<MainPage offersCount={offersCount} offers={offers} />}
+            element={<MainPage offers={offers} />}
           />
           <Route
             path={AppRoute.Login}

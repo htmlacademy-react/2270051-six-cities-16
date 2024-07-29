@@ -10,7 +10,6 @@ import {State} from '../../lib/types/state';
 import {getLocations} from '../../lib/utils/utils';
 import {CITY} from '../../mocks/city';
 
-
 type MainPageProps = {
   offers: BaseOffer[];
 }

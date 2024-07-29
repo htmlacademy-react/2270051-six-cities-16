@@ -1,5 +1,7 @@
 import leaflet from 'leaflet';
 
+export const DEFAULT_CITY: string = 'Paris';
+
 export const CITIES: string[] = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
 export const REVIEWS_COUNT: number = 10;

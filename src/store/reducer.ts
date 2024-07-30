@@ -1,5 +1,5 @@
 import {createReducer, PayloadAction} from '@reduxjs/toolkit';
-import {Offer} from '../lib/types/offer';
+import {Offer, City} from '../lib/types/offer';
 import {State} from '../lib/types/state';
 import {setCity, fillOffers} from './action';
 import {DEFAULT_CITY} from '../const';
@@ -11,8 +11,8 @@ const initialState: State = {
 
 const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(setCity, (state, action: PayloadAction<string>) => {
-      state.city = action.payload;
+    .addCase(setCity, (state, action: PayloadAction<City>) => {
+      state.city = action.payload.name;
     })
     .addCase(fillOffers, (state, action: PayloadAction<Offer[]>) => {
       state.offers = action.payload;

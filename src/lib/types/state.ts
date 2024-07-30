@@ -1,10 +1,9 @@
-// import {store} from '../../store';
-//
-// export type State = ReturnType<typeof store.getState>;
-//
-// export type AppDispatch = typeof store.dispatch;
+import {store} from '../../store';
+import {Offer} from './offer';
 
-import { RootState, AppDispatch } from '../../store';
+export type State = {
+  city: string;
+  offers: Offer[];
+};
 
-export type State = RootState['offers'];
-export { AppDispatch };
+export type AppDispatch = typeof store.dispatch;

@@ -6,7 +6,7 @@ import OfferList from '../../components/offer-list/offer-list';
 import Map from '../../components/map/map';
 import {BaseOffer, City} from '../../lib/types/offer';
 import {getLocations} from '../../lib/utils/utils';
-import {useAppSelector} from '../../hooks';
+import {useAppSelector} from '../../hooks/redux-hooks';
 
 type MainPageProps = {
   offers: BaseOffer[];
@@ -46,7 +46,7 @@ function MainPage({ offers, city }: MainPageProps) {
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map city={cityInfo || { name: '', location: { latitude: 0, longitude: 0, zoom: 0 } }} locations={locations} />
+                <Map city={cityInfo} locations={locations} />
               </section>
             </div>
           </div>

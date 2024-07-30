@@ -1,5 +1,5 @@
 import LocationItem from '../location-item/location-item';
-import {useAppDispatch, useAppSelector} from '../../hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {CITY} from '../../const';
 import {setCity} from '../../store/action';
 import {City} from '../../lib/types/offer';

@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import OfferCard from '../offer-card/offer-card';
 import {BaseOffer} from '../../lib/types/offer';
-import {useAppSelector} from '../../hooks';
+import {useAppSelector} from '../../hooks/redux-hooks';
 
 type OfferListProps = {
   offers: BaseOffer[];

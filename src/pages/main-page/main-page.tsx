@@ -1,24 +1,25 @@
 import {Helmet} from 'react-helmet-async';
-import {useSelector} from 'react-redux';
 import Header from '../../components/header/header';
 import LocationList from '../../components/location-list/location-list';
 import SortingForm from '../../components/sorting-form/sorting-form';
 import OfferList from '../../components/offer-list/offer-list';
 import Map from '../../components/map/map';
-import {BaseOffer} from '../../lib/types/offer';
-import {State} from '../../lib/types/state';
+import {BaseOffer, City} from '../../lib/types/offer';
 import {getLocations} from '../../lib/utils/utils';
-import {CITY} from '../../mocks/city';
+import {useAppSelector} from '../../hooks';
 
 type MainPageProps = {
   offers: BaseOffer[];
+  city: City[];
 }
 
-function MainPage({offers}: MainPageProps) {
-  const activeCity = useSelector((state: State) => state.offers.city);
-  const locations = getLocations(offers);
+function MainPage({ offers, city }: MainPageProps) {
+  const activeCity = useAppSelector((state) => state.offers.city);
   const filteredOffers = offers.filter((offer) => offer.city.name === activeCity);
+  const locations = getLocations(filteredOffers);
   const offersCount = filteredOffers.length;
+
+  const cityInfo = city.find((city) => city.name === activeCity);
 
   return (
     <div className="page page--gray page--main">
@@ -41,11 +42,11 @@ function MainPage({offers}: MainPageProps) {
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{offersCount} places to stay in {activeCity}</b>
               <SortingForm />
-              <OfferList offers={offers} />
+              <OfferList offers={filteredOffers} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map city={CITY} locations={locations} />
+                <Map city={cityInfo || { name: '', location: { latitude: 0, longitude: 0, zoom: 0 } }} locations={locations} />
               </section>
             </div>
           </div>

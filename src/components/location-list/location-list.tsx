@@ -1,24 +1,16 @@
-import {useSelector} from 'react-redux';
 import LocationItem from '../location-item/location-item';
-import {State} from '../../lib/types/state';
-import {CITIES} from '../../const';
-
-type City = {
-  id: number;
-  name: string;
-}
-
-const citiesWithId: City[] = CITIES.map((city, index) => ({ id: index + 1, name: city }));
+import {useAppSelector} from '../../hooks';
+import {CITY} from '../../const';
 
 function LocationList() {
-  const activeCity = useSelector((state: State) => state.offers.city);
+  const activeCity = useAppSelector((state) => state.offers.city);
 
   return (
     <ul className="locations__list tabs__list">
-      {citiesWithId.map((city) => (
+      {CITY.map((city, index) => (
         <LocationItem
           city={city.name}
-          key={city.id}
+          key={index}
           isActive={city.name === activeCity}
         />
       ))}

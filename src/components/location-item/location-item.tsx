@@ -1,13 +1,14 @@
-import {useDispatch} from 'react-redux';
+import {useAppDispatch} from '../../hooks';
 import {setCity} from '../../store/action';
 
 type LocationItemProps = {
   city: string;
   isActive: boolean;
+  onClick: (city: string) => void;
 }
 
 function LocationItem(props: LocationItemProps) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleClick = () => {
     dispatch(setCity(props.city));

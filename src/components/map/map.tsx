@@ -16,6 +16,12 @@ function Map({ city, locations }: MapProps) {
 
   useEffect(() => {
     if (map) {
+      map.eachLayer((layer) => {
+        if (layer instanceof leaflet.Marker) {
+          map.removeLayer(layer);
+        }
+      });
+
       locations.forEach((location) => {
         const marker = new leaflet.Marker(
           [location.latitude, location.longitude],
@@ -24,8 +30,10 @@ function Map({ city, locations }: MapProps) {
           });
         marker.addTo(map);
       });
+
+      map.setView([city.location.latitude, city.location.longitude], city.location.zoom);
     }
-  }, [map, locations]);
+  }, [map, locations, city]);
 
   return (
     <div

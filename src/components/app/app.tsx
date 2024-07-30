@@ -7,7 +7,10 @@ import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import {BaseOffer} from '../../lib/types/offer';
-import {AppRoute, CITY} from '../../const';
+import {AppRoute, CITY, DEFAULT_CITY} from '../../const';
+import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
+import {useEffect} from 'react';
+import {fillOffers, setCity} from '../../store/action';
 
 type AppPageProps = {
   offers: BaseOffer[];
@@ -15,6 +18,18 @@ type AppPageProps = {
 
 function App({ offers }: AppPageProps) {
   const favoriteOffers = offers.filter((offer) => offer.isFavorite);
+  const activeCity = useAppSelector((state) => state.offers.city);
+  const filteredOffers = useAppSelector((state) => state.offers.filteredOffers);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fillOffers(offers));
+    dispatch(setCity(DEFAULT_CITY));
+  }, [dispatch, offers]);
+
+  const handleCityClick = (city: City) => {
+    dispatch(setCity(city));
+  };
 
   return (
     <HelmetProvider>
@@ -22,7 +37,15 @@ function App({ offers }: AppPageProps) {
         <Routes>
           <Route
             path={AppRoute.Root}
-            element={<MainPage offers={offers} city={CITY} />}
+            element={
+              <MainPage
+                offers={offers}
+                cities={CITY}
+                activeCity={activeCity}
+                filteredOffers={filteredOffers}
+                onCityClick={handleCityClick}
+              />
+            }
           />
           <Route
             path={AppRoute.Login}
@@ -32,7 +55,7 @@ function App({ offers }: AppPageProps) {
             path={AppRoute.Favorites}
             element={
               <PrivateRoute>
-                <FavoritesPage favorites={favoriteOffers}/>
+                <FavoritesPage favorites={favoriteOffers} />
               </PrivateRoute>
             }
           />

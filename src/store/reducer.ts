@@ -7,16 +7,19 @@ import {DEFAULT_CITY} from '../const';
 const initialState: State = {
   city: DEFAULT_CITY,
   offers: [],
+  filteredOffers: [],
 };
 
 const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(setCity, (state, action: PayloadAction<City>) => {
-      state.city = action.payload.name;
+      state.city = action.payload;
+      state.filteredOffers = state.offers.filter((offer) => offer.city.name === action.payload.name);
     })
     .addCase(fillOffers, (state, action: PayloadAction<Offer[]>) => {
       state.offers = action.payload;
+      state.filteredOffers = action.payload.filter((offer) => offer.city.name === state.city.name);
     });
 });
 
-export {reducer};
+export { reducer };

@@ -1,10 +1,6 @@
 import leaflet from 'leaflet';
 import {City} from './lib/types/offer';
 
-export const DEFAULT_CITY: string = 'Paris';
-
-export const CITIES: string[] = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
-
 export const CITY: City[] = [
   {
     name: 'Paris',
@@ -55,6 +51,10 @@ export const CITY: City[] = [
     }
   }
 ];
+
+export const DEFAULT_CITY: City = CITY.find((city) => city.name === 'Paris')!;
+
+export const CITIES: string[] = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
 export const REVIEWS_COUNT: number = 10;
 

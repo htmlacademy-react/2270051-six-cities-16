@@ -1,9 +1,7 @@
-import {store} from '../../store';
-import {Offer} from './offer';
+import {City, Offer} from './offer';
 
 export type State = {
-  city: string;
+  city: City;
   offers: Offer[];
+  filteredOffers: Offer[];
 };
-
-export type AppDispatch = typeof store.dispatch;

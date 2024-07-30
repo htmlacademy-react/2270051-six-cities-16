@@ -7,15 +7,15 @@ type LocationListProps = {
   onCityClick: (city: City) => void;
 }
 
-function LocationList(props: LocationListProps) {
+function LocationList({cities, activeCity, onCityClick}: LocationListProps) {
   return (
     <ul className="locations__list tabs__list">
-      {props.cities.map((city) => (
+      {cities.map((city) => (
         <LocationItem
           city={city.name}
           key={city.name}
-          isActive={city.name === props.activeCity.name}
-          onClick={props.onCityClick}
+          isActive={city.name === activeCity.name}
+          onClick={onCityClick}
           cityObject={city}
         />
       ))}

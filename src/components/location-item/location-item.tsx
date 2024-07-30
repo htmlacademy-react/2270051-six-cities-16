@@ -7,15 +7,18 @@ type LocationItemProps = {
   cityObject: City;
 }
 
-function LocationItem(props: LocationItemProps) {
+function LocationItem({city, isActive, onClick, cityObject}: LocationItemProps) {
   return (
     <li className="locations__item">
       <a
-        className={`locations__item-link tabs__item ${props.isActive ? 'tabs__item--active' : ''}`}
+        className={`locations__item-link tabs__item ${isActive ? 'tabs__item--active' : ''}`}
         href="#"
-        onClick={() => props.onClick(props.cityObject)}
+        onClick={(e) => {
+          e.preventDefault();
+          onClick(cityObject);
+        }}
       >
-        <span>{props.city}</span>
+        <span>{city}</span>
       </a>
     </li>
   );

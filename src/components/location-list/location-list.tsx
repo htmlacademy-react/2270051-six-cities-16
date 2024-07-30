@@ -4,10 +4,9 @@ import {City} from '../../lib/types/offer';
 type LocationListProps = {
   cities: City[];
   activeCity: City;
-  onCityClick: (city: City) => void;
 }
 
-function LocationList({cities, activeCity, onCityClick}: LocationListProps) {
+function LocationList({cities, activeCity}: LocationListProps) {
   return (
     <ul className="locations__list tabs__list">
       {cities.map((city) => (
@@ -15,7 +14,6 @@ function LocationList({cities, activeCity, onCityClick}: LocationListProps) {
           city={city.name}
           key={city.name}
           isActive={city.name === activeCity.name}
-          onClick={onCityClick}
           cityObject={city}
         />
       ))}

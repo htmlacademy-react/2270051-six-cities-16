@@ -1,5 +1,5 @@
 import {createReducer, PayloadAction} from '@reduxjs/toolkit';
-import {BaseOffer, City} from '../lib/types/offer';
+import {BaseOffer, City, Offer} from '../lib/types/offer';
 import {State} from '../lib/types/state';
 import {setCity, fillOffers} from './action';
 import {DEFAULT_CITY} from '../const';
@@ -15,12 +15,14 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(setCity, (state, action: PayloadAction<City>) => {
       state.city = action.payload;
       state.filteredOffers = state.offers.filter(
-        (offer) => offer.city.name === action.payload.name);
+        (offer) => offer.city.name === action.payload.name
+      ) as Offer[];
     })
     .addCase(fillOffers, (state, action: PayloadAction<BaseOffer[]>) => {
-      state.offers = action.payload;
+      state.offers = action.payload as Offer[];
       state.filteredOffers = action.payload.filter(
-        (offer) => offer.city.name === state.city.name);
+        (offer) => offer.city.name === state.city.name
+      ) as Offer[];
     });
 });
 

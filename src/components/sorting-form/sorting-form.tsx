@@ -1,11 +1,7 @@
-import {useState} from 'react';
+import useToggle from '../../hooks/use-toggle';
 
 function SortingForm() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleOpen = () => {
-    setIsOpen(!isOpen);
-  };
+  const [isOpen, toggleOpen] = useToggle(false);
 
   return (
     <form className="places__sorting" action="#" method="get">

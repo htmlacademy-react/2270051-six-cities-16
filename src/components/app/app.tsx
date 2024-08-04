@@ -40,7 +40,6 @@ function App({ offers }: AppPageProps) {
             path={AppRoute.Root}
             element={
               <MainPage
-                offers={offers}
                 cities={CITY}
                 activeCity={activeCity}
                 filteredOffers={filteredOffers}

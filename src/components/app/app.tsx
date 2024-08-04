@@ -9,6 +9,7 @@ import PrivateRoute from '../private-route/private-route';
 import {BaseOffer, City} from '../../lib/types/offer';
 import {AppRoute, CITY, DEFAULT_CITY} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
+import useFilteredOffers from '../../hooks/use-filtered-offers';
 import {useEffect} from 'react';
 import {fillOffers, setCity} from '../../store/action';
 
@@ -19,7 +20,7 @@ type AppPageProps = {
 function App({ offers }: AppPageProps) {
   const favoriteOffers = offers.filter((offer) => offer.isFavorite);
   const activeCity = useAppSelector((state) => state.city);
-  const filteredOffers = useAppSelector((state) => state.filteredOffers);
+  const filteredOffers = useFilteredOffers();
   const dispatch = useAppDispatch();
 
   useEffect(() => {

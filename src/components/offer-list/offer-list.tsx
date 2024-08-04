@@ -1,17 +1,10 @@
 import {useState} from 'react';
 import OfferCard from '../offer-card/offer-card';
-import {BaseOffer} from '../../lib/types/offer';
-import {useAppSelector} from '../../hooks/redux-hooks';
+import useFilteredOffers from '../../hooks/use-filtered-offers';
 
-type OfferListProps = {
-  offers: BaseOffer[];
-}
-
-function OfferList({ offers }: OfferListProps) {
+function OfferList() {
   const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
-  const selectedCity = useAppSelector((state) => state.city.name);
-
-  const filteredOffers = offers.filter((offer) => offer.city.name === selectedCity);
+  const filteredOffers = useFilteredOffers();
 
   return (
     <div className="cities__places-list places__list tabs__content">

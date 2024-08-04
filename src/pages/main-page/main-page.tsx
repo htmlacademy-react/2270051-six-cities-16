@@ -14,9 +14,9 @@ type MainPageProps = {
   onCityClick: (city: City) => void;
 }
 
-function MainPage(props: MainPageProps) {
-  const locations = getLocations(props.filteredOffers);
-  const offersCount = props.filteredOffers.length;
+function MainPage({cities, activeCity, filteredOffers, onCityClick}: MainPageProps) {
+  const locations = getLocations(filteredOffers);
+  const offersCount = filteredOffers.length;
 
   return (
     <div className="page page--gray page--main">
@@ -31,9 +31,9 @@ function MainPage(props: MainPageProps) {
         <div className="tabs">
           <section className="locations container">
             <LocationList
-              cities={props.cities}
-              activeCity={props.activeCity}
-              onCityClick={props.onCityClick}
+              cities={cities}
+              activeCity={activeCity}
+              onCityClick={onCityClick}
             />
           </section>
         </div>
@@ -41,13 +41,13 @@ function MainPage(props: MainPageProps) {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offersCount} places to stay in {props.activeCity.name}</b>
+              <b className="places__found">{offersCount} places to stay in {activeCity.name}</b>
               <SortingForm />
-              <OfferList offers={props.filteredOffers} />
+              <OfferList />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map city={props.activeCity} locations={locations} />
+                <Map city={activeCity} locations={locations} />
               </section>
             </div>
           </div>

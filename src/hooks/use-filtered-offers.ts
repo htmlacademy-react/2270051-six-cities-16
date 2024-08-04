@@ -5,8 +5,8 @@ function useFilteredOffers() {
   const city = useAppSelector((state) => state.city.name);
   const offers = useAppSelector((state) => state.offers);
 
-  const filterByCity = (offers: BaseOffer[], city: string) =>
-    offers.filter((offer) => offer.city.name === city);
+  const filterByCity = (allOffers: BaseOffer[], currentCity: string) =>
+    allOffers.filter((offer) => offer.city.name === currentCity);
 
   return filterByCity(offers, city);
 }

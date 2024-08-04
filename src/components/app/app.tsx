@@ -6,7 +6,7 @@ import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
-import {BaseOffer, City} from '../../lib/types/offer';
+import {BaseOffer} from '../../lib/types/offer';
 import {AppRoute, CITY, DEFAULT_CITY} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import useFilteredOffers from '../../hooks/use-filtered-offers';
@@ -28,10 +28,6 @@ function App({ offers }: AppPageProps) {
     dispatch(setCity(DEFAULT_CITY));
   }, [dispatch, offers]);
 
-  const handleCityClick = (city: City) => {
-    dispatch(setCity(city));
-  };
-
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -43,7 +39,6 @@ function App({ offers }: AppPageProps) {
                 cities={CITY}
                 activeCity={activeCity}
                 filteredOffers={filteredOffers}
-                onCityClick={handleCityClick}
               />
             }
           />

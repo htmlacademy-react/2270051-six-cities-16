@@ -11,10 +11,9 @@ type MainPageProps = {
   cities: City[];
   activeCity: City;
   filteredOffers: BaseOffer[];
-  onCityClick: (city: City) => void;
 }
 
-function MainPage({cities, activeCity, filteredOffers, onCityClick}: MainPageProps) {
+function MainPage({cities, activeCity, filteredOffers}: MainPageProps) {
   const locations = getLocations(filteredOffers);
   const offersCount = filteredOffers.length;
 
@@ -33,7 +32,6 @@ function MainPage({cities, activeCity, filteredOffers, onCityClick}: MainPagePro
             <LocationList
               cities={cities}
               activeCity={activeCity}
-              onCityClick={onCityClick}
             />
           </section>
         </div>

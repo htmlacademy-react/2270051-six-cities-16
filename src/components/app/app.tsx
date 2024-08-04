@@ -6,7 +6,7 @@ import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
-import {BaseOffer} from '../../lib/types/offer';
+import {BaseOffer, City} from '../../lib/types/offer';
 import {AppRoute, CITY, DEFAULT_CITY} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {useEffect} from 'react';

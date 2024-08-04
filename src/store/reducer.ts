@@ -14,11 +14,13 @@ const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(setCity, (state, action: PayloadAction<City>) => {
       state.city = action.payload;
-      state.filteredOffers = state.offers.filter((offer) => offer.city.name === action.payload.name);
+      state.filteredOffers = state.offers.filter(
+        (offer) => offer.city.name === action.payload.name);
     })
     .addCase(fillOffers, (state, action: PayloadAction<Offer[]>) => {
       state.offers = action.payload;
-      state.filteredOffers = action.payload.filter((offer) => offer.city.name === state.city.name);
+      state.filteredOffers = action.payload.filter(
+        (offer) => offer.city.name === state.city.name);
     });
 });
 

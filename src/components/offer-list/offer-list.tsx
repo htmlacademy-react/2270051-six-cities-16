@@ -9,7 +9,7 @@ type OfferListProps = {
 
 function OfferList({ offers }: OfferListProps) {
   const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
-  const selectedCity = useAppSelector((state) => state.offers.city.name);
+  const selectedCity = useAppSelector((state) => state.city.name);
 
   const filteredOffers = offers.filter((offer) => offer.city.name === selectedCity);
 

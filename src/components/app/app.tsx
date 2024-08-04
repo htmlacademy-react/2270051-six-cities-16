@@ -18,8 +18,8 @@ type AppPageProps = {
 
 function App({ offers }: AppPageProps) {
   const favoriteOffers = offers.filter((offer) => offer.isFavorite);
-  const activeCity = useAppSelector((state) => state.offers.city);
-  const filteredOffers = useAppSelector((state) => state.offers.filteredOffers);
+  const activeCity = useAppSelector((state) => state.city);
+  const filteredOffers = useAppSelector((state) => state.filteredOffers);
   const dispatch = useAppDispatch();
 
   useEffect(() => {

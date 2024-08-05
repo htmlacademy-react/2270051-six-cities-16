@@ -1,17 +1,14 @@
 import {useState} from 'react';
 import OfferCard from '../offer-card/offer-card';
-import {BaseOffer} from '../../lib/types/offer';
+import useFilteredOffers from '../../hooks/use-filtered-offers';
 
-type OfferListProps = {
-  offers: BaseOffer[];
-}
-
-function OfferList({ offers }: OfferListProps) {
+function OfferList() {
   const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
+  const filteredOffers = useFilteredOffers();
 
   return (
     <div className="cities__places-list places__list tabs__content">
-      {offers.map((offer) => (
+      {filteredOffers.map((offer) => (
         <OfferCard
           key={offer.id}
           offer={offer}

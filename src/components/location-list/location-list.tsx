@@ -1,18 +1,21 @@
-import {CITIES} from '../../const';
 import LocationItem from '../location-item/location-item';
+import {City} from '../../lib/types/offer';
 
-type City = {
-  id: number;
-  name: string;
+type LocationListProps = {
+  cities: City[];
+  activeCity: City;
 }
 
-const citiesWithId: City[] = CITIES.map((city, index) => ({ id: index + 1, name: city }));
-
-function LocationList() {
+function LocationList({cities, activeCity}: LocationListProps) {
   return (
     <ul className="locations__list tabs__list">
-      {citiesWithId.map((city) => (
-        <LocationItem city={city.name} key={city.id} />
+      {cities.map((city) => (
+        <LocationItem
+          city={city.name}
+          key={city.name}
+          isActive={city.name === activeCity.name}
+          cityObject={city}
+        />
       ))}
     </ul>
   );

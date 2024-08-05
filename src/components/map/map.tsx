@@ -1,8 +1,8 @@
 import {useRef, useEffect} from 'react';
-import {City, Location} from '../../lib/types/offer';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/use-map';
+import {City, Location} from '../../lib/types/offer';
 import {defaultCustomIcon} from '../../const';
 
 type MapProps = {
@@ -16,6 +16,12 @@ function Map({ city, locations }: MapProps) {
 
   useEffect(() => {
     if (map) {
+      map.eachLayer((layer) => {
+        if (layer instanceof leaflet.Marker) {
+          map.removeLayer(layer);
+        }
+      });
+
       locations.forEach((location) => {
         const marker = new leaflet.Marker(
           [location.latitude, location.longitude],
@@ -24,8 +30,10 @@ function Map({ city, locations }: MapProps) {
           });
         marker.addTo(map);
       });
+
+      map.setView([city.location.latitude, city.location.longitude], city.location.zoom);
     }
-  }, [map, locations]);
+  }, [map, locations, city]);
 
   return (
     <div

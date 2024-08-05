@@ -1,6 +1,5 @@
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import {HelmetProvider} from 'react-helmet-async';
-import {AppRoute} from '../../const';
 import MainPage from '../../pages/main-page/main-page';
 import LoginPage from '../../pages/login-page/login-page';
 import FavoritesPage from '../../pages/favorites-page/favorites-page';
@@ -8,14 +7,26 @@ import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import {BaseOffer} from '../../lib/types/offer';
+import {AppRoute, CITY, DEFAULT_CITY} from '../../const';
+import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
+import useFilteredOffers from '../../hooks/use-filtered-offers';
+import {useEffect} from 'react';
+import {fillOffers, setCity} from '../../store/action';
 
 type AppPageProps = {
-  offersCount: number;
   offers: BaseOffer[];
 }
 
-function App({ offersCount, offers }: AppPageProps) {
+function App({ offers }: AppPageProps) {
   const favoriteOffers = offers.filter((offer) => offer.isFavorite);
+  const activeCity = useAppSelector((state) => state.city);
+  const filteredOffers = useFilteredOffers();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fillOffers(offers));
+    dispatch(setCity(DEFAULT_CITY));
+  }, [dispatch, offers]);
 
   return (
     <HelmetProvider>
@@ -23,7 +34,13 @@ function App({ offersCount, offers }: AppPageProps) {
         <Routes>
           <Route
             path={AppRoute.Root}
-            element={<MainPage offersCount={offersCount} offers={offers} />}
+            element={
+              <MainPage
+                cities={CITY}
+                activeCity={activeCity}
+                filteredOffers={filteredOffers}
+              />
+            }
           />
           <Route
             path={AppRoute.Login}
@@ -33,7 +50,7 @@ function App({ offersCount, offers }: AppPageProps) {
             path={AppRoute.Favorites}
             element={
               <PrivateRoute>
-                <FavoritesPage favorites={favoriteOffers}/>
+                <FavoritesPage favorites={favoriteOffers} />
               </PrivateRoute>
             }
           />

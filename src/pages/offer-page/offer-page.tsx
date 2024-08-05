@@ -87,7 +87,7 @@ function OfferPage() {
             </div>
           </div>
           <section className="offer__map map">
-            <Map city={CITY} offers={NEAR_OFFERS} />
+            <Map city={CITY} offers={NEAR_OFFERS} activeOfferId={null} />
           </section>
         </section>
         <div className="container">

@@ -5,7 +5,7 @@ import LocationList from '../../components/location-list/location-list';
 import SortingForm from '../../components/sorting-form/sorting-form';
 import OfferList from '../../components/offer-list/offer-list';
 import Map from '../../components/map/map';
-import {getLocations, sortOffers} from '../../lib/utils/utils';
+import {sortOffers} from '../../lib/utils/utils';
 import {BaseOffer, City} from '../../lib/types/offer';
 import {SortType} from '../../const';
 
@@ -18,6 +18,7 @@ type MainPageProps = {
 function MainPage({cities, activeCity, offers}: MainPageProps) {
   const [sortedOffers, setSortedOffers] = useState(offers);
   const [currentSortType, setCurrentSortType] = useState(SortType.Popular);
+  const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
 
   useEffect(() => {
     const sorted = sortOffers(offers, currentSortType);
@@ -28,7 +29,10 @@ function MainPage({cities, activeCity, offers}: MainPageProps) {
     setCurrentSortType(sortType);
   };
 
-  const locations = getLocations(sortedOffers);
+  const handleActiveOfferChange = (offerId: string | null) => {
+    setActiveOfferId(offerId);
+  };
+
   const offersCount = sortedOffers.length;
 
   return (
@@ -55,11 +59,11 @@ function MainPage({cities, activeCity, offers}: MainPageProps) {
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{offersCount} places to stay in {activeCity.name}</b>
               <SortingForm onSortChange={handleSortChange} />
-              <OfferList offers={sortedOffers} />
+              <OfferList offers={sortedOffers} onActiveOfferChange={handleActiveOfferChange} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map city={activeCity} locations={locations} />
+                <Map city={activeCity} offers={sortedOffers} activeOfferId={activeOfferId} />
               </section>
             </div>
           </div>

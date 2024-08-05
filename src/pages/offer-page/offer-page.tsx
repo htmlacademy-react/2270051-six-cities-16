@@ -2,18 +2,15 @@ import {Helmet} from 'react-helmet-async';
 import Header from '../../components/header/header';
 import CommentForm from '../../components/comment-form/comment-form';
 import ReviewList from '../../components/review-list/review-list';
-import {CITY} from '../../mocks/city';
 import Map from '../../components/map/map';
 import NearOfferList from '../../components/near-offer-list/near-offer-list';
-import {NEAR_OFFERS} from '../../mocks/near-offers';
 import OfferGallery from '../../components/offer-gallery/offer-gallery';
 import OfferFeatures from '../../components/offer-features/offer-features';
 import OfferInsideList from '../../components/offer-inside-list/offer-inside-list';
-import {getLocations} from '../../lib/utils/utils';
+import {CITY} from '../../mocks/city';
+import {NEAR_OFFERS} from '../../mocks/near-offers';
 
 function OfferPage() {
-  const locations = getLocations(NEAR_OFFERS);
-
   return (
     <div className="page">
       <Helmet>
@@ -90,7 +87,7 @@ function OfferPage() {
             </div>
           </div>
           <section className="offer__map map">
-            <Map city={CITY} locations={locations} />
+            <Map city={CITY} offers={NEAR_OFFERS} />
           </section>
         </section>
         <div className="container">

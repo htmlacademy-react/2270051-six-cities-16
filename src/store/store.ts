@@ -1,6 +1,13 @@
 import {configureStore} from '@reduxjs/toolkit';
-import {reducer} from './reducer';
+import offersReducer from './reducer';
 
-export const store = configureStore({
-  reducer,
+const store = configureStore({
+  reducer: {
+    offers: offersReducer,
+  },
 });
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+
+export default store;

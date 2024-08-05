@@ -1,7 +1,7 @@
 import {City} from '../../lib/types/offer';
 import {Link} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
-import {setCity} from '../../store/action';
+import {setCity} from '../../store/reducer';
 import {AppRoute} from '../../const';
 
 type LocationItemProps = {

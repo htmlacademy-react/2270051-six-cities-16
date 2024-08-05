@@ -11,7 +11,7 @@ import {AppRoute, CITY, DEFAULT_CITY} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import useFilteredOffers from '../../hooks/use-filtered-offers';
 import {useEffect} from 'react';
-import {fillOffers, setCity} from '../../store/action';
+import {fillOffers, setCity} from '../../store/reducer';
 
 type AppPageProps = {
   offers: BaseOffer[];
@@ -19,7 +19,7 @@ type AppPageProps = {
 
 function App({ offers }: AppPageProps) {
   const favoriteOffers = offers.filter((offer) => offer.isFavorite);
-  const activeCity = useAppSelector((state) => state.city);
+  const activeCity = useAppSelector((state) => state.offers.city);
   const filteredOffers = useFilteredOffers();
   const dispatch = useAppDispatch();
 

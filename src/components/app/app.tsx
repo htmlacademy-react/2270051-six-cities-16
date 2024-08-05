@@ -11,7 +11,7 @@ import {AppRoute, CITY, DEFAULT_CITY} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import useFilteredOffers from '../../hooks/use-filtered-offers';
 import {useEffect} from 'react';
-import {fillOffers, setCity} from '../../store/reducer';
+import {setOffers, setCity} from '../../store/offers-slice';
 
 type AppPageProps = {
   offers: BaseOffer[];
@@ -24,7 +24,7 @@ function App({ offers }: AppPageProps) {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fillOffers(offers));
+    dispatch(setOffers(offers));
     dispatch(setCity(DEFAULT_CITY));
   }, [dispatch, offers]);
 
@@ -38,7 +38,7 @@ function App({ offers }: AppPageProps) {
               <MainPage
                 cities={CITY}
                 activeCity={activeCity}
-                filteredOffers={filteredOffers}
+                offers={filteredOffers}
               />
             }
           />

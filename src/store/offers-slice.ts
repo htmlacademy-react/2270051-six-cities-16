@@ -6,7 +6,6 @@ import {DEFAULT_CITY} from '../const';
 const initialState: State = {
   city: DEFAULT_CITY,
   offers: [],
-  filteredOffers: [],
 };
 
 const offersSlice = createSlice({
@@ -15,18 +14,12 @@ const offersSlice = createSlice({
   reducers: {
     setCity: (state, action: PayloadAction<City>) => {
       state.city = action.payload;
-      state.filteredOffers = state.offers.filter(
-        (offer) => offer.city.name === action.payload.name
-      ) as Offer[];
     },
-    fillOffers: (state, action: PayloadAction<BaseOffer[]>) => {
+    setOffers: (state, action: PayloadAction<BaseOffer[]>) => {
       state.offers = action.payload as Offer[];
-      state.filteredOffers = action.payload.filter(
-        (offer) => offer.city.name === state.city.name
-      ) as Offer[];
-    },
+    }
   },
 });
 
-export const {setCity, fillOffers} = offersSlice.actions;
+export const {setCity, setOffers} = offersSlice.actions;
 export default offersSlice.reducer;

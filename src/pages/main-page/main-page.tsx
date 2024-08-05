@@ -1,21 +1,35 @@
+import {useEffect, useState} from 'react';
 import {Helmet} from 'react-helmet-async';
 import Header from '../../components/header/header';
 import LocationList from '../../components/location-list/location-list';
 import SortingForm from '../../components/sorting-form/sorting-form';
 import OfferList from '../../components/offer-list/offer-list';
 import Map from '../../components/map/map';
-import {getLocations} from '../../lib/utils/utils';
+import {getLocations, sortOffers} from '../../lib/utils/utils';
 import {BaseOffer, City} from '../../lib/types/offer';
+import {SortType} from '../../const';
 
 type MainPageProps = {
   cities: City[];
   activeCity: City;
-  filteredOffers: BaseOffer[];
+  offers: BaseOffer[];
 }
 
-function MainPage({cities, activeCity, filteredOffers}: MainPageProps) {
-  const locations = getLocations(filteredOffers);
-  const offersCount = filteredOffers.length;
+function MainPage({cities, activeCity, offers}: MainPageProps) {
+  const [sortedOffers, setSortedOffers] = useState(offers);
+  const [currentSortType, setCurrentSortType] = useState(SortType.Popular);
+
+  useEffect(() => {
+    const sorted = sortOffers(offers, currentSortType);
+    setSortedOffers(sorted);
+  }, [offers, currentSortType]);
+
+  const handleSortChange = (sortType: string) => {
+    setCurrentSortType(sortType);
+  };
+
+  const locations = getLocations(sortedOffers);
+  const offersCount = sortedOffers.length;
 
   return (
     <div className="page page--gray page--main">
@@ -40,8 +54,8 @@ function MainPage({cities, activeCity, filteredOffers}: MainPageProps) {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{offersCount} places to stay in {activeCity.name}</b>
-              <SortingForm />
-              <OfferList />
+              <SortingForm onSortChange={handleSortChange} />
+              <OfferList offers={sortedOffers} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">

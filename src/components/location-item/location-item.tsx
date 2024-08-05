@@ -1,7 +1,7 @@
 import {City} from '../../lib/types/offer';
 import {Link} from 'react-router-dom';
-import {useDispatch} from 'react-redux';
-import {setCity} from '../../store/reducer';
+import {useAppDispatch} from '../../hooks/redux-hooks';
+import {setCity} from '../../store/offers-slice';
 import {AppRoute} from '../../const';
 
 type LocationItemProps = {
@@ -11,7 +11,7 @@ type LocationItemProps = {
 }
 
 function LocationItem({city, isActive, cityObject}: LocationItemProps) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const buttonClass = `locations__item-link tabs__item ${isActive ? 'tabs__item--active' : ''}`;
 
   const handleClick = () => {

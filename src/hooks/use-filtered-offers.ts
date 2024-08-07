@@ -1,11 +1,12 @@
 import {useAppSelector} from './redux-hooks';
-import {BaseOffer} from '../lib/types/offer';
+import useOffersSelector from './use-offers-selector';
+import {Offer} from '../lib/types/offer';
 
 function useFilteredOffers() {
-  const city = useAppSelector((state) => state.city.name);
-  const offers = useAppSelector((state) => state.offers);
+  const offersState = useAppSelector((state) => state.offers);
+  const {city, offers} = useOffersSelector(offersState);
 
-  const filterByCity = (allOffers: BaseOffer[], currentCity: string) =>
+  const filterByCity = (allOffers: Offer[], currentCity: string) =>
     allOffers.filter((offer) => offer.city.name === currentCity);
 
   return filterByCity(offers, city);

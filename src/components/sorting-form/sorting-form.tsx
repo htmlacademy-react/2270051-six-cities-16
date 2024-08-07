@@ -13,9 +13,9 @@ function SortingForm({onSortChange}: SortingFormProps) {
   const [isOpen, toggleOpen] = useToggle(false);
   const [selectedSort, setSelectedSort] = useState<SortType>(SortType.Popular);
 
-  const handleSortChange = (sortType: SortType) => {
+  const handleSortChange = (sortType: string) => {
     setSelectedSort(sortType);
-    onSortChange(sortType);
+    onSortChange(sortType.toString());
     toggleOpen();
   };
 

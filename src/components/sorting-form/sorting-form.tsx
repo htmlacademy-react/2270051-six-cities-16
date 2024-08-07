@@ -4,7 +4,7 @@ import {useState} from 'react';
 import {SortType, SortTypeNames} from '../../const';
 
 type SortingFormProps = {
-  onSortChange: (sortType: string) => void;
+  onSortChange: (sortType: SortType) => void;
 };
 
 const CitySortTypeSelect = Object.values(SortType);
@@ -13,9 +13,9 @@ function SortingForm({onSortChange}: SortingFormProps) {
   const [isOpen, toggleOpen] = useToggle(false);
   const [selectedSort, setSelectedSort] = useState<SortType>(SortType.Popular);
 
-  const handleSortChange = (sortType: string) => {
+  const handleSortChange = (sortType: SortType) => {
     setSelectedSort(sortType);
-    onSortChange(sortType.toString());
+    onSortChange(sortType);
     toggleOpen();
   };
 
@@ -40,7 +40,7 @@ function SortingForm({onSortChange}: SortingFormProps) {
               key={sortType}
               className={classNames('places__option', { 'places__option--active': isActive })}
               tabIndex={0}
-              onClick={() => handleSortChange(sortType)}
+              onClick={() => handleSortChange(SortType)}
             >
               {SortTypeNames[sortType]}
             </li>

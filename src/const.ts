@@ -8,7 +8,7 @@ export enum SortType {
   TopRatedFirst = 'topRatedFirst',
 }
 
-export const SortTypeNames = {
+export const SortTypeNames: {[key in SortType]: string} = {
   [SortType.Popular]: 'Popular',
   [SortType.PriceLowToHigh]: 'Price: low to high',
   [SortType.PriceHighToLow]: 'Price: high to low',

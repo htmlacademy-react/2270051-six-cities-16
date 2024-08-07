@@ -2,13 +2,13 @@ import leaflet from 'leaflet';
 import {City} from './lib/types/offer';
 
 export enum SortType {
-  Popular = 'popular',
-  PriceLowToHigh = 'priceLowToHigh',
-  PriceHighToLow = 'priceHighToLow',
-  TopRatedFirst = 'topRatedFirst',
+  Popular,
+  PriceLowToHigh,
+  PriceHighToLow,
+  TopRatedFirst,
 }
 
-export const SortTypeNames: {[key in SortType]: string} = {
+export const SortTypeNames = {
   [SortType.Popular]: 'Popular',
   [SortType.PriceLowToHigh]: 'Price: low to high',
   [SortType.PriceHighToLow]: 'Price: high to low',

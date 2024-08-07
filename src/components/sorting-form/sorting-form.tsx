@@ -7,7 +7,7 @@ type SortingFormProps = {
   onSortChange: (sortType: SortType) => void;
 };
 
-const CitySortTypeSelect = Object.values(SortType);
+const CitySortTypeSelect = Object.values(SortType).filter((value) => typeof value === 'number') as SortType[];
 
 function SortingForm({onSortChange}: SortingFormProps) {
   const [isOpen, toggleOpen] = useToggle(false);
@@ -40,7 +40,7 @@ function SortingForm({onSortChange}: SortingFormProps) {
               key={sortType}
               className={classNames('places__option', { 'places__option--active': isActive })}
               tabIndex={0}
-              onClick={() => handleSortChange(SortType)}
+              onClick={() => handleSortChange(sortType)}
             >
               {SortTypeNames[sortType]}
             </li>

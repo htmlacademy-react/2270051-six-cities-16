@@ -17,7 +17,7 @@ type MainPageProps = {
 
 function MainPage({cities, activeCity, offers}: MainPageProps) {
   const [sortedOffers, setSortedOffers] = useState(offers);
-  const [currentSortType, setCurrentSortType] = useState(SortType.Popular);
+  const [currentSortType, setCurrentSortType] = useState<SortType>(SortType.Popular);
   const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ function MainPage({cities, activeCity, offers}: MainPageProps) {
     setSortedOffers(sorted);
   }, [offers, currentSortType]);
 
-  const handleSortChange = (sortType: string) => {
+  const handleSortChange = (sortType: SortType) => {
     setCurrentSortType(sortType);
   };
 

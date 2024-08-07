@@ -15,7 +15,7 @@ function SortingForm({onSortChange}: SortingFormProps) {
 
   const handleSortChange = (sortType: SortType) => {
     setSelectedSort(sortType);
-    onSortChange(sortType.toString());
+    onSortChange(sortType);
     toggleOpen();
   };
 

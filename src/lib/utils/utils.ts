@@ -18,3 +18,7 @@ export function sortOffers(offers: BaseOffer[], sortType: SortType): BaseOffer[]
       return offersCopy;
   }
 }
+
+export function getNumericValues(values: (string | number)[]): number[] {
+  return values.filter((value) => typeof value === 'number') as number[];
+}

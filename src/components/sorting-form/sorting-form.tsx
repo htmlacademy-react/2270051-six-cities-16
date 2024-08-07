@@ -2,12 +2,13 @@ import classNames from 'classnames';
 import useToggle from '../../hooks/use-toggle';
 import {useState} from 'react';
 import {SortType, SortTypeNames} from '../../const';
+import {getNumericValues} from '../../lib/utils/utils';
 
 type SortingFormProps = {
   onSortChange: (sortType: SortType) => void;
 };
 
-const CitySortTypeSelect = Object.values(SortType).filter((value) => typeof value === 'number') as SortType[];
+const CitySortTypeSelect = getNumericValues(Object.values(SortType)) as SortType[];
 
 function SortingForm({onSortChange}: SortingFormProps) {
   const [isOpen, toggleOpen] = useToggle(false);

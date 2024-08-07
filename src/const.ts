@@ -1,11 +1,18 @@
 import leaflet from 'leaflet';
 import {City} from './lib/types/offer';
 
-export const SortType = {
-  Popular: 'Popular',
-  PriceLowToHigh: 'Price: low to high',
-  PriceHighToLow: 'Price: high to low',
-  TopRatedFirst: 'Top rated first',
+export enum SortType {
+  Popular = 'popular',
+  PriceLowToHigh = 'priceLowToHigh',
+  PriceHighToLow = 'priceHighToLow',
+  TopRatedFirst = 'topRatedFirst',
+}
+
+export const SortTypeNames = {
+  [SortType.Popular]: 'Popular',
+  [SortType.PriceLowToHigh]: 'Price: low to high',
+  [SortType.PriceHighToLow]: 'Price: high to low',
+  [SortType.TopRatedFirst]: 'Top rated first'
 };
 
 export const CITY: City[] = [
@@ -59,7 +66,7 @@ export const CITY: City[] = [
   }
 ];
 
-export const DEFAULT_CITY: City = CITY.find((city) => city.name === 'Paris')!;
+export const DEFAULT_CITY: City = CITY.find((city) => city.name === 'Paris') ?? CITY[0];
 
 export const REVIEWS_COUNT: number = 10;
 

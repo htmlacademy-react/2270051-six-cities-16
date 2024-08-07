@@ -1,18 +1,21 @@
+import classNames from 'classnames';
 import useToggle from '../../hooks/use-toggle';
-import SortOption from '../sort-option/sort-option';
 import {useState} from 'react';
+import {SortType, SortTypeNames} from '../../const';
 
 type SortingFormProps = {
   onSortChange: (sortType: string) => void;
 };
 
+const CitySortTypeSelect = Object.values(SortType);
+
 function SortingForm({onSortChange}: SortingFormProps) {
   const [isOpen, toggleOpen] = useToggle(false);
-  const [selectedSort, setSelectedSort] = useState('Popular');
+  const [selectedSort, setSelectedSort] = useState<SortType>(SortType.Popular);
 
-  const handleSortChange = (sortType: string) => {
+  const handleSortChange = (sortType: SortType) => {
     setSelectedSort(sortType);
-    onSortChange(sortType);
+    onSortChange(sortType.toString());
     toggleOpen();
   };
 
@@ -24,12 +27,26 @@ function SortingForm({onSortChange}: SortingFormProps) {
         tabIndex={0}
         onClick={toggleOpen}
       >
-        {selectedSort}
+        {SortTypeNames[selectedSort]}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
-      <SortOption isOpen={isOpen} onSortChange={handleSortChange} />
+      <ul className={classNames('places__options places__options--custom', { 'places__options--opened': isOpen })}>
+        {CitySortTypeSelect.map((sortType) => {
+          const isActive = sortType === selectedSort;
+          return (
+            <li
+              key={sortType}
+              className={classNames('places__option', { 'places__option--active': isActive })}
+              tabIndex={0}
+              onClick={() => handleSortChange(sortType)}
+            >
+              {SortTypeNames[sortType]}
+            </li>
+          );
+        })}
+      </ul>
     </form>
   );
 }

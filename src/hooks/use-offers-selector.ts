@@ -1,6 +1,6 @@
-import {City, Offer} from '../lib/types/offer';
+import {BaseOffer, City} from '../lib/types/offer';
 
-function useOffersSelector(offersState: {city: City; offers: Offer[]}) {
+function useOffersSelector(offersState: {city: City; offers: BaseOffer[]}) {
   const city = offersState.city.name;
   const offers = offersState.offers;
   return { city, offers };

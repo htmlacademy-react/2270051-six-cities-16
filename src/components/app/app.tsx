@@ -9,14 +9,15 @@ import PrivateRoute from '../private-route/private-route';
 import {BaseOffer} from '../../lib/types/offer';
 import {AppRoute, CITY} from '../../const';
 import {useAppSelector} from '../../hooks/redux-hooks';
+import {RootState} from '../../store';
 
 type AppPageProps = {
   offers: BaseOffer[];
 }
 
 function App({offers}: AppPageProps) {
-  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
-  const activeCity = useAppSelector((state) => state.offers.city);
+  const favoriteOffers = offers.filter((offer: BaseOffer) => offer.isFavorite);
+  const activeCity = useAppSelector((state: RootState) => state.offers.city);
 
   return (
     <HelmetProvider>

@@ -1,6 +1,12 @@
 import leaflet from 'leaflet';
 import {City} from './lib/types/offer';
 
+export const URL_API: string = 'https://16.design.htmlacademy.pro/six-cities';
+
+export const REQUEST_TIMEOUT: number = 5000;
+
+export const AUTH_TOKEN_KEY_NAME: string = 'six-cities-token';
+
 export enum SortType {
   Popular,
   PriceLowToHigh,

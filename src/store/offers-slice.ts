@@ -21,7 +21,7 @@ export const fetchOffers = createAsyncThunk<
     extra: AxiosInstance;
   }
   >('offers/fetchOffers', async (_, { extra: api }) => {
-    const response = await api.get('/offers');
+    const response = await api.get<BaseOffer[]>('/offers');
     return response.data;
   });
 
@@ -52,5 +52,5 @@ const offersSlice = createSlice({
   },
 });
 
-export const {setCity, setOffers} = offersSlice.actions;
+export const { setCity, setOffers } = offersSlice.actions;
 export default offersSlice.reducer;

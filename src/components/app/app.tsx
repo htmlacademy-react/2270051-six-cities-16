@@ -7,26 +7,16 @@ import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import {BaseOffer} from '../../lib/types/offer';
-import {AppRoute, CITY, DEFAULT_CITY} from '../../const';
-import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
-import useFilteredOffers from '../../hooks/use-filtered-offers';
-import {useEffect} from 'react';
-import {setOffers, setCity} from '../../store/offers-slice';
+import {AppRoute, CITY} from '../../const';
+import {useAppSelector} from '../../hooks/redux-hooks';
 
 type AppPageProps = {
   offers: BaseOffer[];
 }
 
-function App({ offers }: AppPageProps) {
+function App({offers}: AppPageProps) {
   const favoriteOffers = offers.filter((offer) => offer.isFavorite);
   const activeCity = useAppSelector((state) => state.offers.city);
-  const filteredOffers = useFilteredOffers();
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(setOffers(offers));
-    dispatch(setCity(DEFAULT_CITY));
-  }, [dispatch, offers]);
 
   return (
     <HelmetProvider>
@@ -38,7 +28,6 @@ function App({ offers }: AppPageProps) {
               <MainPage
                 cities={CITY}
                 activeCity={activeCity}
-                offers={filteredOffers}
               />
             }
           />

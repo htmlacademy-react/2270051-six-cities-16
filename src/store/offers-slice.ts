@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction, createAsyncThunk} from '@reduxjs/toolkit';
 import {AxiosInstance} from 'axios';
-import {BaseOffer, City, Offer} from '../lib/types/offer';
+import {BaseOffer, City} from '../lib/types/offer';
 import {State} from '../lib/types/state';
 import {DEFAULT_CITY} from '../const';
 import {AppDispatch, RootState} from '../store';
@@ -13,7 +13,7 @@ const initialState: State = {
 };
 
 export const fetchOffers = createAsyncThunk<
-  Offer[],
+  BaseOffer[],
   void,
   {
     dispatch: AppDispatch;
@@ -21,7 +21,7 @@ export const fetchOffers = createAsyncThunk<
     extra: AxiosInstance;
   }
   >('offers/fetchOffers', async (_, { extra: api }) => {
-    const response = await api.get<BaseOffer[]>('/offers');
+    const response = await api.get('/offers');
     return response.data;
   });
 
@@ -33,7 +33,7 @@ const offersSlice = createSlice({
       state.city = action.payload;
     },
     setOffers: (state, action: PayloadAction<BaseOffer[]>) => {
-      state.offers = action.payload as Offer[];
+      state.offers = action.payload;
     },
   },
   extraReducers: (builder) => {

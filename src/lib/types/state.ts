@@ -1,8 +1,8 @@
-import {City, Offer} from './offer';
+import {BaseOffer, City} from './offer';
 
 export type State = {
   city: City;
-  offers: Offer[];
+  offers: BaseOffer[];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
 };

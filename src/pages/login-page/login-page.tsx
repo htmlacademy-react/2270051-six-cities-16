@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Helmet} from 'react-helmet-async';
 import {useNavigate} from 'react-router-dom';
 import {Link} from 'react-router-dom';
@@ -16,6 +16,12 @@ function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
 
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.AUTH) {
+      navigate(AppRoute.Root);
+    }
+  }, [authorizationStatus, navigate]);
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     if (!isValidPassword(password)) {
@@ -29,11 +35,6 @@ function LoginPage() {
       setError('Login failed. Please check your credentials and try again.');
     }
   };
-
-  if (authorizationStatus === AuthorizationStatus.AUTH) {
-    navigate(AppRoute.Root);
-    return null;
-  }
 
   return (
     <div className="page page--gray page--login">

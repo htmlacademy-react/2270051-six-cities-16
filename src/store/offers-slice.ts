@@ -11,6 +11,7 @@ const initialState: State = {
   status: RequestStatus.IDLE,
   error: null,
   authorizationStatus: AuthorizationStatus.UNKNOWN,
+  authorizationUser: null,
 };
 
 export const fetchOffers = createAsyncThunk<

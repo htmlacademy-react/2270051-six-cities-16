@@ -1,10 +1,11 @@
-import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {AxiosInstance} from 'axios';
 import {dropToken, saveToken} from '../services/token';
 import {API_ROUTES, AuthorizationStatus, DEFAULT_CITY, RequestStatus, THUNK_ACTIONS} from '../const';
 import {State} from '../lib/types/state';
 import {AuthorizationUser} from '../lib/types/user';
 import {AppDispatch, RootState} from './index';
+import {setAuthorizationStatus, setAuthorizationUser} from './actions';
 
 const initialState: State = {
   city: DEFAULT_CITY,
@@ -51,7 +52,6 @@ export const login = createAsyncThunk<
       dispatch(setAuthorizationUser(response.data));
       return response.data;
     } catch (error) {
-      console.error('Login error:', error);
       dispatch(setAuthorizationStatus(AuthorizationStatus.NO_AUTH));
       throw error;
     }
@@ -79,14 +79,7 @@ export const logout = createAsyncThunk<
 const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {
-    setAuthorizationStatus: (state, action: PayloadAction<keyof typeof AuthorizationStatus>) => {
-      state.authorizationStatus = action.payload;
-    },
-    setAuthorizationUser: (state, action: PayloadAction<AuthorizationUser | null>) => {
-      state.authorizationUser = action.payload;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(checkAuthorization.fulfilled, (state, action) => {
@@ -112,5 +105,4 @@ const userSlice = createSlice({
   },
 });
 
-export const {setAuthorizationStatus, setAuthorizationUser} = userSlice.actions;
 export default userSlice.reducer;

@@ -34,7 +34,7 @@ function Header() {
                     </Link>
                   </li>
                   <li className="header__nav-item">
-                    <Link className="header__nav-link" onClick={handleLogout}>
+                    <Link to="/" className="header__nav-link" onClick={handleLogout}>
                       <span className="header__signout">Sign out</span>
                     </Link>
                   </li>

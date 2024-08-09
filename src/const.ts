@@ -18,6 +18,8 @@ export const API_ROUTES = {
 export const THUNK_ACTIONS = {
   FETCH_OFFERS: 'offers/fetchOffers',
   CHECK_AUTH: 'user/checkAuth',
+  LOGIN: '/login',
+  LOGOUT: '/logout'
 } as const;
 
 export const LOADING_MESSAGE: string = 'Loading...';

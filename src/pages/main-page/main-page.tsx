@@ -1,29 +1,42 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {Helmet} from 'react-helmet-async';
+import {useDispatch, useSelector} from 'react-redux';
 import Header from '../../components/header/header';
 import LocationList from '../../components/location-list/location-list';
 import SortingForm from '../../components/sorting-form/sorting-form';
 import OfferList from '../../components/offer-list/offer-list';
 import Map from '../../components/map/map';
+import Spinner from '../../components/spinner/spinner';
 import {sortOffers} from '../../lib/utils/utils';
-import {BaseOffer, City} from '../../lib/types/offer';
-import {SortType} from '../../const';
+import {City} from '../../lib/types/offer';
+import {fetchOffers} from '../../store/offers-slice';
+import {AppDispatch, RootState} from '../../store';
+import useFilteredOffers from '../../hooks/use-filtered-offers';
+import {SortType, RequestStatus} from '../../const';
 
 type MainPageProps = {
   cities: City[];
   activeCity: City;
-  offers: BaseOffer[];
 }
 
-function MainPage({cities, activeCity, offers}: MainPageProps) {
-  const [sortedOffers, setSortedOffers] = useState(offers);
+function MainPage({ cities, activeCity }: MainPageProps) {
+  const dispatch = useDispatch<AppDispatch>();
+  const {status} = useSelector((state: RootState) => state.offers);
+  const filteredOffers = useFilteredOffers();
+
   const [currentSortType, setCurrentSortType] = useState<SortType>(SortType.Popular);
   const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
 
   useEffect(() => {
-    const sorted = sortOffers(offers, currentSortType);
-    setSortedOffers(sorted);
-  }, [offers, currentSortType]);
+    dispatch(fetchOffers());
+  }, [dispatch]);
+
+  const sortedOffers = useMemo(() => {
+    if (status === RequestStatus.SUCCEEDED) {
+      return sortOffers(filteredOffers, currentSortType);
+    }
+    return [];
+  }, [filteredOffers, currentSortType, status]);
 
   const handleSortChange = (sortType: SortType) => {
     setCurrentSortType(sortType);
@@ -34,6 +47,14 @@ function MainPage({cities, activeCity, offers}: MainPageProps) {
   };
 
   const offersCount = sortedOffers.length;
+
+  if (status === RequestStatus.LOADING) {
+    return <Spinner loading error={false} />;
+  }
+
+  if (status === RequestStatus.FAILED) {
+    return <Spinner loading={false} error />;
+  }
 
   return (
     <div className="page page--gray page--main">

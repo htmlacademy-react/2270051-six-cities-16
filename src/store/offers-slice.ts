@@ -2,7 +2,7 @@ import {createSlice, PayloadAction, createAsyncThunk} from '@reduxjs/toolkit';
 import {AxiosInstance} from 'axios';
 import {BaseOffer, City} from '../lib/types/offer';
 import {State} from '../lib/types/state';
-import {API_ROUTES, DEFAULT_CITY, ERROR_MESSAGE, RequestStatus, THUNK_ACTIONS} from '../const';
+import {API_ROUTES, AuthorizationStatus, DEFAULT_CITY, ERROR_MESSAGE, RequestStatus, THUNK_ACTIONS} from '../const';
 import {AppDispatch, RootState} from '../store';
 
 const initialState: State = {
@@ -10,6 +10,7 @@ const initialState: State = {
   offers: [],
   status: RequestStatus.IDLE,
   error: null,
+  authorizationStatus: AuthorizationStatus.UNKNOWN,
 };
 
 export const fetchOffers = createAsyncThunk<

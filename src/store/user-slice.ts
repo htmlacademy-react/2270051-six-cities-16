@@ -1,10 +1,14 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {API_ROUTES, AuthorizationStatus, THUNK_ACTIONS} from '../const';
-import {UserState} from '../lib/types/state';
+import {API_ROUTES, AuthorizationStatus, DEFAULT_CITY, RequestStatus, THUNK_ACTIONS} from '../const';
+import {State} from '../lib/types/state';
 import {AppDispatch, RootState} from './index';
 import {AxiosInstance} from 'axios';
 
-const initialState: UserState = {
+const initialState: State = {
+  city: DEFAULT_CITY,
+  offers: [],
+  status: RequestStatus.IDLE,
+  error: null,
   authorizationStatus: AuthorizationStatus.UNKNOWN,
 };
 

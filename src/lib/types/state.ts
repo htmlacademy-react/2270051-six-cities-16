@@ -6,8 +6,5 @@ export type State = {
   offers: BaseOffer[];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
-};
-
-export type UserState = {
   authorizationStatus: keyof typeof AuthorizationStatus;
 };

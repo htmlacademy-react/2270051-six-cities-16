@@ -7,15 +7,28 @@ export const REQUEST_TIMEOUT: number = 5000;
 
 export const AUTH_TOKEN_KEY_NAME: string = 'six-cities-token';
 
+export const API_ROUTES = {
+  OFFERS: '/offers',
+  FAVORITE: '/favorite',
+  COMMENTS: '/comments',
+  LOGIN: '/login',
+  LOGOUT: '/logout'
+} as const;
+
+export const THUNK_ACTIONS = {
+  FETCH_OFFERS: 'offers/fetchOffers',
+} as const;
+
 export const LOADING_MESSAGE: string = 'Loading...';
 
-export const Status = {
+export const ERROR_MESSAGE: string = 'Something went wrong, try again later';
+
+export const RequestStatus = {
+  IDLE: 'idle',
   SUCCEEDED: 'succeeded',
   LOADING: 'loading',
   FAILED: 'failed',
 } as const;
-
-export const SERVER_UNAVAILABLE_MESSAGE: string = 'Server is unavailable, try again later';
 
 export enum SortType {
   Popular,

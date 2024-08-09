@@ -1,6 +1,6 @@
 import {Helmet} from 'react-helmet-async';
 import Header from '../header/header';
-import {LOADING_MESSAGE, SERVER_UNAVAILABLE_MESSAGE} from '../../const';
+import {ERROR_MESSAGE, LOADING_MESSAGE} from '../../const';
 
 type SpinnerProps = {
   loading: boolean;
@@ -23,7 +23,7 @@ function Spinner({loading, error}: SpinnerProps) {
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">
                   {loading && LOADING_MESSAGE}
-                  {error && !loading && SERVER_UNAVAILABLE_MESSAGE}
+                  {error && !loading && ERROR_MESSAGE}
                 </h1>
               </div>
             </div>

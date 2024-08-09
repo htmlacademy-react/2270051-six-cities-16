@@ -12,7 +12,7 @@ import {City} from '../../lib/types/offer';
 import {fetchOffers} from '../../store/offers-slice';
 import {AppDispatch, RootState} from '../../store';
 import useFilteredOffers from '../../hooks/use-filtered-offers';
-import {SortType, Status} from '../../const';
+import {SortType, RequestStatus} from '../../const';
 
 type MainPageProps = {
   cities: City[];
@@ -32,7 +32,7 @@ function MainPage({ cities, activeCity }: MainPageProps) {
   }, [dispatch]);
 
   const sortedOffers = useMemo(() => {
-    if (status === Status.SUCCEEDED) {
+    if (status === RequestStatus.SUCCEEDED) {
       return sortOffers(filteredOffers, currentSortType);
     }
     return [];
@@ -48,11 +48,11 @@ function MainPage({ cities, activeCity }: MainPageProps) {
 
   const offersCount = sortedOffers.length;
 
-  if (status === Status.LOADING) {
+  if (status === RequestStatus.LOADING) {
     return <Spinner loading error={false} />;
   }
 
-  if (status === Status.FAILED) {
+  if (status === RequestStatus.FAILED) {
     return <Spinner loading={false} error />;
   }
 

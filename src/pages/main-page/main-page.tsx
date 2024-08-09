@@ -12,6 +12,7 @@ import {fetchOffers} from '../../store/offers-slice';
 import {AppDispatch, RootState} from '../../store';
 import useFilteredOffers from '../../hooks/use-filtered-offers';
 import {City} from '../../lib/types/offer';
+import Spinner from '../../components/spinner/spinner';
 
 type MainPageProps = {
   cities: City[];
@@ -20,7 +21,7 @@ type MainPageProps = {
 
 function MainPage({ cities, activeCity }: MainPageProps) {
   const dispatch = useDispatch<AppDispatch>();
-  const {status, error} = useSelector((state: RootState) => state.offers);
+  const {status} = useSelector((state: RootState) => state.offers);
   const filteredOffers = useFilteredOffers();
 
   const [currentSortType, setCurrentSortType] = useState<SortType>(SortType.Popular);
@@ -48,11 +49,11 @@ function MainPage({ cities, activeCity }: MainPageProps) {
   const offersCount = sortedOffers.length;
 
   if (status === 'loading') {
-    return <div>Loading...</div>;
+    return <Spinner loading error={false} />;
   }
 
   if (status === 'failed') {
-    return <div>Error: {error}</div>;
+    return <Spinner loading={false} error />;
   }
 
   return (

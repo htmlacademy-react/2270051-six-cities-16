@@ -22,7 +22,7 @@ function SortingForm({onSortChange}: SortingFormProps) {
 
   return (
     <form className="places__sorting" action="#" method="get">
-      <span className="places__sorting-caption">Sort by</span>
+      <span className="places__sorting-caption">Sort by </span>
       <span
         className="places__sorting-type"
         tabIndex={0}

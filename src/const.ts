@@ -9,6 +9,12 @@ export const AUTH_TOKEN_KEY_NAME: string = 'six-cities-token';
 
 export const LOADING_MESSAGE: string = 'Loading...';
 
+export const Status = {
+  SUCCEEDED: 'succeeded',
+  LOADING: 'loading',
+  FAILED: 'failed',
+} as const;
+
 export const SERVER_UNAVAILABLE_MESSAGE: string = 'Server is unavailable, try again later';
 
 export enum SortType {

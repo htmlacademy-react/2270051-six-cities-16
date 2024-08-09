@@ -6,13 +6,13 @@ import LocationList from '../../components/location-list/location-list';
 import SortingForm from '../../components/sorting-form/sorting-form';
 import OfferList from '../../components/offer-list/offer-list';
 import Map from '../../components/map/map';
+import Spinner from '../../components/spinner/spinner';
 import {sortOffers} from '../../lib/utils/utils';
-import {SortType} from '../../const';
+import {City} from '../../lib/types/offer';
 import {fetchOffers} from '../../store/offers-slice';
 import {AppDispatch, RootState} from '../../store';
 import useFilteredOffers from '../../hooks/use-filtered-offers';
-import {City} from '../../lib/types/offer';
-import Spinner from '../../components/spinner/spinner';
+import {SortType, Status} from '../../const';
 
 type MainPageProps = {
   cities: City[];
@@ -32,7 +32,7 @@ function MainPage({ cities, activeCity }: MainPageProps) {
   }, [dispatch]);
 
   const sortedOffers = useMemo(() => {
-    if (status === 'succeeded') {
+    if (status === Status.SUCCEEDED) {
       return sortOffers(filteredOffers, currentSortType);
     }
     return [];
@@ -48,11 +48,11 @@ function MainPage({ cities, activeCity }: MainPageProps) {
 
   const offersCount = sortedOffers.length;
 
-  if (status === 'loading') {
+  if (status === Status.LOADING) {
     return <Spinner loading error={false} />;
   }
 
-  if (status === 'failed') {
+  if (status === Status.FAILED) {
     return <Spinner loading={false} error />;
   }
 

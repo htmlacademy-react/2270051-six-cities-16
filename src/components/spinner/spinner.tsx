@@ -8,13 +8,6 @@ type SpinnerProps = {
 };
 
 function Spinner({loading, error}: SpinnerProps) {
-  let message = '';
-  if (loading) {
-    message = LOADING_MESSAGE;
-  } else if (error) {
-    message = SERVER_UNAVAILABLE_MESSAGE;
-  }
-
   return (
     <div className="page page--gray">
       <Helmet>
@@ -29,7 +22,8 @@ function Spinner({loading, error}: SpinnerProps) {
             <div className="offer__wrapper">
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">
-                  {message}
+                  {loading && LOADING_MESSAGE}
+                  {error && !loading && SERVER_UNAVAILABLE_MESSAGE}
                 </h1>
               </div>
             </div>

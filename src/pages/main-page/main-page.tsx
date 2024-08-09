@@ -49,7 +49,7 @@ function MainPage({ cities, activeCity }: MainPageProps) {
   const offersCount = sortedOffers.length;
 
   if (status === 'loading') {
-    return <Spinner loading />;
+    return <Spinner loading error={false} />;
   }
 
   if (status === 'failed') {

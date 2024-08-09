@@ -4,9 +4,17 @@ import {LOADING_MESSAGE, SERVER_UNAVAILABLE_MESSAGE} from '../../const';
 
 type SpinnerProps = {
   loading: boolean;
+  error: boolean;
 };
 
-function Spinner({loading}: SpinnerProps) {
+function Spinner({loading, error}: SpinnerProps) {
+  let message = '';
+  if (loading) {
+    message = LOADING_MESSAGE;
+  } else if (error) {
+    message = SERVER_UNAVAILABLE_MESSAGE;
+  }
+
   return (
     <div className="page page--gray">
       <Helmet>
@@ -21,7 +29,7 @@ function Spinner({loading}: SpinnerProps) {
             <div className="offer__wrapper">
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">
-                  {loading ? LOADING_MESSAGE : SERVER_UNAVAILABLE_MESSAGE}
+                  {message}
                 </h1>
               </div>
             </div>

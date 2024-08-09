@@ -25,15 +25,10 @@ export const checkAuthorization = createAsyncThunk<
     extra: AxiosInstance;
   }
   >(THUNK_ACTIONS.CHECK_AUTH, async (_, { dispatch, extra: api }) => {
-    try {
-      const response = await api.get<AuthorizationUser>(API_ROUTES.LOGIN);
-      dispatch(setAuthorizationStatus(AuthorizationStatus.AUTH));
-      dispatch(setAuthorizationUser(response.data));
-      return response.data;
-    } catch (error) {
-      dispatch(setAuthorizationStatus(AuthorizationStatus.NO_AUTH));
-      throw error;
-    }
+    const response = await api.get<AuthorizationUser>(API_ROUTES.LOGIN);
+    dispatch(setAuthorizationStatus(AuthorizationStatus.AUTH));
+    dispatch(setAuthorizationUser(response.data));
+    return response.data;
   });
 
 export const login = createAsyncThunk<
@@ -45,16 +40,11 @@ export const login = createAsyncThunk<
     extra: AxiosInstance;
   }
   >(THUNK_ACTIONS.LOGIN, async ({ email, password }, { dispatch, extra: api }) => {
-    try {
-      const response = await api.post<AuthorizationUser>(API_ROUTES.LOGIN, { email, password });
-      saveToken(response.data.token);
-      dispatch(setAuthorizationStatus(AuthorizationStatus.AUTH));
-      dispatch(setAuthorizationUser(response.data));
-      return response.data;
-    } catch (error) {
-      dispatch(setAuthorizationStatus(AuthorizationStatus.NO_AUTH));
-      throw error;
-    }
+    const response = await api.post<AuthorizationUser>(API_ROUTES.LOGIN, { email, password });
+    saveToken(response.data.token);
+    dispatch(setAuthorizationStatus(AuthorizationStatus.AUTH));
+    dispatch(setAuthorizationUser(response.data));
+    return response.data;
   });
 
 export const logout = createAsyncThunk<
@@ -66,14 +56,10 @@ export const logout = createAsyncThunk<
     extra: AxiosInstance;
   }
   >(THUNK_ACTIONS.LOGOUT, async (_, { dispatch, extra: api }) => {
-    try {
-      await api.delete(API_ROUTES.LOGOUT);
-      dropToken();
-      dispatch(setAuthorizationStatus(AuthorizationStatus.NO_AUTH));
-      dispatch(setAuthorizationUser(null));
-    } catch (error) {
-      throw error;
-    }
+    await api.delete(API_ROUTES.LOGOUT);
+    dropToken();
+    dispatch(setAuthorizationStatus(AuthorizationStatus.NO_AUTH));
+    dispatch(setAuthorizationUser(null));
   });
 
 const userSlice = createSlice({

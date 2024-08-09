@@ -1,6 +1,5 @@
 import {useEffect, useMemo, useState} from 'react';
 import {Helmet} from 'react-helmet-async';
-import {useDispatch, useSelector} from 'react-redux';
 import Header from '../../components/header/header';
 import LocationList from '../../components/location-list/location-list';
 import SortingForm from '../../components/sorting-form/sorting-form';
@@ -10,18 +9,17 @@ import Spinner from '../../components/spinner/spinner';
 import {sortOffers} from '../../lib/utils/utils';
 import {City} from '../../lib/types/offer';
 import {fetchOffers} from '../../store/offers-slice';
-import {AppDispatch, RootState} from '../../store';
 import useFilteredOffers from '../../hooks/use-filtered-offers';
+import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {SortType, RequestStatus} from '../../const';
 
 type MainPageProps = {
   cities: City[];
-  activeCity: City;
 }
 
-function MainPage({ cities, activeCity }: MainPageProps) {
-  const dispatch = useDispatch<AppDispatch>();
-  const {status} = useSelector((state: RootState) => state.offers);
+function MainPage({ cities }: MainPageProps) {
+  const dispatch = useAppDispatch();
+  const {status, city} = useAppSelector((state) => state.offers);
   const filteredOffers = useFilteredOffers();
 
   const [currentSortType, setCurrentSortType] = useState<SortType>(SortType.Popular);
@@ -70,7 +68,7 @@ function MainPage({ cities, activeCity }: MainPageProps) {
           <section className="locations container">
             <LocationList
               cities={cities}
-              activeCity={activeCity}
+              activeCity={city}
             />
           </section>
         </div>
@@ -78,13 +76,13 @@ function MainPage({ cities, activeCity }: MainPageProps) {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offersCount} places to stay in {activeCity.name}</b>
+              <b className="places__found">{offersCount} places to stay in {city.name}</b>
               <SortingForm onSortChange={handleSortChange} />
               <OfferList offers={sortedOffers} onActiveOfferChange={handleActiveOfferChange} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map city={activeCity} offers={sortedOffers} activeOfferId={activeOfferId} />
+                <Map city={city} offers={sortedOffers} activeOfferId={activeOfferId} />
               </section>
             </div>
           </div>

@@ -17,6 +17,7 @@ export const API_ROUTES = {
 
 export const THUNK_ACTIONS = {
   FETCH_OFFERS: 'offers/fetchOffers',
+  CHECK_AUTH: 'user/checkAuth',
 } as const;
 
 export const LOADING_MESSAGE: string = 'Loading...';
@@ -28,6 +29,12 @@ export const RequestStatus = {
   SUCCEEDED: 'succeeded',
   LOADING: 'loading',
   FAILED: 'failed',
+} as const;
+
+export const AuthorizationStatus = {
+  AUTH: 'AUTH',
+  NO_AUTH: 'NO_AUTH',
+  UNKNOWN: 'UNKNOWN',
 } as const;
 
 export enum SortType {

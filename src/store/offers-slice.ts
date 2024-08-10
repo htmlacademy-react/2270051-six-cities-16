@@ -1,9 +1,10 @@
 import {createSlice, PayloadAction, createAsyncThunk} from '@reduxjs/toolkit';
 import {AxiosInstance} from 'axios';
+import {setCity} from './actions';
+import {AppDispatch, RootState} from '../store';
 import {BaseOffer, City} from '../lib/types/offer';
 import {State} from '../lib/types/state';
-import {API_ROUTES, AuthorizationStatus, DEFAULT_CITY, ERROR_MESSAGE, RequestStatus, THUNK_ACTIONS} from '../const';
-import {AppDispatch, RootState} from '../store';
+import {API_ROUTES, AuthorizationStatus, DEFAULT_CITY, RequestStatus, THUNK_ACTIONS} from '../const';
 
 const initialState: State = {
   city: DEFAULT_CITY,
@@ -14,7 +15,7 @@ const initialState: State = {
   authorizationUser: null,
 };
 
-export const fetchOffers = createAsyncThunk<
+export const fetchAllOffers = createAsyncThunk<
   BaseOffer[],
   void,
   {
@@ -30,26 +31,23 @@ export const fetchOffers = createAsyncThunk<
 const offersSlice = createSlice({
   name: 'offers',
   initialState,
-  reducers: {
-    setCity: (state, action: PayloadAction<City>) => {
-      state.city = action.payload;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchOffers.pending, (state) => {
+      .addCase(setCity, (state, action: PayloadAction<City>) => {
+        state.city = action.payload;
+      })
+      .addCase(fetchAllOffers.pending, (state) => {
         state.status = RequestStatus.LOADING;
       })
-      .addCase(fetchOffers.fulfilled, (state, action) => {
-        state.status = RequestStatus.SUCCEEDED;
+      .addCase(fetchAllOffers.fulfilled, (state, action) => {
+        state.status = RequestStatus.SUCCESS;
         state.offers = action.payload;
       })
-      .addCase(fetchOffers.rejected, (state, action) => {
+      .addCase(fetchAllOffers.rejected, (state) => {
         state.status = RequestStatus.FAILED;
-        state.error = action.error.message ?? ERROR_MESSAGE;
       });
   },
 });
 
-export const {setCity} = offersSlice.actions;
 export default offersSlice.reducer;

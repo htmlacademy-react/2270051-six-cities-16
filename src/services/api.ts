@@ -1,8 +1,9 @@
 import axios, {AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig} from 'axios';
+import {NavigateFunction} from 'react-router-dom';
 import {getToken} from './token';
 import {REQUEST_TIMEOUT, URL_API} from '../const';
 
-export const createAPI = (navigate?: (path: string) => void): AxiosInstance => {
+export const createAPI = (navigate?: NavigateFunction): AxiosInstance => {
   const api = axios.create({
     baseURL: URL_API,
     timeout: REQUEST_TIMEOUT,

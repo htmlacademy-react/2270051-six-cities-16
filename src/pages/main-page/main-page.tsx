@@ -1,5 +1,6 @@
 import {useEffect, useMemo, useState} from 'react';
 import {Helmet} from 'react-helmet-async';
+import classNames from 'classnames';
 import Header from '../../components/header/header';
 import LocationList from '../../components/location-list/location-list';
 import SortingForm from '../../components/sorting-form/sorting-form';
@@ -8,7 +9,8 @@ import Map from '../../components/map/map';
 import Spinner from '../../components/spinner/spinner';
 import {sortOffers} from '../../lib/utils/utils';
 import {City} from '../../lib/types/offer';
-import {fetchOffers} from '../../store/offers-slice';
+import {RootState} from '../../store';
+import {fetchAllOffers} from '../../store/offers-slice';
 import useFilteredOffers from '../../hooks/use-filtered-offers';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {SortType, RequestStatus} from '../../const';
@@ -17,20 +19,20 @@ type MainPageProps = {
   cities: City[];
 }
 
-function MainPage({ cities }: MainPageProps) {
+function MainPage({cities}: MainPageProps) {
   const dispatch = useAppDispatch();
-  const {status, city} = useAppSelector((state) => state.offers);
+  const {status, city} = useAppSelector((state: RootState) => state.offers);
   const filteredOffers = useFilteredOffers();
 
   const [currentSortType, setCurrentSortType] = useState<SortType>(SortType.Popular);
   const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
 
   useEffect(() => {
-    dispatch(fetchOffers());
+    dispatch(fetchAllOffers());
   }, [dispatch]);
 
   const sortedOffers = useMemo(() => {
-    if (status === RequestStatus.SUCCEEDED) {
+    if (status === RequestStatus.SUCCESS) {
       return sortOffers(filteredOffers, currentSortType);
     }
     return [];
@@ -62,7 +64,7 @@ function MainPage({ cities }: MainPageProps) {
 
       <Header />
 
-      <main className="page__main page__main--index">
+      <main className={classNames('page__main page__main--index', { 'page__main--index-empty': offersCount === 0 })}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
@@ -73,19 +75,33 @@ function MainPage({ cities }: MainPageProps) {
           </section>
         </div>
         <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offersCount} places to stay in {city.name}</b>
-              <SortingForm onSortChange={handleSortChange} />
-              <OfferList offers={sortedOffers} onActiveOfferChange={handleActiveOfferChange} />
-            </section>
-            <div className="cities__right-section">
-              <section className="cities__map map">
-                <Map city={city} offers={sortedOffers} activeOfferId={activeOfferId} />
+          {offersCount === 0 ? (
+            <div className="cities__places-container cities__places-container--empty container">
+              <section className="cities__no-places">
+                <div className="cities__status-wrapper tabs__content">
+                  <b className="cities__status">No places to stay available</b>
+                  <p className="cities__status-description">
+                    We could not find any property available at the moment in {city.name}
+                  </p>
+                </div>
               </section>
+              <div className="cities__right-section"></div>
             </div>
-          </div>
+          ) : (
+            <div className="cities__places-container container">
+              <section className="cities__places places">
+                <h2 className="visually-hidden">Places</h2>
+                <b className="places__found">{offersCount} places to stay in {city.name}</b>
+                <SortingForm onSortChange={handleSortChange} />
+                <OfferList offers={sortedOffers} onActiveOfferChange={handleActiveOfferChange} />
+              </section>
+              <div className="cities__right-section">
+                <section className="cities__map map">
+                  <Map city={city} offers={sortedOffers} activeOfferId={activeOfferId} />
+                </section>
+              </div>
+            </div>
+          )}
         </div>
       </main>
     </div>

@@ -8,9 +8,17 @@ import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import useFavoriteOffers from '../../hooks/use-favorite-offers';
 import {AppRoute, CITY} from '../../const';
+import {useAppDispatch} from '../../hooks/redux-hooks';
+import {checkAuthorization} from '../../store/user-slice';
+import {useEffect} from 'react';
 
 function App() {
   const favoriteOffers = useFavoriteOffers();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(checkAuthorization());
+  }, [dispatch]);
 
   return (
     <HelmetProvider>

@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {Helmet} from 'react-helmet-async';
-import {useNavigate} from 'react-router-dom';
-import {Link} from 'react-router-dom';
+import {useNavigate, Link} from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
-import {AppRoute, AuthorizationStatus} from '../../const';
 import {isValidPassword} from './utils';
 import {login} from '../../store/user-slice';
+import {AppRoute, AuthorizationStatus, LOGIN_FAILED_MESSAGE, PASSWORD_ERROR_MESSAGE} from '../../const';
 
 function LoginPage() {
   const dispatch = useAppDispatch();
@@ -25,14 +24,14 @@ function LoginPage() {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     if (!isValidPassword(password)) {
-      setError('Password must contain at least one letter and one number');
+      setError(PASSWORD_ERROR_MESSAGE);
       return;
     }
     try {
       await dispatch(login({ email, password })).unwrap();
       navigate(AppRoute.Root);
     } catch (err) {
-      setError('Login failed. Please check your credentials and try again.');
+      setError(LOGIN_FAILED_MESSAGE);
     }
   };
 

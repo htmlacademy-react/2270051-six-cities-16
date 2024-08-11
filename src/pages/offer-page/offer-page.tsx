@@ -54,9 +54,11 @@ function OfferPage() {
           </div>
           <div className="offer__container container">
             <div className="offer__wrapper">
-              <div className="offer__mark">
-                <span>Premium</span>
-              </div>
+              {offer.isPremium && (
+                <div className="offer__mark">
+                  <span>Premium</span>
+                </div>
+              )}
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">{offer.title}</h1>
                 <button className="offer__bookmark-button button" type="button">
@@ -73,7 +75,11 @@ function OfferPage() {
                 </div>
                 <span className="offer__rating-value rating__value">{offer.rating}</span>
               </div>
-              <OfferFeatures features={offer.features} />
+              <OfferFeatures
+                type={offer.type}
+                bedrooms={offer.bedrooms}
+                maxAdults={offer.maxAdults}
+              />
               <div className="offer__price">
                 <b className="offer__price-value">&euro;{offer.price}</b>
                 <span className="offer__price-text">&nbsp;night</span>

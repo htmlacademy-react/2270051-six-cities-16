@@ -7,19 +7,23 @@ export const REQUEST_TIMEOUT: number = 5000;
 
 export const AUTH_TOKEN_KEY: string = 'six-cities-token';
 
-export const API_ROUTES = {
+export const API_ROUTE = {
   OFFERS: '/offers',
   FAVORITE: '/favorite',
   COMMENTS: '/comments',
   LOGIN: '/login',
-  LOGOUT: '/logout'
+  LOGOUT: '/logout',
 } as const;
 
-export const THUNK_ACTIONS = {
+export const THUNK_ACTION = {
   FETCH_OFFERS: 'offers/fetchOffers',
   CHECK_AUTH: 'user/checkAuth',
-  LOGIN: '/login',
-  LOGOUT: '/logout'
+  LOGIN: 'user/login',
+  LOGOUT: 'user/logout',
+  FETCH_OFFER_BY_ID: 'offer/fetchOfferById',
+  FETCH_NEARBY_OFFERS: 'offer/fetchNearbyOffers',
+  FETCH_COMMENTS: 'offer/fetchComments',
+  POST_COMMENT: 'offer/postComment',
 } as const;
 
 export const AppRoute = {

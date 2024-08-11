@@ -1,7 +1,7 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {AxiosInstance} from 'axios';
 import {dropToken, saveToken} from '../services/token';
-import {API_ROUTES, AuthorizationStatus, DEFAULT_CITY, RequestStatus, THUNK_ACTIONS} from '../const';
+import {API_ROUTE, AuthorizationStatus, DEFAULT_CITY, RequestStatus, THUNK_ACTION} from '../const';
 import {State} from '../lib/types/state';
 import {AuthorizationUser} from '../lib/types/user';
 import {AppDispatch, RootState} from './index';
@@ -24,12 +24,13 @@ export const checkAuthorization = createAsyncThunk<
     state: RootState;
     extra: AxiosInstance;
   }
-  >(THUNK_ACTIONS.CHECK_AUTH, async (_, { dispatch, extra: api }) => {
-    const response = await api.get<AuthorizationUser>(API_ROUTES.LOGIN);
-    dispatch(setAuthorizationStatus(AuthorizationStatus.AUTH));
-    dispatch(setAuthorizationUser(response.data));
-    return response.data;
-  });
+  >(THUNK_ACTION.CHECK_AUTH,
+    async (_, { dispatch, extra: api }) => {
+      const response = await api.get<AuthorizationUser>(API_ROUTE.LOGIN);
+      dispatch(setAuthorizationStatus(AuthorizationStatus.AUTH));
+      dispatch(setAuthorizationUser(response.data));
+      return response.data;
+    });
 
 export const login = createAsyncThunk<
   AuthorizationUser,
@@ -39,13 +40,14 @@ export const login = createAsyncThunk<
     state: RootState;
     extra: AxiosInstance;
   }
-  >(THUNK_ACTIONS.LOGIN, async ({ email, password }, { dispatch, extra: api }) => {
-    const response = await api.post<AuthorizationUser>(API_ROUTES.LOGIN, { email, password });
-    saveToken(response.data.token);
-    dispatch(setAuthorizationStatus(AuthorizationStatus.AUTH));
-    dispatch(setAuthorizationUser(response.data));
-    return response.data;
-  });
+  >(THUNK_ACTION.LOGIN,
+    async ({ email, password }, { dispatch, extra: api }) => {
+      const response = await api.post<AuthorizationUser>(API_ROUTE.LOGIN, { email, password });
+      saveToken(response.data.token);
+      dispatch(setAuthorizationStatus(AuthorizationStatus.AUTH));
+      dispatch(setAuthorizationUser(response.data));
+      return response.data;
+    });
 
 export const logout = createAsyncThunk<
   void,
@@ -55,12 +57,13 @@ export const logout = createAsyncThunk<
     state: RootState;
     extra: AxiosInstance;
   }
-  >(THUNK_ACTIONS.LOGOUT, async (_, { dispatch, extra: api }) => {
-    await api.delete(API_ROUTES.LOGOUT);
-    dropToken();
-    dispatch(setAuthorizationStatus(AuthorizationStatus.NO_AUTH));
-    dispatch(setAuthorizationUser(null));
-  });
+  >(THUNK_ACTION.LOGOUT,
+    async (_, { dispatch, extra: api }) => {
+      await api.delete(API_ROUTE.LOGOUT);
+      dropToken();
+      dispatch(setAuthorizationStatus(AuthorizationStatus.NO_AUTH));
+      dispatch(setAuthorizationUser(null));
+    });
 
 const userSlice = createSlice({
   name: 'user',

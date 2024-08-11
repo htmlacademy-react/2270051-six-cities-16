@@ -4,7 +4,7 @@ import {setCity} from './actions';
 import {AppDispatch, RootState} from '../store';
 import {BaseOffer, City} from '../lib/types/offer';
 import {State} from '../lib/types/state';
-import {API_ROUTES, AuthorizationStatus, DEFAULT_CITY, RequestStatus, THUNK_ACTIONS} from '../const';
+import {API_ROUTE, AuthorizationStatus, DEFAULT_CITY, RequestStatus, THUNK_ACTION} from '../const';
 
 const initialState: State = {
   city: DEFAULT_CITY,
@@ -23,10 +23,11 @@ export const fetchAllOffers = createAsyncThunk<
     state: RootState;
     extra: AxiosInstance;
   }
-  >(THUNK_ACTIONS.FETCH_OFFERS, async (_, { extra: api }) => {
-    const response = await api.get<BaseOffer[]>(API_ROUTES.OFFERS);
-    return response.data;
-  });
+  >(THUNK_ACTION.FETCH_OFFERS,
+    async (_, { extra: api }) => {
+      const response = await api.get<BaseOffer[]>(API_ROUTE.OFFERS);
+      return response.data;
+    });
 
 const offersSlice = createSlice({
   name: 'offers',

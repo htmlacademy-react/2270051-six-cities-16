@@ -21,18 +21,20 @@ function LoginPage() {
     }
   }, [authorizationStatus, navigate]);
 
-  const handleSubmit = async (event: React.FormEvent) => {
+  const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     if (!isValidPassword(password)) {
       setError(PASSWORD_ERROR_MESSAGE);
       return;
     }
-    try {
-      await dispatch(login({ email, password })).unwrap();
-      navigate(AppRoute.Root);
-    } catch (err) {
-      setError(LOGIN_FAILED_MESSAGE);
-    }
+    dispatch(login({ email, password }))
+      .unwrap()
+      .then(() => {
+        navigate(AppRoute.Root);
+      })
+      .catch(() => {
+        setError(LOGIN_FAILED_MESSAGE);
+      });
   };
 
   return (
@@ -55,7 +57,11 @@ function LoginPage() {
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
-            <form className="login__form form" action="#" method="post" onSubmit={handleSubmit}>
+            <form
+              className="login__form form"
+              action="#" method="post"
+              onSubmit={handleSubmit}
+            >
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
                 <input
@@ -65,7 +71,7 @@ function LoginPage() {
                   placeholder="Email"
                   required
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(event) => setEmail(event.target.value)}
                 />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
@@ -77,7 +83,7 @@ function LoginPage() {
                   placeholder="Password"
                   required
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(event) => setPassword(event.target.value)}
                 />
               </div>
               {error && <p className="login__error">{error}</p>}

@@ -5,7 +5,7 @@ import {AuthorizationUser} from './user';
 export type State = {
   city: City;
   offers: BaseOffer[];
-  status: RequestStatus;
+  status: keyof typeof RequestStatus;
   error: string | null;
   authorizationStatus: keyof typeof AuthorizationStatus;
   authorizationUser: AuthorizationUser | null;

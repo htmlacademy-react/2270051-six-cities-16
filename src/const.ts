@@ -5,7 +5,7 @@ export const URL_API: string = 'https://16.design.htmlacademy.pro/six-cities';
 
 export const REQUEST_TIMEOUT: number = 5000;
 
-export const AUTH_TOKEN_KEY_NAME: string = 'six-cities-token';
+export const AUTH_TOKEN_KEY: string = 'six-cities-token';
 
 export const API_ROUTES = {
   OFFERS: '/offers',
@@ -17,17 +17,37 @@ export const API_ROUTES = {
 
 export const THUNK_ACTIONS = {
   FETCH_OFFERS: 'offers/fetchOffers',
+  CHECK_AUTH: 'user/checkAuth',
+  LOGIN: '/login',
+  LOGOUT: '/logout'
+} as const;
+
+export const AppRoute = {
+  Root: '/',
+  Login: '/login',
+  Favorites: '/favorites',
+  Offer: '/offer/:id',
 } as const;
 
 export const LOADING_MESSAGE: string = 'Loading...';
 
 export const ERROR_MESSAGE: string = 'Something went wrong, try again later';
 
+export const PASSWORD_ERROR_MESSAGE: string = 'Password must contain at least one letter and one number';
+
+export const LOGIN_FAILED_MESSAGE: string = 'Login failed. Please check your credentials and try again.';
+
 export const RequestStatus = {
-  IDLE: 'idle',
-  SUCCEEDED: 'succeeded',
-  LOADING: 'loading',
-  FAILED: 'failed',
+  IDLE: 'IDLE',
+  SUCCESS: 'SUCCESS',
+  LOADING: 'LOADING',
+  FAILED: 'FAILED',
+} as const;
+
+export const AuthorizationStatus = {
+  AUTH: 'AUTH',
+  NO_AUTH: 'NO_AUTH',
+  UNKNOWN: 'UNKNOWN',
 } as const;
 
 export enum SortType {
@@ -100,13 +120,6 @@ export const DEFAULT_CITY: City = CITY.find((city) => city.name === 'Paris') ?? 
 export const REVIEWS_COUNT: number = 10;
 
 export const PHOTO_COUNT: number = 6;
-
-export const AppRoute = {
-  Root: '/',
-  Login: '/login',
-  Favorites: '/favorites',
-  Offer: '/offer/:id',
-} as const;
 
 export const defaultCustomIcon = leaflet.icon({
   iconUrl: 'img/pin.svg',

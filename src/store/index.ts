@@ -1,13 +1,12 @@
 import {configureStore} from '@reduxjs/toolkit';
-import offersReducer from './offers-slice';
+import {NavigateFunction} from 'react-router-dom';
+import rootReducer from './root-reducer';
 import {createAPI} from '../services/api';
 
-export const api = createAPI();
+export const api = createAPI((() => {}) as NavigateFunction);
 
 const store = configureStore({
-  reducer: {
-    offers: offersReducer,
-  },
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       thunk: {

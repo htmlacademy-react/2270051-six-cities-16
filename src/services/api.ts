@@ -1,7 +1,7 @@
 import axios, {AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig} from 'axios';
 import {NavigateFunction} from 'react-router-dom';
 import {getToken} from './token';
-import {REQUEST_TIMEOUT, URL_API} from '../const';
+import {AppRoute, REQUEST_TIMEOUT, URL_API} from '../const';
 
 export const createAPI = (navigate?: NavigateFunction): AxiosInstance => {
   const api = axios.create({
@@ -24,8 +24,8 @@ export const createAPI = (navigate?: NavigateFunction): AxiosInstance => {
   api.interceptors.response.use(
     (response: AxiosResponse) => response,
     (error: AxiosError) => {
-      if (error.response && error.response.status === 401 && navigate) {
-        navigate('/login');
+      if (error.response && error.response.status === 400 && navigate) {
+        navigate(AppRoute.Login);
       }
       return Promise.reject(error);
     }

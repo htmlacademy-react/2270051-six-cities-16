@@ -38,10 +38,10 @@ export const PASSWORD_ERROR_MESSAGE: string = 'Password must contain at least on
 export const LOGIN_FAILED_MESSAGE: string = 'Login failed. Please check your credentials and try again.';
 
 export const RequestStatus = {
-  IDLE: 'idle',
-  SUCCESS: 'success',
-  LOADING: 'loading',
-  FAILED: 'failed',
+  IDLE: 'IDLE',
+  SUCCESS: 'SUCCESS',
+  LOADING: 'LOADING',
+  FAILED: 'FAILED',
 } as const;
 
 export const AuthorizationStatus = {

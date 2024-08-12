@@ -1,10 +1,14 @@
 import ReviewItem from '../review-item/review-item';
-import {REVIEWS} from '../../mocks/reviews';
+import {Review} from '../../lib/types/review';
 import {sortReviews} from './utils';
 import {REVIEWS_COUNT} from '../../const';
 
-function ReviewList() {
-  const sortedReviews = sortReviews(REVIEWS);
+type ReviewListProps = {
+  reviews: Review[];
+};
+
+function ReviewList({ reviews }: ReviewListProps) {
+  const sortedReviews = sortReviews(reviews);
   const limitedReviews = sortedReviews.slice(0, REVIEWS_COUNT);
 
   return (

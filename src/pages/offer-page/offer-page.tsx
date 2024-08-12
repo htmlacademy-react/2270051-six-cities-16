@@ -13,6 +13,7 @@ import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {RootState} from '../../store';
 import {fetchOfferById, fetchNearbyOffers, fetchComments} from '../../store/offer-slice';
 import {CITY} from '../../mocks/city';
+import {RequestStatus} from "../../const";
 
 function OfferPage() {
   const {id} = useParams<{id: string}>();
@@ -27,11 +28,11 @@ function OfferPage() {
     }
   }, [id, dispatch]);
 
-  if (status === 'loading') {
+  if (status === RequestStatus.LOADING) {
     return <div>Loading...</div>;
   }
 
-  if (status === 'failed') {
+  if (status === RequestStatus.FAILED) {
     return <div>Error: {error}</div>;
   }
 

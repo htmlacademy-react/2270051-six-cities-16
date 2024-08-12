@@ -10,9 +10,9 @@ function OfferGallery({images}: OfferGalleryProps) {
 
   return (
     <div className="offer__gallery">
-      {displayedImages.map((image, index) => (
-        <div className="offer__image-wrapper" key={index}>
-          <img className="offer__image" src={image} alt={`Photo studio ${index + 1}`} />
+      {displayedImages.map((image) => (
+        <div className="offer__image-wrapper" key={image}>
+          <img className="offer__image" src={image} alt="Photo studio" />
         </div>
       ))}
     </div>

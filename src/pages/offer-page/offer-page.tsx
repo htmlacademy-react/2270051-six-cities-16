@@ -14,7 +14,6 @@ import NotFoundPage from '../not-found-page/not-found-page';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {RootState} from '../../store';
 import {fetchOfferById, fetchNearbyOffers, fetchComments} from '../../store/offer-slice';
-import {CITY} from '../../mocks/city';
 import {RequestStatus} from '../../const';
 import {getNearbyOffers} from './utils';
 
@@ -32,6 +31,8 @@ function OfferPage() {
   }, [id, dispatch]);
 
   const filteredNearbyOffers = getNearbyOffers(nearbyOffers);
+
+  const combinedOffers = [offer, ...filteredNearbyOffers];
 
   if (status === RequestStatus.LOADING) {
     return <Spinner loading error={false} />;
@@ -114,7 +115,7 @@ function OfferPage() {
             </div>
           </div>
           <section className="offer__map map">
-            <Map city={CITY} offers={nearbyOffers} activeOfferId={offer.id} />
+            <Map city={offer.city} offers={combinedOffers} activeOfferId={offer.id} />
           </section>
         </section>
         <div className="container">

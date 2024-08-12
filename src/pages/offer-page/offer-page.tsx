@@ -1,5 +1,5 @@
-import {Helmet} from 'react-helmet-async';
 import {useEffect} from 'react';
+import {Helmet} from 'react-helmet-async';
 import {useParams} from 'react-router-dom';
 import Header from '../../components/header/header';
 import CommentForm from '../../components/comment-form/comment-form';
@@ -9,16 +9,19 @@ import NearOfferList from '../../components/near-offer-list/near-offer-list';
 import OfferGallery from '../../components/offer-gallery/offer-gallery';
 import OfferFeatures from '../../components/offer-features/offer-features';
 import OfferInsideList from '../../components/offer-inside-list/offer-inside-list';
+import Spinner from '../../components/spinner/spinner';
+import NotFoundPage from '../not-found-page/not-found-page';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {RootState} from '../../store';
 import {fetchOfferById, fetchNearbyOffers, fetchComments} from '../../store/offer-slice';
 import {CITY} from '../../mocks/city';
-import {RequestStatus} from "../../const";
+import {RequestStatus} from '../../const';
+
 
 function OfferPage() {
   const {id} = useParams<{id: string}>();
   const dispatch = useAppDispatch();
-  const {offer, nearbyOffers, comments, status, error} = useAppSelector((state: RootState) => state.offer);
+  const {offer, nearbyOffers, comments, status} = useAppSelector((state: RootState) => state.offer);
 
   useEffect(() => {
     if (id) {
@@ -29,15 +32,15 @@ function OfferPage() {
   }, [id, dispatch]);
 
   if (status === RequestStatus.LOADING) {
-    return <div>Loading...</div>;
+    return <Spinner loading error={false} />;
   }
 
-  if (status === RequestStatus.FAILED) {
-    return <div>Error: {error}</div>;
+  if (status === RequestStatus.FAILED || (status === RequestStatus.SUCCESS && !offer)) {
+    return <NotFoundPage />;
   }
 
   if (!offer) {
-    return <div>Offer not found</div>;
+    return null;
   }
 
   return (

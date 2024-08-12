@@ -125,6 +125,8 @@ export const REVIEWS_COUNT: number = 10;
 
 export const PHOTO_COUNT: number = 6;
 
+export const NEARBY_OFFERS_COUNT: number = 3;
+
 export const defaultCustomIcon = leaflet.icon({
   iconUrl: 'img/pin.svg',
   iconSize: [30, 40],

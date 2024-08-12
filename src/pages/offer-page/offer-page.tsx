@@ -16,7 +16,7 @@ import {RootState} from '../../store';
 import {fetchOfferById, fetchNearbyOffers, fetchComments} from '../../store/offer-slice';
 import {CITY} from '../../mocks/city';
 import {RequestStatus} from '../../const';
-
+import {getNearbyOffers} from './utils';
 
 function OfferPage() {
   const {id} = useParams<{id: string}>();
@@ -30,6 +30,8 @@ function OfferPage() {
       dispatch(fetchComments(id));
     }
   }, [id, dispatch]);
+
+  const filteredNearbyOffers = getNearbyOffers(nearbyOffers);
 
   if (status === RequestStatus.LOADING) {
     return <Spinner loading error={false} />;
@@ -118,7 +120,7 @@ function OfferPage() {
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <NearOfferList offers={nearbyOffers} />
+            <NearOfferList offers={filteredNearbyOffers} />
           </section>
         </div>
       </main>

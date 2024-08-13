@@ -41,6 +41,8 @@ export const PASSWORD_ERROR_MESSAGE: string = 'Password must contain at least on
 
 export const LOGIN_FAILED_MESSAGE: string = 'Login failed. Please check your credentials and try again.';
 
+export const COMMENT_SUBMIT_ERROR_MESSAGE = 'Failed to submit comment. Please try again.';
+
 export const RequestStatus = {
   IDLE: 'IDLE',
   SUCCESS: 'SUCCESS',
@@ -138,3 +140,7 @@ export const activeCustomIcon = leaflet.icon({
   iconSize: [30, 40],
   iconAnchor: [15, 40],
 });
+
+export const MIN_COMMENT_LENGTH: number = 50;
+
+export const MAX_COMMENT_LENGTH: number = 300;

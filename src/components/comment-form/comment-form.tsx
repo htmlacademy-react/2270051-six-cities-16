@@ -26,8 +26,7 @@ function CommentForm({ offerId }: OfferIdProps) {
     });
   };
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
+  const handleSubmitAsync = async () => {
     if (formData.rating === '' ||
       formData.review.length < MIN_COMMENT_LENGTH ||
       formData.review.length > MAX_COMMENT_LENGTH) {
@@ -38,13 +37,23 @@ function CommentForm({ offerId }: OfferIdProps) {
     setError(null);
 
     try {
-      await dispatch(postComment({ id: offerId, comment: formData.review, rating: Number(formData.rating) })).unwrap();
+      await dispatch(postComment(
+        {
+          id: offerId,
+          comment: formData.review,
+          rating: Number(formData.rating)
+        })).unwrap();
       setFormData({ rating: '', review: '' });
     } catch (err) {
       setError(COMMENT_SUBMIT_ERROR_MESSAGE);
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    handleSubmitAsync();
   };
 
   if (authorizationStatus !== AuthorizationStatus.AUTH) {

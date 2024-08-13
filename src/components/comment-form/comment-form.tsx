@@ -4,7 +4,11 @@ import {postComment} from '../../store/offer-slice';
 import Rating from './rating';
 import {AuthorizationStatus, COMMENT_SUBMIT_ERROR_MESSAGE, MAX_COMMENT_LENGTH, MIN_COMMENT_LENGTH} from '../../const';
 
-function CommentForm({ offerId }: { offerId: string }) {
+type OfferIdProps = {
+  offerId: string;
+}
+
+function CommentForm({ offerId }: OfferIdProps) {
   const dispatch = useAppDispatch();
   const { authorizationStatus } = useAppSelector((state) => state.user);
   const [formData, setFormData] = useState({
@@ -24,7 +28,9 @@ function CommentForm({ offerId }: { offerId: string }) {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    if (formData.rating === '' || formData.review.length < MIN_COMMENT_LENGTH || formData.review.length > MAX_COMMENT_LENGTH) {
+    if (formData.rating === '' ||
+      formData.review.length < MIN_COMMENT_LENGTH ||
+      formData.review.length > MAX_COMMENT_LENGTH) {
       return;
     }
 

@@ -1,22 +1,44 @@
 import React, {useState} from 'react';
+import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
+import {postComment} from '../../store/offer-slice';
 import Rating from './rating';
+import {AuthorizationStatus} from '../../const';
 
-function CommentForm() {
+function CommentForm({offerId}: { offerId: string }) {
+  const dispatch = useAppDispatch();
+  const {authorizationStatus} = useAppSelector((state) => state.user);
   const [formData, setFormData] = useState({
     rating: '',
     review: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const {name, value} = event.target;
+    const { name, value } = event.target;
     setFormData({
       ...formData,
       [name]: value
     });
   };
 
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (formData.rating === '' || formData.review.length < 50) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    await dispatch(postComment({ id: offerId, comment: formData.review, rating: Number(formData.rating) }));
+    setIsSubmitting(false);
+    setFormData({ rating: '', review: '' });
+  };
+
+  if (authorizationStatus !== AuthorizationStatus.AUTH) {
+    return null;
+  }
+
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmit}>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
 
       <Rating rating={formData.rating} handleRatingChange={handleInputChange} />
@@ -40,7 +62,7 @@ function CommentForm() {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={formData.rating === '' || formData.review.length < 50 || formData.review.length > 300}
+          disabled={formData.rating === '' || formData.review.length < 50 || formData.review.length > 300 || isSubmitting}
         >
           Submit
         </button>

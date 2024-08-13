@@ -95,6 +95,9 @@ const offerSlice = createSlice({
       })
       .addCase(postComment.fulfilled, (state, action: PayloadAction<Review>) => {
         state.comments.push(action.payload);
+      })
+      .addCase(postComment.rejected, (state, action) => {
+        state.error = action.error.message ?? null;
       });
   },
 });

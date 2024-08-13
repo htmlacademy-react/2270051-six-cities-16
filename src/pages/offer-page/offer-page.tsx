@@ -110,7 +110,7 @@ function OfferPage() {
               </div>
               <section className="offer__reviews reviews">
                 <ReviewList reviews={comments} />
-                <CommentForm />
+                {id && <CommentForm offerId={id} />}
               </section>
             </div>
           </div>

@@ -14,8 +14,8 @@ import NotFoundPage from '../not-found-page/not-found-page';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {RootState} from '../../store';
 import {fetchOfferById, fetchNearbyOffers, fetchComments} from '../../store/offer-slice';
+import {getNearbyOffers, getNonNullOffers} from './utils';
 import {RequestStatus} from '../../const';
-import {getNearbyOffers} from './utils';
 
 function OfferPage() {
   const {id} = useParams<{id: string}>();
@@ -32,7 +32,7 @@ function OfferPage() {
 
   const filteredNearbyOffers = getNearbyOffers(nearbyOffers);
 
-  const combinedOffers = [offer, ...filteredNearbyOffers];
+  const combinedOffers = getNonNullOffers([offer, ...filteredNearbyOffers]);
 
   if (status === RequestStatus.LOADING) {
     return <Spinner loading error={false} />;

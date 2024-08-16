@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {postComment} from '../../store/offer-slice';
 import Rating from './rating';
+import {isValidCommentFormData} from './utils';
 import {AuthorizationStatus, COMMENT_SUBMIT_ERROR_MESSAGE, MAX_COMMENT_LENGTH, MIN_COMMENT_LENGTH} from '../../const';
 
 type OfferIdProps = {
@@ -10,7 +11,7 @@ type OfferIdProps = {
 
 function CommentForm({ offerId }: OfferIdProps) {
   const dispatch = useAppDispatch();
-  const {authorizationStatus} = useAppSelector((state) => state.user);
+  const { authorizationStatus } = useAppSelector((state) => state.user);
   const [formData, setFormData] = useState({
     rating: '',
     review: ''
@@ -26,10 +27,8 @@ function CommentForm({ offerId }: OfferIdProps) {
     });
   };
 
-  const handleSubmitAsync = async () => {
-    if (formData.rating === '' ||
-      formData.review.length < MIN_COMMENT_LENGTH ||
-      formData.review.length > MAX_COMMENT_LENGTH) {
+  const handleSubmitForm = async () => {
+    if (!isValidCommentFormData(formData.rating, formData.review, MIN_COMMENT_LENGTH, MAX_COMMENT_LENGTH)) {
       return;
     }
 
@@ -53,7 +52,7 @@ function CommentForm({ offerId }: OfferIdProps) {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    handleSubmitAsync();
+    handleSubmitForm();
   };
 
   if (authorizationStatus !== AuthorizationStatus.Auth) {
@@ -87,9 +86,7 @@ function CommentForm({ offerId }: OfferIdProps) {
           className="reviews__submit form__submit button"
           type="submit"
           disabled={
-            formData.rating === '' ||
-            formData.review.length < MIN_COMMENT_LENGTH ||
-            formData.review.length > MAX_COMMENT_LENGTH ||
+            !isValidCommentFormData(formData.rating, formData.review, MIN_COMMENT_LENGTH, MAX_COMMENT_LENGTH) ||
             isSubmitting
           }
         >

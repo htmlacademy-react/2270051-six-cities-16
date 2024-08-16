@@ -85,7 +85,7 @@ const offerSlice = createSlice({
       })
       .addCase(fetchOfferById.rejected, (state, action) => {
         state.status = RequestStatus.Failed;
-        state.error = action.error.message ?? null;
+        state.error = action.error.message ?? undefined;
       })
       .addCase(fetchNearbyOffers.fulfilled, (state, action: PayloadAction<BaseOffer[]>) => {
         state.nearbyOffers = action.payload;
@@ -97,7 +97,7 @@ const offerSlice = createSlice({
         state.comments.push(action.payload);
       })
       .addCase(postComment.rejected, (state, action) => {
-        state.error = action.error.message ?? null;
+        state.error = action.error.message ?? undefined;
       });
   },
 });

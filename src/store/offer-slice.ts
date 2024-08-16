@@ -4,14 +4,14 @@ import {OfferState} from '../lib/types/state';
 import {BaseOffer, Offer} from '../lib/types/offer';
 import {Review} from '../lib/types/review';
 import {AppDispatch, RootState} from './index';
-import {API_ROUTE, RequestStatus, THUNK_ACTION} from '../const';
+import {ApiRoute, RequestStatus, ThunkAction} from '../const';
 
 const initialState: OfferState = {
   offer: null,
   nearbyOffers: [],
   comments: [],
-  status: RequestStatus.IDLE,
-  error: null,
+  status: RequestStatus.Idle,
+  error: undefined,
 };
 
 export const fetchOfferById = createAsyncThunk<
@@ -22,9 +22,9 @@ export const fetchOfferById = createAsyncThunk<
     state: RootState;
     extra: AxiosInstance;
   }
-  >(THUNK_ACTION.FETCH_OFFER_BY_ID,
+  >(ThunkAction.FetchOfferById,
     async (id, { extra: api }) => {
-      const response = await api.get<Offer>(`${API_ROUTE.OFFERS}/${id}`);
+      const response = await api.get<Offer>(`${ApiRoute.Offers}/${id}`);
       return response.data;
     });
 
@@ -36,9 +36,9 @@ export const fetchNearbyOffers = createAsyncThunk<
     state: RootState;
     extra: AxiosInstance;
   }
-  >(THUNK_ACTION.FETCH_NEARBY_OFFERS,
+  >(ThunkAction.FetchNearbyOffers,
     async (id, { extra: api }) => {
-      const response = await api.get<BaseOffer[]>(`${API_ROUTE.OFFERS}/${id}/nearby`);
+      const response = await api.get<BaseOffer[]>(`${ApiRoute.Offers}/${id}/nearby`);
       return response.data;
     });
 
@@ -50,9 +50,9 @@ export const fetchComments = createAsyncThunk<
     state: RootState;
     extra: AxiosInstance;
   }
-  >(THUNK_ACTION.FETCH_COMMENTS,
+  >(ThunkAction.FetchComments,
     async (id, { extra: api }) => {
-      const response = await api.get<Review[]>(`${API_ROUTE.COMMENTS}/${id}`);
+      const response = await api.get<Review[]>(`${ApiRoute.Comments}/${id}`);
       return response.data;
     });
 
@@ -64,9 +64,9 @@ export const postComment = createAsyncThunk<
     state: RootState;
     extra: AxiosInstance;
   }
-  >(THUNK_ACTION.POST_COMMENT,
+  >(ThunkAction.PostComment,
     async ({ id, comment, rating }, { extra: api }) => {
-      const response = await api.post<Review>(`${API_ROUTE.COMMENTS}/${id}`, { comment, rating });
+      const response = await api.post<Review>(`${ApiRoute.Comments}/${id}`, { comment, rating });
       return response.data;
     });
 
@@ -77,14 +77,14 @@ const offerSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchOfferById.pending, (state) => {
-        state.status = RequestStatus.LOADING;
+        state.status = RequestStatus.Loading;
       })
       .addCase(fetchOfferById.fulfilled, (state, action: PayloadAction<Offer>) => {
-        state.status = RequestStatus.SUCCESS;
+        state.status = RequestStatus.Success;
         state.offer = action.payload;
       })
       .addCase(fetchOfferById.rejected, (state, action) => {
-        state.status = RequestStatus.FAILED;
+        state.status = RequestStatus.Failed;
         state.error = action.error.message ?? null;
       })
       .addCase(fetchNearbyOffers.fulfilled, (state, action: PayloadAction<BaseOffer[]>) => {

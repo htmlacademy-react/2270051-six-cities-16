@@ -16,7 +16,7 @@ function LoginPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (authorizationStatus === AuthorizationStatus.AUTH) {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
       navigate(AppRoute.Root);
     }
   }, [authorizationStatus, navigate]);

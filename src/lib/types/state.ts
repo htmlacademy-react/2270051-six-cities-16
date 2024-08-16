@@ -7,7 +7,7 @@ export type State = {
   city: City;
   offers: BaseOffer[];
   status: keyof typeof RequestStatus;
-  error: string | null;
+  error: string | undefined;
   authorizationStatus: keyof typeof AuthorizationStatus;
   authorizationUser: AuthorizationUser | null;
 };
@@ -17,5 +17,5 @@ export type OfferState = {
   nearbyOffers: BaseOffer[];
   comments: Review[];
   status: keyof typeof RequestStatus;
-  error: string | null;
+  error: string | undefined;
 }

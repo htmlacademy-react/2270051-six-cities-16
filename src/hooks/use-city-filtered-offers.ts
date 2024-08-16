@@ -3,7 +3,7 @@ import useOffersSelector from './use-offers-selector';
 import {BaseOffer} from '../lib/types/offer';
 import {RootState} from '../store';
 
-function useFilteredOffers() {
+function useCityFilteredOffers() {
   const offersState = useAppSelector((state: RootState) => state.offers);
   const {city, offers} = useOffersSelector(offersState);
 
@@ -13,4 +13,4 @@ function useFilteredOffers() {
   return filterByCity(offers, city);
 }
 
-export default useFilteredOffers;
+export default useCityFilteredOffers;

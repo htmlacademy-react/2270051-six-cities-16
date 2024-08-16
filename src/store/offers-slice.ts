@@ -4,14 +4,14 @@ import {setCity} from './actions';
 import {AppDispatch, RootState} from '../store';
 import {BaseOffer, City} from '../lib/types/offer';
 import {State} from '../lib/types/state';
-import {API_ROUTE, AuthorizationStatus, DEFAULT_CITY, RequestStatus, THUNK_ACTION} from '../const';
+import {ApiRoute, AuthorizationStatus, DEFAULT_CITY, RequestStatus, ThunkAction} from '../const';
 
 const initialState: State = {
   city: DEFAULT_CITY,
   offers: [],
-  status: RequestStatus.IDLE,
-  error: null,
-  authorizationStatus: AuthorizationStatus.UNKNOWN,
+  status: RequestStatus.Idle,
+  error: undefined,
+  authorizationStatus: AuthorizationStatus.Unknown,
   authorizationUser: null,
 };
 
@@ -23,9 +23,9 @@ export const fetchAllOffers = createAsyncThunk<
     state: RootState;
     extra: AxiosInstance;
   }
-  >(THUNK_ACTION.FETCH_OFFERS,
+  >(ThunkAction.FetchOffers,
     async (_, { extra: api }) => {
-      const response = await api.get<BaseOffer[]>(API_ROUTE.OFFERS);
+      const response = await api.get<BaseOffer[]>(ApiRoute.Offers);
       return response.data;
     });
 
@@ -39,14 +39,14 @@ const offersSlice = createSlice({
         state.city = action.payload;
       })
       .addCase(fetchAllOffers.pending, (state) => {
-        state.status = RequestStatus.LOADING;
+        state.status = RequestStatus.Loading;
       })
       .addCase(fetchAllOffers.fulfilled, (state, action) => {
-        state.status = RequestStatus.SUCCESS;
+        state.status = RequestStatus.Success;
         state.offers = action.payload;
       })
       .addCase(fetchAllOffers.rejected, (state) => {
-        state.status = RequestStatus.FAILED;
+        state.status = RequestStatus.Failed;
       });
   },
 });

@@ -1,7 +1,7 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {AxiosInstance} from 'axios';
 import {dropToken, saveToken} from '../services/token';
-import {API_ROUTE, AuthorizationStatus, DEFAULT_CITY, RequestStatus, THUNK_ACTION} from '../const';
+import {ApiRoute, AuthorizationStatus, DEFAULT_CITY, RequestStatus, ThunkAction} from '../const';
 import {State} from '../lib/types/state';
 import {AuthorizationUser} from '../lib/types/user';
 import {AppDispatch, RootState} from './index';
@@ -10,9 +10,9 @@ import {setAuthorizationStatus, setAuthorizationUser} from './actions';
 const initialState: State = {
   city: DEFAULT_CITY,
   offers: [],
-  status: RequestStatus.IDLE,
-  error: null,
-  authorizationStatus: AuthorizationStatus.UNKNOWN,
+  status: RequestStatus.Idle,
+  error: undefined,
+  authorizationStatus: AuthorizationStatus.Unknown,
   authorizationUser: null,
 };
 
@@ -24,10 +24,10 @@ export const checkAuthorization = createAsyncThunk<
     state: RootState;
     extra: AxiosInstance;
   }
-  >(THUNK_ACTION.CHECK_AUTH,
+  >(ThunkAction.CheckAuth,
     async (_, { dispatch, extra: api }) => {
-      const response = await api.get<AuthorizationUser>(API_ROUTE.LOGIN);
-      dispatch(setAuthorizationStatus(AuthorizationStatus.AUTH));
+      const response = await api.get<AuthorizationUser>(ApiRoute.Login);
+      dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
       dispatch(setAuthorizationUser(response.data));
       return response.data;
     });
@@ -40,11 +40,11 @@ export const login = createAsyncThunk<
     state: RootState;
     extra: AxiosInstance;
   }
-  >(THUNK_ACTION.LOGIN,
+  >(ThunkAction.Login,
     async ({ email, password }, { dispatch, extra: api }) => {
-      const response = await api.post<AuthorizationUser>(API_ROUTE.LOGIN, { email, password });
+      const response = await api.post<AuthorizationUser>(ApiRoute.Login, { email, password });
       saveToken(response.data.token);
-      dispatch(setAuthorizationStatus(AuthorizationStatus.AUTH));
+      dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
       dispatch(setAuthorizationUser(response.data));
       return response.data;
     });
@@ -57,11 +57,11 @@ export const logout = createAsyncThunk<
     state: RootState;
     extra: AxiosInstance;
   }
-  >(THUNK_ACTION.LOGOUT,
+  >(ThunkAction.Logout,
     async (_, { dispatch, extra: api }) => {
-      await api.delete(API_ROUTE.LOGOUT);
+      await api.delete(ApiRoute.Logout);
       dropToken();
-      dispatch(setAuthorizationStatus(AuthorizationStatus.NO_AUTH));
+      dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
       dispatch(setAuthorizationUser(null));
     });
 
@@ -72,23 +72,23 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(checkAuthorization.fulfilled, (state, action) => {
-        state.authorizationStatus = AuthorizationStatus.AUTH;
+        state.authorizationStatus = AuthorizationStatus.Auth;
         state.authorizationUser = action.payload;
       })
       .addCase(checkAuthorization.rejected, (state) => {
-        state.authorizationStatus = AuthorizationStatus.NO_AUTH;
+        state.authorizationStatus = AuthorizationStatus.NoAuth;
         state.authorizationUser = null;
       })
       .addCase(login.fulfilled, (state, action) => {
-        state.authorizationStatus = AuthorizationStatus.AUTH;
+        state.authorizationStatus = AuthorizationStatus.Auth;
         state.authorizationUser = action.payload;
       })
       .addCase(login.rejected, (state) => {
-        state.authorizationStatus = AuthorizationStatus.NO_AUTH;
+        state.authorizationStatus = AuthorizationStatus.NoAuth;
         state.authorizationUser = null;
       })
       .addCase(logout.fulfilled, (state) => {
-        state.authorizationStatus = AuthorizationStatus.NO_AUTH;
+        state.authorizationStatus = AuthorizationStatus.NoAuth;
         state.authorizationUser = null;
       });
   },

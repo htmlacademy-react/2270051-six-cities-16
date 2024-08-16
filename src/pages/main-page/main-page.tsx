@@ -11,7 +11,7 @@ import {sortOffers} from '../../lib/utils/utils';
 import {City} from '../../lib/types/offer';
 import {RootState} from '../../store';
 import {fetchAllOffers} from '../../store/offers-slice';
-import useFilteredOffers from '../../hooks/use-filtered-offers';
+import useCityFilteredOffers from '../../hooks/use-city-filtered-offers';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {SortType, RequestStatus} from '../../const';
 
@@ -22,7 +22,7 @@ type MainPageProps = {
 function MainPage({cities}: MainPageProps) {
   const dispatch = useAppDispatch();
   const {status, city} = useAppSelector((state: RootState) => state.offers);
-  const filteredOffers = useFilteredOffers();
+  const filteredOffers = useCityFilteredOffers();
 
   const [currentSortType, setCurrentSortType] = useState<SortType>(SortType.Popular);
   const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
@@ -32,7 +32,7 @@ function MainPage({cities}: MainPageProps) {
   }, [dispatch]);
 
   const sortedOffers = useMemo(() => {
-    if (status === RequestStatus.SUCCESS) {
+    if (status === RequestStatus.Success) {
       return sortOffers(filteredOffers, currentSortType);
     }
     return [];
@@ -48,11 +48,11 @@ function MainPage({cities}: MainPageProps) {
 
   const offersCount = sortedOffers.length;
 
-  if (status === RequestStatus.LOADING) {
+  if (status === RequestStatus.Loading) {
     return <Spinner loading error={false} />;
   }
 
-  if (status === RequestStatus.FAILED) {
+  if (status === RequestStatus.Failed) {
     return <Spinner loading={false} error />;
   }
 

@@ -10,7 +10,7 @@ type OfferIdProps = {
 
 function CommentForm({ offerId }: OfferIdProps) {
   const dispatch = useAppDispatch();
-  const { authorizationStatus } = useAppSelector((state) => state.user);
+  const {authorizationStatus} = useAppSelector((state) => state.user);
   const [formData, setFormData] = useState({
     rating: '',
     review: ''
@@ -56,7 +56,7 @@ function CommentForm({ offerId }: OfferIdProps) {
     handleSubmitAsync();
   };
 
-  if (authorizationStatus !== AuthorizationStatus.AUTH) {
+  if (authorizationStatus !== AuthorizationStatus.Auth) {
     return null;
   }
 

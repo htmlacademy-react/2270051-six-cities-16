@@ -1,29 +1,29 @@
 import leaflet from 'leaflet';
 import {City} from './lib/types/offer';
 
-export const URL_API: string = 'https://16.design.htmlacademy.pro/six-cities';
+export const URL_API = 'https://16.design.htmlacademy.pro/six-cities';
 
-export const REQUEST_TIMEOUT: number = 5000;
+export const REQUEST_TIMEOUT = 5000;
 
-export const AUTH_TOKEN_KEY: string = 'six-cities-token';
+export const AUTH_TOKEN_KEY = 'six-cities-token';
 
-export const API_ROUTE = {
-  OFFERS: '/offers',
-  FAVORITE: '/favorite',
-  COMMENTS: '/comments',
-  LOGIN: '/login',
-  LOGOUT: '/logout',
+export const ApiRoute = {
+  Offers: '/offers',
+  Favorite: '/favorite',
+  Comments: '/comments',
+  Login: '/login',
+  Logout: '/logout',
 } as const;
 
-export const THUNK_ACTION = {
-  FETCH_OFFERS: 'offers/fetchOffers',
-  CHECK_AUTH: 'user/checkAuth',
-  LOGIN: 'user/login',
-  LOGOUT: 'user/logout',
-  FETCH_OFFER_BY_ID: 'offer/fetchOfferById',
-  FETCH_NEARBY_OFFERS: 'offer/fetchNearbyOffers',
-  FETCH_COMMENTS: 'offer/fetchComments',
-  POST_COMMENT: 'offer/postComment',
+export const ThunkAction = {
+  FetchOffers: 'offers/fetchOffers',
+  CheckAuth: 'user/checkAuth',
+  Login: 'user/login',
+  Logout: 'user/logout',
+  FetchOfferById: 'offer/fetchOfferById',
+  FetchNearbyOffers: 'offer/fetchNearbyOffers',
+  FetchComments: 'offer/fetchComments',
+  PostComment: 'offer/postComment',
 } as const;
 
 export const AppRoute = {
@@ -33,27 +33,27 @@ export const AppRoute = {
   Offer: '/offer/:id',
 } as const;
 
-export const LOADING_MESSAGE: string = 'Loading...';
+export const LOADING_MESSAGE = 'Loading...';
 
-export const ERROR_MESSAGE: string = 'Something went wrong, try again later';
+export const ERROR_MESSAGE = 'Something went wrong, try again later';
 
-export const PASSWORD_ERROR_MESSAGE: string = 'Password must contain at least one letter and one number';
+export const PASSWORD_ERROR_MESSAGE = 'Password must contain at least one letter and one number';
 
-export const LOGIN_FAILED_MESSAGE: string = 'Login failed. Please check your credentials and try again.';
+export const LOGIN_FAILED_MESSAGE = 'Login failed. Please check your credentials and try again.';
 
 export const COMMENT_SUBMIT_ERROR_MESSAGE = 'Failed to submit comment. Please try again.';
 
 export const RequestStatus = {
-  IDLE: 'IDLE',
-  SUCCESS: 'SUCCESS',
-  LOADING: 'LOADING',
-  FAILED: 'FAILED',
+  Idle: 'Idle',
+  Success: 'Success',
+  Loading: 'Loading',
+  Failed: 'Failed',
 } as const;
 
 export const AuthorizationStatus = {
-  AUTH: 'AUTH',
-  NO_AUTH: 'NO_AUTH',
-  UNKNOWN: 'UNKNOWN',
+  Auth: 'Auth',
+  NoAuth: 'NoAuth',
+  Unknown: 'Unknown',
 } as const;
 
 export enum SortType {
@@ -123,24 +123,24 @@ export const CITY: City[] = [
 
 export const DEFAULT_CITY: City = CITY.find((city) => city.name === 'Paris') ?? CITY[0];
 
-export const REVIEWS_COUNT: number = 10;
+export const REVIEWS_COUNT = 10;
 
-export const PHOTO_COUNT: number = 6;
+export const PHOTO_COUNT = 6;
 
-export const NEARBY_OFFERS_COUNT: number = 3;
+export const NEARBY_OFFERS_COUNT = 3;
 
-export const defaultCustomIcon = leaflet.icon({
+export const DefaultCustomIcon = leaflet.icon({
   iconUrl: 'img/pin.svg',
   iconSize: [30, 40],
   iconAnchor: [15, 40],
 });
 
-export const activeCustomIcon = leaflet.icon({
+export const ActiveCustomIcon = leaflet.icon({
   iconUrl: 'img/pin-active.svg',
   iconSize: [30, 40],
   iconAnchor: [15, 40],
 });
 
-export const MIN_COMMENT_LENGTH: number = 50;
+export const MIN_COMMENT_LENGTH = 50;
 
-export const MAX_COMMENT_LENGTH: number = 300;
+export const MAX_COMMENT_LENGTH = 300;

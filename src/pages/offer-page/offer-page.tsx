@@ -34,11 +34,11 @@ function OfferPage() {
 
   const combinedOffers = getNonNullOffers([offer, ...filteredNearbyOffers]);
 
-  if (status === RequestStatus.LOADING) {
+  if (status === RequestStatus.Loading) {
     return <Spinner loading error={false} />;
   }
 
-  if (status === RequestStatus.FAILED || (status === RequestStatus.SUCCESS && !offer)) {
+  if (status === RequestStatus.Failed || (status === RequestStatus.Success && !offer)) {
     return <NotFoundPage />;
   }
 

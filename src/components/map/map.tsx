@@ -17,7 +17,6 @@ function Map({city, offers, activeOfferId}: MapProps) {
 
   useEffect(() => {
     if (map) {
-      map.scrollWheelZoom.disable();
 
       map.eachLayer((layer) => {
         if (layer instanceof leaflet.Marker) {

@@ -1,12 +1,11 @@
 import {PHOTO_COUNT} from '../../const';
-import {getDisplayedImages} from './utils';
 
 type OfferGalleryProps = {
   images: string[];
 }
 
 function OfferGallery({images}: OfferGalleryProps) {
-  const displayedImages = getDisplayedImages(images, PHOTO_COUNT);
+  const displayedImages = images.slice(0, PHOTO_COUNT);
 
   return (
     <div className="offer__gallery">

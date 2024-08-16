@@ -1,4 +1,4 @@
-import {capitalizeFirstLetter} from './utils';
+import {capitalizeFirstLetter, pluralize} from './utils';
 
 type OfferFeaturesProps = {
   type: string;
@@ -13,10 +13,10 @@ function OfferFeatures({type, bedrooms, maxAdults}: OfferFeaturesProps) {
         {capitalizeFirstLetter(type)}
       </li>
       <li className="offer__feature offer__feature--bedrooms">
-        {bedrooms} {bedrooms === 1 ? 'Bedroom' : 'Bedrooms'}
+        {bedrooms} {pluralize(bedrooms, 'Bedroom', 'Bedrooms')}
       </li>
       <li className="offer__feature offer__feature--adults">
-        Max {maxAdults} {maxAdults === 1 ? 'adult' : 'adults'}
+        Max {maxAdults} {pluralize(maxAdults, 'adult', 'adults')}
       </li>
     </ul>
   );

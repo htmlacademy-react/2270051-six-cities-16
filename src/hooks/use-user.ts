@@ -5,7 +5,7 @@ import {AuthorizationUser} from '../lib/types/user';
 
 export function useUser(): {
   authorizationStatus: typeof AuthorizationStatus[keyof typeof AuthorizationStatus];
-  authorizationUser?: AuthorizationUser;
+  authorizationUser: AuthorizationUser;
   } {
   const authorizationStatus = useAppSelector((state:RootState) => state.user.authorizationStatus);
   const authorizationUser = useAppSelector((state: RootState) => state.user.authorizationUser);

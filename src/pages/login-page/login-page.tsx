@@ -13,7 +13,7 @@ function LoginPage() {
   const authorizationStatus = useAppSelector((state) => state.user.authorizationStatus);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string>(null);
 
   useEffect(() => {
     if (authorizationStatus === AuthorizationStatus.Auth) {

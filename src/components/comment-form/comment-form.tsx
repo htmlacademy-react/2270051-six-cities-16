@@ -59,7 +59,7 @@ function CommentForm({ offerId }: OfferIdProps) {
     <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmit}>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
 
-      <Rating rating={formData.rating} handleRatingChange={handleInputChange} />
+      <Rating rating={formData.rating} handleRatingChange={handleInputChange} disabled={isSubmitting}/>
 
       <textarea
         className="reviews__textarea form__textarea"
@@ -70,6 +70,7 @@ function CommentForm({ offerId }: OfferIdProps) {
         onChange={handleInputChange}
         minLength={MIN_COMMENT_LENGTH}
         maxLength={MAX_COMMENT_LENGTH}
+        disabled={isSubmitting}
       >
       </textarea>
       {submitError && <p className="reviews__error">{submitError}</p>}

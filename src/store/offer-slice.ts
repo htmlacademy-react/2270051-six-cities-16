@@ -4,7 +4,7 @@ import {OfferState} from '../lib/types/state';
 import {BaseOffer, Offer} from '../lib/types/offer';
 import {Review} from '../lib/types/review';
 import {AppDispatch, RootState} from './index';
-import {ApiRoute, RequestStatus, ThunkAction} from '../const';
+import {ApiRoute, COMMENT_SUBMIT_ERROR_MESSAGE, RequestStatus, ThunkAction} from '../const';
 
 const initialState: OfferState = {
   offer: null,
@@ -66,8 +66,12 @@ export const postComment = createAsyncThunk<
   }
   >(ThunkAction.PostComment,
     async ({ id, comment, rating }, { extra: api }) => {
-      const response = await api.post<Review>(`${ApiRoute.Comments}/${id}`, { comment, rating });
-      return response.data;
+      try {
+        const response = await api.post<Review>(`${ApiRoute.Comments}/${id}`, { comment, rating });
+        return response.data;
+      } catch (error) {
+        throw new Error(COMMENT_SUBMIT_ERROR_MESSAGE);
+      }
     });
 
 const offerSlice = createSlice({
@@ -107,7 +111,7 @@ const offerSlice = createSlice({
         state.submitError = undefined;
       })
       .addCase(postComment.rejected, (state, action) => {
-        state.submitError = action.error.message ?? undefined;
+        state.submitError = action.error.message ?? COMMENT_SUBMIT_ERROR_MESSAGE;
       });
   },
 });

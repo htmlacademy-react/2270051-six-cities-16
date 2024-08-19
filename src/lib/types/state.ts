@@ -13,7 +13,7 @@ export type State = {
 };
 
 export type OfferState = {
-  offer: Offer;
+  offer: Offer | null;
   nearbyOffers: BaseOffer[];
   comments: Review[];
   status: keyof typeof RequestStatus;

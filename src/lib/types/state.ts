@@ -17,5 +17,6 @@ export type OfferState = {
   nearbyOffers: BaseOffer[];
   comments: Review[];
   status: keyof typeof RequestStatus;
-  error: string | undefined;
+  loadError: string | undefined;
+  submitError: string | undefined;
 }

@@ -11,7 +11,8 @@ const initialState: OfferState = {
   nearbyOffers: [],
   comments: [],
   status: RequestStatus.Idle,
-  error: undefined,
+  loadError: undefined,
+  submitError: undefined,
 };
 
 export const fetchOfferById = createAsyncThunk<
@@ -60,7 +61,6 @@ export const postComment = createAsyncThunk<
   Review,
   { id: string; comment: string; rating: number },
   {
-    dispatch: AppDispatch;
     state: RootState;
     extra: AxiosInstance;
   }
@@ -82,22 +82,32 @@ const offerSlice = createSlice({
       .addCase(fetchOfferById.fulfilled, (state, action: PayloadAction<Offer>) => {
         state.status = RequestStatus.Success;
         state.offer = action.payload;
+        state.loadError = undefined;
       })
       .addCase(fetchOfferById.rejected, (state, action) => {
         state.status = RequestStatus.Failed;
-        state.error = action.error.message ?? undefined;
+        state.loadError = action.error.message ?? undefined;
       })
       .addCase(fetchNearbyOffers.fulfilled, (state, action: PayloadAction<BaseOffer[]>) => {
         state.nearbyOffers = action.payload;
+        state.loadError = undefined;
+      })
+      .addCase(fetchNearbyOffers.rejected, (state, action) => {
+        state.loadError = action.error.message ?? undefined;
       })
       .addCase(fetchComments.fulfilled, (state, action: PayloadAction<Review[]>) => {
         state.comments = action.payload;
+        state.loadError = undefined;
+      })
+      .addCase(fetchComments.rejected, (state, action) => {
+        state.loadError = action.error.message ?? undefined;
       })
       .addCase(postComment.fulfilled, (state, action: PayloadAction<Review>) => {
         state.comments.push(action.payload);
+        state.submitError = undefined;
       })
       .addCase(postComment.rejected, (state, action) => {
-        state.error = action.error.message ?? undefined;
+        state.submitError = action.error.message ?? undefined;
       });
   },
 });

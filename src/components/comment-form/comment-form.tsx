@@ -3,7 +3,7 @@ import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {postComment} from '../../store/offer-slice';
 import Rating from './rating';
 import {isValidCommentFormData} from './utils';
-import {AuthorizationStatus, COMMENT_SUBMIT_ERROR_MESSAGE, MAX_COMMENT_LENGTH, MIN_COMMENT_LENGTH} from '../../const';
+import {AuthorizationStatus, MAX_COMMENT_LENGTH, MIN_COMMENT_LENGTH} from '../../const';
 
 type OfferIdProps = {
   offerId: string;
@@ -11,13 +11,12 @@ type OfferIdProps = {
 
 function CommentForm({ offerId }: OfferIdProps) {
   const dispatch = useAppDispatch();
-  const { authorizationStatus } = useAppSelector((state) => state.user);
+  const {authorizationStatus, submitError} = useAppSelector((state) => state.user);
   const [formData, setFormData] = useState({
     rating: '',
     review: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
@@ -33,18 +32,14 @@ function CommentForm({ offerId }: OfferIdProps) {
     }
 
     setIsSubmitting(true);
-    setError(null);
 
     try {
-      await dispatch(postComment(
-        {
-          id: offerId,
-          comment: formData.review,
-          rating: Number(formData.rating)
-        })).unwrap();
+      await dispatch(postComment({
+        id: offerId,
+        comment: formData.review,
+        rating: Number(formData.rating)
+      }));
       setFormData({ rating: '', review: '' });
-    } catch (err) {
-      setError(COMMENT_SUBMIT_ERROR_MESSAGE);
     } finally {
       setIsSubmitting(false);
     }
@@ -76,7 +71,7 @@ function CommentForm({ offerId }: OfferIdProps) {
         maxLength={MAX_COMMENT_LENGTH}
       >
       </textarea>
-      {error && <p className="reviews__error">{error}</p>}
+      {submitError && <p className="reviews__error">{submitError}</p>}
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and

@@ -5,7 +5,7 @@ import Logo from '../../components/logo/logo';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {isValidPassword} from './utils';
 import {login} from '../../store/user-slice';
-import {AppRoute, AuthorizationStatus, LOGIN_FAILED_MESSAGE, PASSWORD_ERROR_MESSAGE} from '../../const';
+import {AppRoute, AuthorizationStatus, PASSWORD_ERROR_MESSAGE} from '../../const';
 import {clearError, setError} from '../../store/actions';
 
 function LoginPage() {
@@ -32,9 +32,6 @@ function LoginPage() {
     dispatch(login({ email, password }))
       .then(() => {
         navigate(AppRoute.Root);
-      })
-      .catch(() => {
-        dispatch(setError(LOGIN_FAILED_MESSAGE));
       });
   };
 

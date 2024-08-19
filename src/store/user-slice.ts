@@ -42,11 +42,15 @@ export const login = createAsyncThunk<
   }
   >(ThunkAction.Login,
     async ({ email, password }, { dispatch, extra: api }) => {
-      const response = await api.post<AuthorizationUser>(ApiRoute.Login, { email, password });
-      saveToken(response.data.token);
-      dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
-      dispatch(setAuthorizationUser(response.data));
-      return response.data;
+      try {
+        const response = await api.post<AuthorizationUser>(ApiRoute.Login, { email, password });
+        saveToken(response.data.token);
+        dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
+        dispatch(setAuthorizationUser(response.data));
+        return response.data;
+      } catch (error) {
+        throw new Error(LOGIN_FAILED_MESSAGE);
+      }
     });
 
 export const logout = createAsyncThunk<

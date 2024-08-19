@@ -1,11 +1,11 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {AxiosInstance} from 'axios';
 import {dropToken, saveToken} from '../services/token';
-import {ApiRoute, AuthorizationStatus, DEFAULT_CITY, RequestStatus, ThunkAction} from '../const';
+import {ApiRoute, AuthorizationStatus, DEFAULT_CITY, LOGIN_FAILED_MESSAGE, RequestStatus, ThunkAction} from '../const';
 import {State} from '../lib/types/state';
 import {AuthorizationUser} from '../lib/types/user';
 import {AppDispatch, RootState} from './index';
-import {setAuthorizationStatus, setAuthorizationUser} from './actions';
+import {clearError, setAuthorizationStatus, setAuthorizationUser, setError} from './actions';
 
 const initialState: State = {
   city: DEFAULT_CITY,
@@ -82,14 +82,22 @@ const userSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.authorizationStatus = AuthorizationStatus.Auth;
         state.authorizationUser = action.payload;
+        state.error = undefined;
       })
       .addCase(login.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
         state.authorizationUser = null;
+        state.error = LOGIN_FAILED_MESSAGE;
       })
       .addCase(logout.fulfilled, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
         state.authorizationUser = null;
+      })
+      .addCase(setError, (state, action) => {
+        state.error = action.payload;
+      })
+      .addCase(clearError, (state) => {
+        state.error = undefined;
       });
   },
 });

@@ -11,7 +11,8 @@ type OfferIdProps = {
 
 function CommentForm({ offerId }: OfferIdProps) {
   const dispatch = useAppDispatch();
-  const {authorizationStatus, submitError} = useAppSelector((state) => state.user);
+  const { authorizationStatus } = useAppSelector((state) => state.user);
+  const { submitError } = useAppSelector((state) => state.offer);
   const [formData, setFormData] = useState({
     rating: '',
     review: ''

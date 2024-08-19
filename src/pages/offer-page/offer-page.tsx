@@ -32,7 +32,7 @@ function OfferPage() {
 
   const filteredNearbyOffers = nearbyOffers.slice(0, NEARBY_OFFERS_COUNT);
 
-  const combinedOffers: BaseOffer[] = [offer, ...filteredNearbyOffers];
+  const combinedOffers: BaseOffer[] = offer ? [offer, ...filteredNearbyOffers] : filteredNearbyOffers;
 
   if (status === RequestStatus.Loading) {
     return <Spinner loading error={false} />;

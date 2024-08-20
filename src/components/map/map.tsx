@@ -3,7 +3,7 @@ import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/use-map';
 import {BaseOffer, City} from '../../lib/types/offer';
-import {activeCustomIcon, defaultCustomIcon} from '../../const';
+import {ActiveCustomIcon, DefaultCustomIcon} from '../../const';
 
 type MapProps = {
   city: City;
@@ -17,6 +17,7 @@ function Map({city, offers, activeOfferId}: MapProps) {
 
   useEffect(() => {
     if (map) {
+
       map.eachLayer((layer) => {
         if (layer instanceof leaflet.Marker) {
           map.removeLayer(layer);
@@ -28,7 +29,7 @@ function Map({city, offers, activeOfferId}: MapProps) {
         const marker = new leaflet.Marker(
           [offer.location.latitude, offer.location.longitude],
           {
-            icon: isActive ? activeCustomIcon : defaultCustomIcon
+            icon: isActive ? ActiveCustomIcon : DefaultCustomIcon
           });
         marker.addTo(map);
       });

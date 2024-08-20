@@ -5,18 +5,19 @@ import Logo from '../../components/logo/logo';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {isValidPassword} from './utils';
 import {login} from '../../store/user-slice';
-import {AppRoute, AuthorizationStatus, LOGIN_FAILED_MESSAGE, PASSWORD_ERROR_MESSAGE} from '../../const';
+import {AppRoute, AuthorizationStatus, PASSWORD_ERROR_MESSAGE} from '../../const';
+import {clearError, setError} from '../../store/actions';
 
 function LoginPage() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const authorizationStatus = useAppSelector((state) => state.user.authorizationStatus);
+  const error = useAppSelector((state) => state.user.error);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (authorizationStatus === AuthorizationStatus.AUTH) {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
       navigate(AppRoute.Root);
     }
   }, [authorizationStatus, navigate]);
@@ -24,16 +25,13 @@ function LoginPage() {
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     if (!isValidPassword(password)) {
-      setError(PASSWORD_ERROR_MESSAGE);
+      dispatch(setError(PASSWORD_ERROR_MESSAGE));
       return;
     }
+    dispatch(clearError());
     dispatch(login({ email, password }))
-      .unwrap()
       .then(() => {
         navigate(AppRoute.Root);
-      })
-      .catch(() => {
-        setError(LOGIN_FAILED_MESSAGE);
       });
   };
 

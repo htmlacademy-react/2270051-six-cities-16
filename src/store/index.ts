@@ -1,9 +1,8 @@
 import {configureStore} from '@reduxjs/toolkit';
-import {NavigateFunction} from 'react-router-dom';
 import rootReducer from './root-reducer';
 import {createAPI} from '../services/api';
 
-export const api = createAPI((() => {}) as NavigateFunction);
+export const api = createAPI();
 
 const store = configureStore({
   reducer: rootReducer,

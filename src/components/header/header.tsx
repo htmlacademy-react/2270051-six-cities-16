@@ -1,13 +1,13 @@
 import {Link} from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import {logout} from '../../store/user-slice';
-import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
+import {useAppDispatch} from '../../hooks/redux-hooks';
+import {useUser} from '../../hooks/use-user';
 import {AppRoute, AuthorizationStatus} from '../../const';
 
 function Header() {
   const dispatch = useAppDispatch();
-  const authorizationStatus = useAppSelector((state) => state.user.authorizationStatus);
-  const authorizationUser = useAppSelector((state) => state.user.authorizationUser);
+  const {authorizationStatus, authorizationUser} = useUser();
 
   const handleLogout = () => {
     dispatch(logout());
@@ -22,7 +22,7 @@ function Header() {
           </div>
           <nav className="header__nav">
             <ul className="header__nav-list">
-              {authorizationStatus === AuthorizationStatus.AUTH ? (
+              {authorizationStatus === AuthorizationStatus.Auth ? (
                 <>
                   <li className="header__nav-item user">
                     <Link to={AppRoute.Favorites} className="header__nav-link header__nav-link--profile">

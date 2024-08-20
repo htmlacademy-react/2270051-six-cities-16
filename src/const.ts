@@ -24,6 +24,9 @@ export const ThunkAction = {
   FetchNearbyOffers: 'offer/fetchNearbyOffers',
   FetchComments: 'offer/fetchComments',
   PostComment: 'offer/postComment',
+  FetchFavorites: 'offers/fetchFavorites',
+  AddToFavorites: 'offers/addToFavorites',
+  RemoveFromFavorites: 'offers/removeFromFavorites',
 } as const;
 
 export const AppRoute = {

@@ -8,3 +8,4 @@ export const setAuthorizationStatus = createAction<keyof typeof AuthorizationSta
 export const setAuthorizationUser = createAction<AuthorizationUser | null>('user/setAuthorizationUser');
 export const setError = createAction<string | undefined>('user/setError');
 export const clearError = createAction('user/clearError');
+export const clearFavorites = createAction('offers/clearFavorites');

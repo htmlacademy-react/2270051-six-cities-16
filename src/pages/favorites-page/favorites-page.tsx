@@ -1,14 +1,12 @@
 import {Helmet} from 'react-helmet-async';
 import {Link} from 'react-router-dom';
 import {MemoizedHeader as Header} from '../../components/header/header';
-import {BaseOffer} from '../../lib/types/offer';
 import {groupFavorites} from './utils';
+import {useAppSelector} from '../../hooks/redux-hooks';
+import BookmarkButton from '../../components/bookmark-button/bookmark-button';
 
-type FavoritesPageProps = {
-  favorites: BaseOffer[];
-}
-
-function FavoritesPage({favorites}: FavoritesPageProps) {
+function FavoritesPage() {
+  const favorites = useAppSelector((state) => state.offers.favorites);
   const groupedFavorites = groupFavorites(favorites);
 
   return (
@@ -47,12 +45,14 @@ function FavoritesPage({favorites}: FavoritesPageProps) {
                               <b className="place-card__price-value">&euro;{offer.price}</b>
                               <span className="place-card__price-text">&#47;&nbsp;night</span>
                             </div>
-                            <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
-                              <svg className="place-card__bookmark-icon" width="18" height="19">
-                                <use xlinkHref="#icon-bookmark"></use>
-                              </svg>
-                              <span className="visually-hidden">In bookmarks</span>
-                            </button>
+                            <BookmarkButton
+                              offerId={offer.id}
+                              isFavorite={offer.isFavorite}
+                              buttonClassName="place-card__bookmark-button"
+                              iconClassName="place-card__bookmark-icon"
+                              iconWidth="18"
+                              iconHeight="19"
+                            />
                           </div>
                           <div className="place-card__rating rating">
                             <div className="place-card__stars rating__stars">

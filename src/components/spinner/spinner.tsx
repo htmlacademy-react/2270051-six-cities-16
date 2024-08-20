@@ -1,5 +1,5 @@
 import {Helmet} from 'react-helmet-async';
-import Header from '../header/header';
+import {MemoizedHeader as Header} from '../header/header';
 import {ERROR_MESSAGE, LOADING_MESSAGE} from '../../const';
 
 type SpinnerProps = {

@@ -3,7 +3,7 @@ import {Helmet} from 'react-helmet-async';
 import classNames from 'classnames';
 import {MemoizedHeader as Header} from '../../components/header/header';
 import {MemoizedLocationList as LocationList} from '../../components/location-list/location-list';
-import SortingForm from '../../components/sorting-form/sorting-form';
+import {MemoizedSortingForm as SortingForm} from '../../components/sorting-form/sorting-form';
 import {MemoizedOfferList as OfferList} from '../../components/offer-list/offer-list';
 import Map from '../../components/map/map';
 import Spinner from '../../components/spinner/spinner';

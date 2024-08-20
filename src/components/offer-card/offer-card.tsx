@@ -1,3 +1,4 @@
+import React from 'react';
 import {Link} from 'react-router-dom';
 import {BaseOffer} from '../../lib/types/offer';
 
@@ -65,4 +66,4 @@ function OfferCard({ offer, onSelect, isActive, className = 'cities__card' }: Of
   );
 }
 
-export default OfferCard;
+export const MemoizedOfferCard = React.memo(OfferCard);

@@ -1,3 +1,4 @@
+import React from 'react';
 import {Link} from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import {logout} from '../../store/user-slice';
@@ -55,4 +56,4 @@ function Header() {
   );
 }
 
-export default Header;
+export const MemoizedHeader = React.memo(Header);

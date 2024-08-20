@@ -7,6 +7,7 @@ import {MemoizedSortingForm as SortingForm} from '../../components/sorting-form/
 import {MemoizedOfferList as OfferList} from '../../components/offer-list/offer-list';
 import Map from '../../components/map/map';
 import Spinner from '../../components/spinner/spinner';
+import NoPlacesAvailable from '../../components/no-places-available/no-places-available';
 import {sortOffers} from '../../lib/utils/utils';
 import {City} from '../../lib/types/offer';
 import {RootState} from '../../store';
@@ -14,6 +15,7 @@ import {fetchAllOffers} from '../../store/offers-slice';
 import useCityFilteredOffers from '../../hooks/use-city-filtered-offers';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {SortType, RequestStatus} from '../../const';
+
 
 type MainPageProps = {
   cities: City[];
@@ -76,17 +78,7 @@ function MainPage({cities}: MainPageProps) {
         </div>
         <div className="cities">
           {offersCount === 0 ? (
-            <div className="cities__places-container cities__places-container--empty container">
-              <section className="cities__no-places">
-                <div className="cities__status-wrapper tabs__content">
-                  <b className="cities__status">No places to stay available</b>
-                  <p className="cities__status-description">
-                    We could not find any property available at the moment in {city.name}
-                  </p>
-                </div>
-              </section>
-              <div className="cities__right-section"></div>
-            </div>
+            <NoPlacesAvailable cityName={city.name} />
           ) : (
             <div className="cities__places-container container">
               <section className="cities__places places">

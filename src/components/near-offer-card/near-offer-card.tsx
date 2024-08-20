@@ -1,5 +1,5 @@
 import {BaseOffer} from '../../lib/types/offer';
-import OfferCard from '../offer-card/offer-card';
+import {MemoizedOfferCard as OfferCard} from '../offer-card/offer-card';
 
 type NearOfferCardProps = {
   offer: BaseOffer;

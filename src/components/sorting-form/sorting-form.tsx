@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import useToggle from '../../hooks/use-toggle';
-import {useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {SortType, SortTypeNames} from '../../const';
 import {getNumericValues} from '../../lib/utils/utils';
 
@@ -14,11 +14,13 @@ function SortingForm({onSortChange}: SortingFormProps) {
   const [isOpen, toggleOpen] = useToggle(false);
   const [selectedSort, setSelectedSort] = useState<SortType>(SortType.Popular);
 
-  const handleSortChange = (sortType: SortType) => {
+  const handleSortChange = useCallback((sortType: SortType) => {
     setSelectedSort(sortType);
     onSortChange(sortType);
     toggleOpen();
-  };
+  }, [onSortChange, toggleOpen]);
+
+  const memoizedCitySortTypeSelect = useMemo(() => CitySortTypeSelect, []);
 
   return (
     <form className="places__sorting" action="#" method="get">
@@ -34,7 +36,7 @@ function SortingForm({onSortChange}: SortingFormProps) {
         </svg>
       </span>
       <ul className={classNames('places__options places__options--custom', { 'places__options--opened': isOpen })}>
-        {CitySortTypeSelect.map((sortType) => {
+        {memoizedCitySortTypeSelect.map((sortType) => {
           const isActive = sortType === selectedSort;
           return (
             <li
@@ -52,4 +54,4 @@ function SortingForm({onSortChange}: SortingFormProps) {
   );
 }
 
-export default SortingForm;
+export const MemoizedSortingForm = React.memo(SortingForm);

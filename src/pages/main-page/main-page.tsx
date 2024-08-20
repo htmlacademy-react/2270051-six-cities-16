@@ -1,10 +1,10 @@
-import {useEffect, useMemo, useState} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import {Helmet} from 'react-helmet-async';
 import classNames from 'classnames';
-import Header from '../../components/header/header';
-import LocationList from '../../components/location-list/location-list';
-import SortingForm from '../../components/sorting-form/sorting-form';
-import OfferList from '../../components/offer-list/offer-list';
+import {MemoizedHeader as Header} from '../../components/header/header';
+import {MemoizedLocationList as LocationList} from '../../components/location-list/location-list';
+import {MemoizedSortingForm as SortingForm} from '../../components/sorting-form/sorting-form';
+import {MemoizedOfferList as OfferList} from '../../components/offer-list/offer-list';
 import Map from '../../components/map/map';
 import Spinner from '../../components/spinner/spinner';
 import {sortOffers} from '../../lib/utils/utils';
@@ -38,13 +38,13 @@ function MainPage({cities}: MainPageProps) {
     return [];
   }, [filteredOffers, currentSortType, status]);
 
-  const handleSortChange = (sortType: SortType) => {
+  const handleSortChange = useCallback((sortType: SortType) => {
     setCurrentSortType(sortType);
-  };
+  }, []);
 
-  const handleActiveOfferChange = (offerId: string | null) => {
+  const handleActiveOfferChange = useCallback((offerId: string | null) => {
     setActiveOfferId(offerId);
-  };
+  }, []);
 
   const offersCount = sortedOffers.length;
 

@@ -36,7 +36,7 @@ function LoginPage() {
   };
 
   return (
-    <div className="page page--gray page--login">
+    <>
       <Helmet>
         <title>6 cities: authorization</title>
       </Helmet>
@@ -97,7 +97,7 @@ function LoginPage() {
           </section>
         </div>
       </main>
-    </div>
+    </>
   );
 }
 

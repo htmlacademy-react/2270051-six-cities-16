@@ -11,6 +11,7 @@ import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {checkAuthorization} from '../../store/user-slice';
 import {fetchFavorites} from '../../store/offers-slice';
 import {AppRoute, AuthorizationStatus, CITY} from '../../const';
+import Layout from '../layout/layout';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -29,32 +30,34 @@ function App() {
   return (
     <HelmetProvider>
       <BrowserRouter>
-        <Routes>
-          <Route
-            path={AppRoute.Root}
-            element={<MainPage cities={CITY} />}
-          />
-          <Route
-            path={AppRoute.Login}
-            element={<LoginPage />}
-          />
-          <Route
-            path={AppRoute.Favorites}
-            element={
-              <PrivateRoute>
-                <FavoritesPage />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path={AppRoute.Offer}
-            element={<OfferPage />}
-          />
-          <Route
-            path="*"
-            element={<NotFoundPage />}
-          />
-        </Routes>
+        <Layout>
+          <Routes>
+            <Route
+              path={AppRoute.Root}
+              element={<MainPage cities={CITY} />}
+            />
+            <Route
+              path={AppRoute.Login}
+              element={<LoginPage />}
+            />
+            <Route
+              path={AppRoute.Favorites}
+              element={
+                <PrivateRoute>
+                  <FavoritesPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path={AppRoute.Offer}
+              element={<OfferPage />}
+            />
+            <Route
+              path="*"
+              element={<NotFoundPage />}
+            />
+          </Routes>
+        </Layout>
       </BrowserRouter>
     </HelmetProvider>
   );

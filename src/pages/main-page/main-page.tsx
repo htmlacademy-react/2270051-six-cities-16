@@ -1,7 +1,6 @@
 import {useEffect, useState} from 'react';
 import {Helmet} from 'react-helmet-async';
 import classNames from 'classnames';
-import Header from '../../components/header/header';
 import LocationList from '../../components/location-list/location-list';
 import SortingForm from '../../components/sorting-form/sorting-form';
 import OfferList from '../../components/offer-list/offer-list';
@@ -53,12 +52,10 @@ function MainPage({cities}: MainPageProps) {
   }
 
   return (
-    <div className="page page--gray page--main">
+    <>
       <Helmet>
         <title>6 cities</title>
       </Helmet>
-
-      <Header />
 
       <main className={classNames('page__main page__main--index', { 'page__main--index-empty': offersCount === 0 })}>
         <h1 className="visually-hidden">Cities</h1>
@@ -90,7 +87,7 @@ function MainPage({cities}: MainPageProps) {
           )}
         </div>
       </main>
-    </div>
+    </>
   );
 }
 

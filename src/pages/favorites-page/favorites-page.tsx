@@ -1,6 +1,5 @@
 import {Helmet} from 'react-helmet-async';
 import {Link} from 'react-router-dom';
-import Header from '../../components/header/header';
 import {groupFavorites} from './utils';
 import {useAppSelector} from '../../hooks/redux-hooks';
 import BookmarkButton from '../../components/bookmark-button/bookmark-button';
@@ -10,12 +9,10 @@ function FavoritesPage() {
   const groupedFavorites = groupFavorites(favorites);
 
   return (
-    <div className="page">
+    <>
       <Helmet>
         <title>6 cities: favorites</title>
       </Helmet>
-
-      <Header />
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
@@ -79,7 +76,7 @@ function FavoritesPage() {
           <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33"/>
         </Link>
       </footer>
-    </div>
+    </>
   );
 }
 

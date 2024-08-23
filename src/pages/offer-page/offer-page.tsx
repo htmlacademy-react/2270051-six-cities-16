@@ -1,7 +1,6 @@
 import {useEffect} from 'react';
 import {Helmet} from 'react-helmet-async';
 import {useParams} from 'react-router-dom';
-import Header from '../../components/header/header';
 import CommentForm from '../../components/comment-form/comment-form';
 import ReviewList from '../../components/review-list/review-list';
 import Map from '../../components/map/map';
@@ -48,12 +47,10 @@ function OfferPage() {
   }
 
   return (
-    <div className="page">
+    <>
       <Helmet>
         <title>6 cities: offer</title>
       </Helmet>
-
-      <Header />
 
       <main className="page__main page__main--offer">
         <section className="offer">
@@ -128,7 +125,7 @@ function OfferPage() {
           </section>
         </div>
       </main>
-    </div>
+    </>
   );
 }
 

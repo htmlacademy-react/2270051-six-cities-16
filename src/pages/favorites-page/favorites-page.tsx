@@ -2,7 +2,7 @@ import {Helmet} from 'react-helmet-async';
 import {Link} from 'react-router-dom';
 import {groupFavorites} from './utils';
 import {useAppSelector} from '../../hooks/redux-hooks';
-import BookmarkButton from '../../components/bookmark-button/bookmark-button';
+import FavoritesButton from '../../components/bookmark-button/favorites-button';
 
 function FavoritesPage() {
   const favorites = useAppSelector((state) => state.offers.favorites);
@@ -42,7 +42,7 @@ function FavoritesPage() {
                               <b className="place-card__price-value">&euro;{offer.price}</b>
                               <span className="place-card__price-text">&#47;&nbsp;night</span>
                             </div>
-                            <BookmarkButton
+                            <FavoritesButton
                               offerId={offer.id}
                               isFavorite={offer.isFavorite}
                               buttonClassName="place-card__bookmark-button"

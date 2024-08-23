@@ -30,34 +30,20 @@ function App() {
   return (
     <HelmetProvider>
       <BrowserRouter>
-        <Layout>
-          <Routes>
-            <Route
-              path={AppRoute.Root}
-              element={<MainPage cities={CITY} />}
+        <Routes>
+          <Route path={AppRoute.Login} element={<LoginPage />} />
+          <Route path="/" element={<Layout />}>
+            <Route path={AppRoute.Root} element={<MainPage cities={CITY} />} />
+            <Route path={AppRoute.Favorites} element={
+              <PrivateRoute>
+                <FavoritesPage />
+              </PrivateRoute>
+            }
             />
-            <Route
-              path={AppRoute.Login}
-              element={<LoginPage />}
-            />
-            <Route
-              path={AppRoute.Favorites}
-              element={
-                <PrivateRoute>
-                  <FavoritesPage />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path={AppRoute.Offer}
-              element={<OfferPage />}
-            />
-            <Route
-              path="*"
-              element={<NotFoundPage />}
-            />
-          </Routes>
-        </Layout>
+            <Route path={AppRoute.Offer} element={<OfferPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Route>
+        </Routes>
       </BrowserRouter>
     </HelmetProvider>
   );

@@ -4,7 +4,7 @@ import {addToFavorites, removeFromFavorites} from '../../store/offers-slice';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import classNames from 'classnames';
 
-type BookmarkButtonProps = {
+type FavoritesButtonProps = {
   offerId: string;
   isFavorite: boolean;
   buttonClassName: string;
@@ -13,7 +13,7 @@ type BookmarkButtonProps = {
   iconHeight: string;
 };
 
-function BookmarkButton({ offerId, isFavorite, buttonClassName, iconClassName, iconWidth, iconHeight }: BookmarkButtonProps) {
+function FavoritesButton({ offerId, isFavorite, buttonClassName, iconClassName, iconWidth, iconHeight }: FavoritesButtonProps) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const authorizationStatus = useAppSelector((state) => state.user.authorizationStatus);
@@ -45,4 +45,4 @@ function BookmarkButton({ offerId, isFavorite, buttonClassName, iconClassName, i
   );
 }
 
-export default BookmarkButton;
+export default FavoritesButton;

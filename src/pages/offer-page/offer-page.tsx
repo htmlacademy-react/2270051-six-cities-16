@@ -15,7 +15,7 @@ import {RootState} from '../../store';
 import {fetchOfferById, fetchNearbyOffers, fetchComments} from '../../store/offer-slice';
 import {NEARBY_OFFERS_COUNT, RequestStatus} from '../../const';
 import {BaseOffer} from '../../lib/types/offer';
-import BookmarkButton from '../../components/bookmark-button/bookmark-button';
+import FavoritesButton from '../../components/bookmark-button/favorites-button';
 
 function OfferPage() {
   const {id} = useParams<{id: string}>();
@@ -66,7 +66,7 @@ function OfferPage() {
               )}
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">{offer.title}</h1>
-                <BookmarkButton
+                <FavoritesButton
                   offerId={offer.id}
                   isFavorite={offer.isFavorite}
                   buttonClassName="offer__bookmark-button"

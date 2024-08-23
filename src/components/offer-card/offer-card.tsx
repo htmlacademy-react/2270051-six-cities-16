@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import BookmarkButton from '../bookmark-button/bookmark-button';
+import FavoritesButton from '../bookmark-button/favorites-button';
 import {BaseOffer} from '../../lib/types/offer';
 
 type OfferCardProps = {
@@ -42,7 +42,7 @@ function OfferCard({ offer, onSelect, isActive, className = 'cities__card' }: Of
             <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <BookmarkButton
+          <FavoritesButton
             offerId={offer.id}
             isFavorite={offer.isFavorite}
             buttonClassName="place-card__bookmark-button"

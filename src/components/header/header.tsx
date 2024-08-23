@@ -57,4 +57,4 @@ function Header() {
   );
 }
 
-export const MemoizedHeader = React.memo(Header);
+export default Header;

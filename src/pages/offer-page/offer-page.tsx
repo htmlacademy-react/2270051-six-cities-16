@@ -1,7 +1,7 @@
 import {useEffect} from 'react';
 import {Helmet} from 'react-helmet-async';
 import {useParams} from 'react-router-dom';
-import {MemoizedHeader as Header} from '../../components/header/header';
+import Header from '../../components/header/header';
 import CommentForm from '../../components/comment-form/comment-form';
 import ReviewList from '../../components/review-list/review-list';
 import Map from '../../components/map/map';

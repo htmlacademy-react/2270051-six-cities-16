@@ -1,10 +1,10 @@
-import {useCallback, useEffect, useMemo, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {Helmet} from 'react-helmet-async';
 import classNames from 'classnames';
-import {MemoizedHeader as Header} from '../../components/header/header';
-import {MemoizedLocationList as LocationList} from '../../components/location-list/location-list';
-import {MemoizedSortingForm as SortingForm} from '../../components/sorting-form/sorting-form';
-import {MemoizedOfferList as OfferList} from '../../components/offer-list/offer-list';
+import Header from '../../components/header/header';
+import LocationList from '../../components/location-list/location-list';
+import SortingForm from '../../components/sorting-form/sorting-form';
+import OfferList from '../../components/offer-list/offer-list';
 import Map from '../../components/map/map';
 import Spinner from '../../components/spinner/spinner';
 import NoPlacesAvailable from '../../components/no-places-available/no-places-available';
@@ -15,7 +15,6 @@ import {fetchAllOffers} from '../../store/offers-slice';
 import useCityFilteredOffers from '../../hooks/use-city-filtered-offers';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {SortType, RequestStatus} from '../../const';
-
 
 type MainPageProps = {
   cities: City[];
@@ -33,20 +32,15 @@ function MainPage({cities}: MainPageProps) {
     dispatch(fetchAllOffers());
   }, [dispatch]);
 
-  const sortedOffers = useMemo(() => {
-    if (status === RequestStatus.Success) {
-      return sortOffers(filteredOffers, currentSortType);
-    }
-    return [];
-  }, [filteredOffers, currentSortType, status]);
+  const sortedOffers = status === RequestStatus.Success ? sortOffers(filteredOffers, currentSortType) : [];
 
-  const handleSortChange = useCallback((sortType: SortType) => {
+  const handleSortChange = (sortType: SortType) => {
     setCurrentSortType(sortType);
-  }, []);
+  };
 
-  const handleActiveOfferChange = useCallback((offerId: string | null) => {
+  const handleActiveOfferChange = (offerId: string | null) => {
     setActiveOfferId(offerId);
-  }, []);
+  };
 
   const offersCount = sortedOffers.length;
 

@@ -22,4 +22,4 @@ function LocationList({cities, activeCity}: LocationListProps) {
   );
 }
 
-export const MemoizedLocationList = React.memo(LocationList);
+export default LocationList;

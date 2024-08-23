@@ -1,6 +1,6 @@
 import {Helmet} from 'react-helmet-async';
 import {Link} from 'react-router-dom';
-import {MemoizedHeader as Header} from '../../components/header/header';
+import Header from '../../components/header/header';
 import {groupFavorites} from './utils';
 import {useAppSelector} from '../../hooks/redux-hooks';
 import BookmarkButton from '../../components/bookmark-button/bookmark-button';

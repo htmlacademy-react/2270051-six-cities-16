@@ -15,7 +15,7 @@ import {RootState} from '../../store';
 import {fetchOfferById, fetchNearbyOffers, fetchComments} from '../../store/offer-slice';
 import {NEARBY_OFFERS_COUNT, RequestStatus} from '../../const';
 import {BaseOffer} from '../../lib/types/offer';
-import FavoritesButton from '../../components/bookmark-button/favorites-button';
+import FavoritesButton from '../../components/favorites-button/favorites-button';
 
 function OfferPage() {
   const {id} = useParams<{id: string}>();

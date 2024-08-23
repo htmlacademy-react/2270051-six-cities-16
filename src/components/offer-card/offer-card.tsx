@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import FavoritesButton from '../bookmark-button/favorites-button';
+import FavoritesButton from '../favorites-button/favorites-button';
 import {BaseOffer} from '../../lib/types/offer';
 
 type OfferCardProps = {

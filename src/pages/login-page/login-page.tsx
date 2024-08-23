@@ -16,7 +16,7 @@ function LoginPage() {
   const error = useAppSelector((state) => state.user.error);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [randomCity, setRandomCity] = useState(getRandomCity(CITY));
+  const randomCity = getRandomCity(CITY);
 
   useEffect(() => {
     if (authorizationStatus === AuthorizationStatus.Auth) {

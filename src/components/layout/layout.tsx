@@ -1,23 +1,37 @@
 import React from 'react';
-import {Outlet, useLocation} from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
 import Header from '../header/header';
 import {AppRoute} from '../../const';
 
 type LayoutProps = {
-  children?: React.ReactNode;
+  children: React.ReactNode;
 };
 
 function Layout({children}: LayoutProps) {
   const location = useLocation();
 
+  const isMainPage = location.pathname === AppRoute.Root;
   const isLoginPage = location.pathname === AppRoute.Login;
+  const isOfferPage = location.pathname === AppRoute.Offer;
 
-  const pageClasses = isLoginPage ? 'page page--gray page--login' : 'page';
+  let pageClasses = 'page';
+
+  if (isMainPage) {
+    pageClasses += ' page--gray page--main';
+  }
+
+  if (isLoginPage) {
+    pageClasses += ' page--gray page--login';
+  }
+
+  if (isOfferPage) {
+    pageClasses += ' page__main--offer';
+  }
 
   return (
     <div className={pageClasses}>
       {!isLoginPage && <Header />}
-      <main>{children || <Outlet />}</main>
+      {children}
     </div>
   );
 }

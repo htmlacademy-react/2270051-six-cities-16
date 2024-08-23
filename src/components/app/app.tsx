@@ -31,18 +31,16 @@ function App() {
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
-          <Route path={AppRoute.Login} element={<LoginPage />} />
-          <Route path="/" element={<Layout />}>
-            <Route path={AppRoute.Root} element={<MainPage cities={CITY} />} />
-            <Route path={AppRoute.Favorites} element={
-              <PrivateRoute>
-                <FavoritesPage />
-              </PrivateRoute>
-            }
-            />
-            <Route path={AppRoute.Offer} element={<OfferPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Route>
+          <Route path={AppRoute.Root} element={<Layout><MainPage cities={CITY} /></Layout>} />
+          <Route path={AppRoute.Login} element={<Layout><LoginPage /></Layout>} />
+          <Route path={AppRoute.Favorites} element={
+            <PrivateRoute>
+              <Layout><FavoritesPage /></Layout>
+            </PrivateRoute>
+          }
+          />
+          <Route path={AppRoute.Offer} element={<Layout><OfferPage /></Layout>} />
+          <Route path="*" element={<Layout><NotFoundPage /></Layout>} />
         </Routes>
       </BrowserRouter>
     </HelmetProvider>

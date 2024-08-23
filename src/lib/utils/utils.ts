@@ -1,4 +1,4 @@
-import {BaseOffer} from '../types/offer';
+import {BaseOffer, City} from '../types/offer';
 import {SortType} from '../../const';
 
 export function formatDate(date: string): string {
@@ -21,4 +21,8 @@ export function sortOffers(offers: BaseOffer[], sortType: SortType): BaseOffer[]
 
 export function getNumericValues(values: (string | number)[]): number[] {
   return values.filter((value) => typeof value === 'number') as number[];
+}
+
+export function getRandomCity(cities: City[]) {
+  return cities[Math.floor(Math.random() * cities.length)];
 }

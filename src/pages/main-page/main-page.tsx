@@ -1,4 +1,5 @@
 import {useEffect, useState} from 'react';
+import {useLocation} from 'react-router-dom';
 import {Helmet} from 'react-helmet-async';
 import classNames from 'classnames';
 import LocationList from '../../components/location-list/location-list';
@@ -10,6 +11,7 @@ import NoPlacesAvailable from '../../components/no-places-available/no-places-av
 import {sortOffers} from '../../lib/utils/utils';
 import {City} from '../../lib/types/offer';
 import {RootState} from '../../store';
+import {setCity} from '../../store/actions';
 import {fetchAllOffers} from '../../store/offers-slice';
 import useCityFilteredOffers from '../../hooks/use-city-filtered-offers';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
@@ -23,13 +25,24 @@ function MainPage({cities}: MainPageProps) {
   const dispatch = useAppDispatch();
   const {status, city} = useAppSelector((state: RootState) => state.offers);
   const filteredOffers = useCityFilteredOffers();
-
   const [currentSortType, setCurrentSortType] = useState<SortType>(SortType.Popular);
   const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
+  const location = useLocation();
 
   useEffect(() => {
     dispatch(fetchAllOffers());
   }, [dispatch]);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const cityName = searchParams.get('city');
+    if (cityName) {
+      const selectedCity = cities.find((c) => c.name === cityName);
+      if (selectedCity) {
+        dispatch(setCity(selectedCity));
+      }
+    }
+  }, [location.search, cities, dispatch]);
 
   const sortedOffers = status === RequestStatus.Success ? sortOffers(filteredOffers, currentSortType) : [];
 

@@ -1,6 +1,6 @@
+import {useState} from 'react';
 import classNames from 'classnames';
 import useToggle from '../../hooks/use-toggle';
-import React, {useState} from 'react';
 import {SortType, SortTypeNames} from '../../const';
 import {getNumericValues} from '../../lib/utils/utils';
 

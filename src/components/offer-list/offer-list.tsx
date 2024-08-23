@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import {useCallback, useState} from 'react';
 import {MemoizedOfferCard as OfferCard} from '../offer-card/offer-card';
 import {BaseOffer} from '../../lib/types/offer';
 

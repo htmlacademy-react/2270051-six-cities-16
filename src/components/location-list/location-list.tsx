@@ -1,4 +1,3 @@
-import React from 'react';
 import LocationItem from '../location-item/location-item';
 import {City} from '../../lib/types/offer';
 

@@ -1,15 +1,17 @@
-import {useCallback, useEffect, useMemo, useState} from 'react';
+import {useEffect, useState} from 'react';
+import {useLocation} from 'react-router-dom';
 import {Helmet} from 'react-helmet-async';
 import classNames from 'classnames';
-import {MemoizedHeader as Header} from '../../components/header/header';
-import {MemoizedLocationList as LocationList} from '../../components/location-list/location-list';
-import {MemoizedSortingForm as SortingForm} from '../../components/sorting-form/sorting-form';
-import {MemoizedOfferList as OfferList} from '../../components/offer-list/offer-list';
+import LocationList from '../../components/location-list/location-list';
+import SortingForm from '../../components/sorting-form/sorting-form';
+import OfferList from '../../components/offer-list/offer-list';
 import Map from '../../components/map/map';
 import Spinner from '../../components/spinner/spinner';
+import NoPlacesAvailable from '../../components/no-places-available/no-places-available';
 import {sortOffers} from '../../lib/utils/utils';
 import {City} from '../../lib/types/offer';
 import {RootState} from '../../store';
+import {setCity} from '../../store/actions';
 import {fetchAllOffers} from '../../store/offers-slice';
 import useCityFilteredOffers from '../../hooks/use-city-filtered-offers';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
@@ -23,28 +25,34 @@ function MainPage({cities}: MainPageProps) {
   const dispatch = useAppDispatch();
   const {status, city} = useAppSelector((state: RootState) => state.offers);
   const filteredOffers = useCityFilteredOffers();
-
   const [currentSortType, setCurrentSortType] = useState<SortType>(SortType.Popular);
   const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
+  const location = useLocation();
 
   useEffect(() => {
     dispatch(fetchAllOffers());
   }, [dispatch]);
 
-  const sortedOffers = useMemo(() => {
-    if (status === RequestStatus.Success) {
-      return sortOffers(filteredOffers, currentSortType);
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const cityName = searchParams.get('city');
+    if (cityName) {
+      const selectedCity = cities.find((c) => c.name === cityName);
+      if (selectedCity) {
+        dispatch(setCity(selectedCity));
+      }
     }
-    return [];
-  }, [filteredOffers, currentSortType, status]);
+  }, [location.search, cities, dispatch]);
 
-  const handleSortChange = useCallback((sortType: SortType) => {
+  const sortedOffers = status === RequestStatus.Success ? sortOffers(filteredOffers, currentSortType) : [];
+
+  const handleSortChange = (sortType: SortType) => {
     setCurrentSortType(sortType);
-  }, []);
+  };
 
-  const handleActiveOfferChange = useCallback((offerId: string | null) => {
+  const handleActiveOfferChange = (offerId: string | null) => {
     setActiveOfferId(offerId);
-  }, []);
+  };
 
   const offersCount = sortedOffers.length;
 
@@ -57,12 +65,10 @@ function MainPage({cities}: MainPageProps) {
   }
 
   return (
-    <div className="page page--gray page--main">
+    <>
       <Helmet>
         <title>6 cities</title>
       </Helmet>
-
-      <Header />
 
       <main className={classNames('page__main page__main--index', { 'page__main--index-empty': offersCount === 0 })}>
         <h1 className="visually-hidden">Cities</h1>
@@ -76,17 +82,7 @@ function MainPage({cities}: MainPageProps) {
         </div>
         <div className="cities">
           {offersCount === 0 ? (
-            <div className="cities__places-container cities__places-container--empty container">
-              <section className="cities__no-places">
-                <div className="cities__status-wrapper tabs__content">
-                  <b className="cities__status">No places to stay available</b>
-                  <p className="cities__status-description">
-                    We could not find any property available at the moment in {city.name}
-                  </p>
-                </div>
-              </section>
-              <div className="cities__right-section"></div>
-            </div>
+            <NoPlacesAvailable cityName={city.name} />
           ) : (
             <div className="cities__places-container container">
               <section className="cities__places places">
@@ -104,7 +100,7 @@ function MainPage({cities}: MainPageProps) {
           )}
         </div>
       </main>
-    </div>
+    </>
   );
 }
 

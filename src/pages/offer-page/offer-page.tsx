@@ -1,7 +1,6 @@
 import {useEffect} from 'react';
 import {Helmet} from 'react-helmet-async';
 import {useParams} from 'react-router-dom';
-import {MemoizedHeader as Header} from '../../components/header/header';
 import CommentForm from '../../components/comment-form/comment-form';
 import ReviewList from '../../components/review-list/review-list';
 import Map from '../../components/map/map';
@@ -16,6 +15,7 @@ import {RootState} from '../../store';
 import {fetchOfferById, fetchNearbyOffers, fetchComments} from '../../store/offer-slice';
 import {NEARBY_OFFERS_COUNT, RequestStatus} from '../../const';
 import {BaseOffer} from '../../lib/types/offer';
+import FavoritesButton from '../../components/favorites-button/favorites-button';
 
 function OfferPage() {
   const {id} = useParams<{id: string}>();
@@ -47,12 +47,10 @@ function OfferPage() {
   }
 
   return (
-    <div className="page">
+    <>
       <Helmet>
         <title>6 cities: offer</title>
       </Helmet>
-
-      <Header />
 
       <main className="page__main page__main--offer">
         <section className="offer">
@@ -68,12 +66,14 @@ function OfferPage() {
               )}
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">{offer.title}</h1>
-                <button className="offer__bookmark-button button" type="button">
-                  <svg className="offer__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark"></use>
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <FavoritesButton
+                  offerId={offer.id}
+                  isFavorite={offer.isFavorite}
+                  buttonClassName="offer__bookmark-button"
+                  iconClassName="offer__bookmark-icon"
+                  iconWidth="31"
+                  iconHeight="33"
+                />
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
@@ -125,7 +125,7 @@ function OfferPage() {
           </section>
         </div>
       </main>
-    </div>
+    </>
   );
 }
 

@@ -5,11 +5,13 @@ import {ApiRoute, AuthorizationStatus, DEFAULT_CITY, LOGIN_FAILED_MESSAGE, Reque
 import {State} from '../lib/types/state';
 import {AuthorizationUser} from '../lib/types/user';
 import {AppDispatch, RootState} from './index';
-import {clearError, setAuthorizationStatus, setAuthorizationUser, setError} from './actions';
+import {clearError, setAuthorizationStatus, setAuthorizationUser, setError, clearFavorites} from './actions';
+import {fetchFavorites} from './offers-slice';
 
 const initialState: State = {
   city: DEFAULT_CITY,
   offers: [],
+  favorites: [],
   status: RequestStatus.Idle,
   error: undefined,
   authorizationStatus: AuthorizationStatus.Unknown,
@@ -26,10 +28,15 @@ export const checkAuthorization = createAsyncThunk<
   }
   >(ThunkAction.CheckAuth,
     async (_, { dispatch, extra: api }) => {
-      const response = await api.get<AuthorizationUser>(ApiRoute.Login);
-      dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
-      dispatch(setAuthorizationUser(response.data));
-      return response.data;
+      try {
+        const response = await api.get<AuthorizationUser>(ApiRoute.Login);
+        dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
+        dispatch(setAuthorizationUser(response.data));
+        return response.data;
+      } catch (error) {
+        dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
+        throw error;
+      }
     });
 
 export const login = createAsyncThunk<
@@ -47,6 +54,7 @@ export const login = createAsyncThunk<
         saveToken(response.data.token);
         dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
         dispatch(setAuthorizationUser(response.data));
+        dispatch(fetchFavorites());
         return response.data;
       } catch (error) {
         throw new Error(LOGIN_FAILED_MESSAGE);
@@ -67,6 +75,7 @@ export const logout = createAsyncThunk<
       dropToken();
       dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
       dispatch(setAuthorizationUser(null));
+      dispatch(clearFavorites());
     });
 
 const userSlice = createSlice({

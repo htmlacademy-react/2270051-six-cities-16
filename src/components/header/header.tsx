@@ -1,14 +1,14 @@
-import React from 'react';
 import {Link} from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import {logout} from '../../store/user-slice';
-import {useAppDispatch} from '../../hooks/redux-hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {useUser} from '../../hooks/use-user';
 import {AppRoute, AuthorizationStatus} from '../../const';
 
 function Header() {
   const dispatch = useAppDispatch();
   const {authorizationStatus, authorizationUser} = useUser();
+  const favoritesCount = useAppSelector((state) => state.offers.favorites.length);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -31,7 +31,7 @@ function Header() {
                         <img src={authorizationUser?.avatarUrl} alt="User avatar" />
                       </div>
                       <span className="header__user-name user__name">{authorizationUser?.email}</span>
-                      <span className="header__favorite-count">3</span>
+                      <span className="header__favorite-count">{favoritesCount}</span>
                     </Link>
                   </li>
                   <li className="header__nav-item">
@@ -56,4 +56,4 @@ function Header() {
   );
 }
 
-export const MemoizedHeader = React.memo(Header);
+export default Header;

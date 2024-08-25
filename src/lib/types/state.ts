@@ -6,6 +6,7 @@ import {Review} from './review';
 export type State = {
   city: City;
   offers: BaseOffer[];
+  favorites: BaseOffer[];
   status: keyof typeof RequestStatus;
   error: string | undefined;
   authorizationStatus: keyof typeof AuthorizationStatus;

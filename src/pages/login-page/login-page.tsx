@@ -5,8 +5,9 @@ import Logo from '../../components/logo/logo';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {isValidPassword} from './utils';
 import {login} from '../../store/user-slice';
-import {AppRoute, AuthorizationStatus, PASSWORD_ERROR_MESSAGE} from '../../const';
+import {AppRoute, AuthorizationStatus, CITY, PASSWORD_ERROR_MESSAGE} from '../../const';
 import {clearError, setError} from '../../store/actions';
+import {getRandomCity} from '../../lib/utils/utils';
 
 function LoginPage() {
   const dispatch = useAppDispatch();
@@ -15,6 +16,7 @@ function LoginPage() {
   const error = useAppSelector((state) => state.user.error);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const randomCity = getRandomCity(CITY);
 
   useEffect(() => {
     if (authorizationStatus === AuthorizationStatus.Auth) {
@@ -90,8 +92,8 @@ function LoginPage() {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <Link className="locations__item-link" to={AppRoute.Root}>
-                <span>Amsterdam</span>
+              <Link className="locations__item-link" to={`${AppRoute.Root}?city=${randomCity.name}`}>
+                <span>{randomCity.name}</span>
               </Link>
             </div>
           </section>

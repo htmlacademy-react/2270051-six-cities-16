@@ -74,6 +74,34 @@ export const postComment = createAsyncThunk<
       }
     });
 
+export const addToFavorites = createAsyncThunk<
+  Offer,
+  string,
+  {
+    dispatch: AppDispatch;
+    state: RootState;
+    extra: AxiosInstance;
+  }
+  >(ThunkAction.AddToFavorites,
+    async (id, { extra: api }) => {
+      const response = await api.post<Offer>(`${ApiRoute.Favorite}/${id}/1`);
+      return response.data;
+    });
+
+export const removeFromFavorites = createAsyncThunk<
+  Offer,
+  string,
+  {
+    dispatch: AppDispatch;
+    state: RootState;
+    extra: AxiosInstance;
+  }
+  >(ThunkAction.RemoveFromFavorites,
+    async (id, { extra: api }) => {
+      const response = await api.post<Offer>(`${ApiRoute.Favorite}/${id}/0`);
+      return response.data;
+    });
+
 const offerSlice = createSlice({
   name: 'offer',
   initialState,
@@ -112,6 +140,22 @@ const offerSlice = createSlice({
       })
       .addCase(postComment.rejected, (state, action) => {
         state.submitError = action.error.message ?? COMMENT_SUBMIT_ERROR_MESSAGE;
+      })
+      .addCase(addToFavorites.fulfilled, (state, action: PayloadAction<Offer>) => {
+        if (state.offer && state.offer.id === action.payload.id) {
+          state.offer.isFavorite = true;
+        }
+        state.nearbyOffers = state.nearbyOffers.map((offer) =>
+          offer.id === action.payload.id ? { ...offer, isFavorite: true } : offer
+        );
+      })
+      .addCase(removeFromFavorites.fulfilled, (state, action: PayloadAction<Offer>) => {
+        if (state.offer && state.offer.id === action.payload.id) {
+          state.offer.isFavorite = false;
+        }
+        state.nearbyOffers = state.nearbyOffers.map((offer) =>
+          offer.id === action.payload.id ? { ...offer, isFavorite: false } : offer
+        );
       });
   },
 });

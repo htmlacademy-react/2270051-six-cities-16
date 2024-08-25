@@ -16,13 +16,17 @@ function LoginPage() {
   const error = useAppSelector((state) => state.user.error);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const randomCity = getRandomCity(CITY);
+  const [randomCity, setRandomCity] = useState(getRandomCity(CITY));
 
   useEffect(() => {
     if (authorizationStatus === AuthorizationStatus.Auth) {
       navigate(AppRoute.Root);
     }
   }, [authorizationStatus, navigate]);
+
+  useEffect(() => {
+    setRandomCity(getRandomCity(CITY));
+  }, []);
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();

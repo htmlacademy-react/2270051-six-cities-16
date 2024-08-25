@@ -35,30 +35,30 @@ const offerSlice = createSlice({
         state.offer = action.payload;
         state.loadError = undefined;
       })
-      .addCase(fetchOfferById.rejected, (state, action) => {
+      .addCase(fetchOfferById.rejected, (state) => {
         state.status = RequestStatus.Failed;
-        state.loadError = action.error.message ?? ERROR_MESSAGE;
+        state.loadError = ERROR_MESSAGE;
       })
       .addCase(fetchNearbyOffers.fulfilled, (state, action: PayloadAction<BaseOffer[]>) => {
         state.nearbyOffers = action.payload;
         state.loadError = undefined;
       })
-      .addCase(fetchNearbyOffers.rejected, (state, action) => {
-        state.loadError = action.error.message ?? ERROR_MESSAGE;
+      .addCase(fetchNearbyOffers.rejected, (state) => {
+        state.loadError = ERROR_MESSAGE;
       })
       .addCase(fetchComments.fulfilled, (state, action: PayloadAction<Review[]>) => {
         state.comments = action.payload;
         state.loadError = undefined;
       })
-      .addCase(fetchComments.rejected, (state, action) => {
-        state.loadError = action.error.message ?? ERROR_MESSAGE;
+      .addCase(fetchComments.rejected, (state) => {
+        state.loadError = ERROR_MESSAGE;
       })
       .addCase(postComment.fulfilled, (state, action: PayloadAction<Review>) => {
         state.comments.push(action.payload);
         state.submitError = undefined;
       })
-      .addCase(postComment.rejected, (state, action) => {
-        state.submitError = action.error.message ?? COMMENT_SUBMIT_ERROR_MESSAGE;
+      .addCase(postComment.rejected, (state) => {
+        state.submitError = COMMENT_SUBMIT_ERROR_MESSAGE;
       })
       .addCase(addToFavorites.fulfilled, (state, action: PayloadAction<Offer>) => {
         if (state.offer && state.offer.id === action.payload.id) {

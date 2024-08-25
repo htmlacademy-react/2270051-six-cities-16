@@ -5,7 +5,6 @@ import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {useUser} from '../../hooks/use-user';
 import {AppRoute, AuthorizationStatus} from '../../const';
 
-
 function Header() {
   const dispatch = useAppDispatch();
   const {authorizationStatus, authorizationUser} = useUser();

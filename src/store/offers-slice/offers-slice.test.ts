@@ -8,8 +8,8 @@ import {
 } from './offers-thunk';
 import { AuthorizationStatus, DEFAULT_CITY, RequestStatus, ERROR_MESSAGE } from '../../const';
 import { State } from '../../lib/types/state';
-import { BaseOffer, City } from '../../lib/types/offer';
 import { clearFavorites, setCity } from '../actions';
+import { createMockBaseOffer, createMockCity } from '../../lib/utils/mocks';
 
 const initialState: State = {
   city: DEFAULT_CITY,
@@ -27,7 +27,7 @@ describe('offersSlice', () => {
   });
 
   it('should handle setCity', () => {
-    const mockCity: City = { name: 'Paris', location: { latitude: 48.8566, longitude: 2.3522, zoom: 13 } };
+    const mockCity = createMockCity();
     const state = offersReducer(initialState, setCity(mockCity));
     expect(state.city).toEqual(mockCity);
   });
@@ -38,7 +38,7 @@ describe('offersSlice', () => {
   });
 
   it('should handle fetchAllOffers.fulfilled', () => {
-    const mockOffers: BaseOffer[] = [{ id: '1', title: 'Test Offer' }] as BaseOffer[];
+    const mockOffers = [createMockBaseOffer()];
     const state = offersReducer(initialState, fetchAllOffers.fulfilled(mockOffers, ''));
     expect(state.status).toEqual(RequestStatus.Success);
     expect(state.offers).toEqual(mockOffers);
@@ -51,7 +51,7 @@ describe('offersSlice', () => {
   });
 
   it('should handle fetchFavorites.fulfilled', () => {
-    const mockFavorites: BaseOffer[] = [{ id: '1', isFavorite: true }] as BaseOffer[];
+    const mockFavorites = [createMockBaseOffer()];
     const state = offersReducer(initialState, fetchFavorites.fulfilled(mockFavorites, ''));
     expect(state.favorites).toEqual(mockFavorites);
     expect(state.offers.every((offer) => offer.isFavorite)).toBe(true);
@@ -63,10 +63,10 @@ describe('offersSlice', () => {
   });
 
   it('should handle addToFavorites.fulfilled', () => {
-    const mockOffer: BaseOffer = { id: '1', isFavorite: false } as BaseOffer;
-    const state = offersReducer({ ...initialState, offers: [mockOffer] }, addToFavorites.fulfilled(mockOffer, '', '1'));
+    const mockOffer = createMockBaseOffer();
+    const state = offersReducer({ ...initialState, offers: [mockOffer] }, addToFavorites.fulfilled(mockOffer, '', mockOffer.id));
     expect(state.favorites).toContain(mockOffer);
-    expect(state.offers.find((offer) => offer.id === '1')?.isFavorite).toBe(true);
+    expect(state.offers.find((offer) => offer.id === mockOffer.id)?.isFavorite).toBe(true);
   });
 
   it('should handle addToFavorites.rejected', () => {
@@ -75,10 +75,10 @@ describe('offersSlice', () => {
   });
 
   it('should handle removeFromFavorites.fulfilled', () => {
-    const mockOffer: BaseOffer = { id: '1', isFavorite: true } as BaseOffer;
-    const state = offersReducer({ ...initialState, offers: [mockOffer], favorites: [mockOffer] }, removeFromFavorites.fulfilled(mockOffer, '', '1'));
+    const mockOffer = createMockBaseOffer();
+    const state = offersReducer({ ...initialState, offers: [mockOffer], favorites: [mockOffer] }, removeFromFavorites.fulfilled(mockOffer, '', mockOffer.id));
     expect(state.favorites).not.toContain(mockOffer);
-    expect(state.offers.find((offer) => offer.id === '1')?.isFavorite).toBe(false);
+    expect(state.offers.find((offer) => offer.id === mockOffer.id)?.isFavorite).toBe(false);
   });
 
   it('should handle removeFromFavorites.rejected', () => {
@@ -87,7 +87,7 @@ describe('offersSlice', () => {
   });
 
   it('should handle clearFavorites', () => {
-    const mockOffer: BaseOffer = { id: '1', isFavorite: true } as BaseOffer;
+    const mockOffer = createMockBaseOffer();
     const state = offersReducer({ ...initialState, offers: [mockOffer], favorites: [mockOffer] }, clearFavorites());
     expect(state.favorites).toEqual([]);
     expect(state.offers.every((offer) => !offer.isFavorite)).toBe(true);

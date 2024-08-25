@@ -4,7 +4,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { checkAuthorization, login, logout } from './user-thunk';
 import { setAuthorizationStatus, setAuthorizationUser, clearFavorites } from '../actions';
 import { AuthorizationStatus, ApiRoute } from '../../const';
-import { AuthorizationUser } from '../../lib/types/user';
+import { createMockUser } from '../../lib/utils/mocks';
 import { RootState } from '../index';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
@@ -22,13 +22,7 @@ describe('User Thunks', () => {
 
   describe('checkAuthorization', () => {
     it('should dispatch setAuthorizationStatus and setAuthorizationUser on success', async () => {
-      const mockUser: AuthorizationUser = {
-        name: 'John Doe',
-        email: 'john.doe@example.com',
-        token: 'token',
-        avatarUrl: '',
-        isPro: false
-      };
+      const mockUser = createMockUser();
       mock.onGet(ApiRoute.Login).reply(200, mockUser);
 
       await checkAuthorization()(dispatch, getState, axios);
@@ -48,13 +42,7 @@ describe('User Thunks', () => {
 
   describe('login', () => {
     it('should dispatch setAuthorizationStatus and setAuthorizationUser on success', async () => {
-      const mockUser: AuthorizationUser = {
-        name: 'John Doe',
-        email: 'john.doe@example.com',
-        token: 'token',
-        avatarUrl: '',
-        isPro: false
-      };
+      const mockUser = createMockUser();
       mock.onPost(ApiRoute.Login).reply(200, mockUser);
 
       await login({ email: 'test@test.com', password: 'password' })(dispatch, getState, axios);
@@ -62,7 +50,6 @@ describe('User Thunks', () => {
       expect(dispatch).toHaveBeenCalledWith(setAuthorizationStatus(AuthorizationStatus.Auth));
       expect(dispatch).toHaveBeenCalledWith(setAuthorizationUser(mockUser));
     });
-
   });
 
   describe('logout', () => {

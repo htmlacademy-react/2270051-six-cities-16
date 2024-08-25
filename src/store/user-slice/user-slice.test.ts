@@ -3,7 +3,7 @@ import userReducer from './user-slice';
 import { checkAuthorization, login, logout } from './user-thunk';
 import { AuthorizationStatus, DEFAULT_CITY, RequestStatus } from '../../const';
 import { State } from '../../lib/types/state';
-import { AuthorizationUser } from '../../lib/types/user';
+import { createMockUser } from '../../lib/utils/mocks';
 
 const initialState: State = {
   city: DEFAULT_CITY,
@@ -21,13 +21,7 @@ describe('userSlice', () => {
   });
 
   it('should handle checkAuthorization.fulfilled', () => {
-    const mockUser: AuthorizationUser = {
-      name: 'John Doe',
-      email: 'john.doe@example.com',
-      token: 'token',
-      avatarUrl: '',
-      isPro: false
-    };
+    const mockUser = createMockUser();
     const state = userReducer(initialState, checkAuthorization.fulfilled(mockUser, ''));
     expect(state.authorizationStatus).toEqual(AuthorizationStatus.Auth);
     expect(state.authorizationUser).toEqual(mockUser);
@@ -40,13 +34,7 @@ describe('userSlice', () => {
   });
 
   it('should handle login.fulfilled', () => {
-    const mockUser: AuthorizationUser = {
-      name: 'John Doe',
-      email: 'john.doe@example.com',
-      token: 'token',
-      avatarUrl: '',
-      isPro: false
-    };
+    const mockUser = createMockUser();
     const state = userReducer(initialState, login.fulfilled(mockUser, '', { email: 'test@test.com', password: 'password' }));
     expect(state.authorizationStatus).toEqual(AuthorizationStatus.Auth);
     expect(state.authorizationUser).toEqual(mockUser);
@@ -58,5 +46,4 @@ describe('userSlice', () => {
     expect(state.authorizationStatus).toEqual(AuthorizationStatus.NoAuth);
     expect(state.authorizationUser).toBeNull();
   });
-
 });

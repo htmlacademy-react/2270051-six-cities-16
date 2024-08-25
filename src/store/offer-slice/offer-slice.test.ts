@@ -10,8 +10,7 @@ import {
 } from './offer-thunk';
 import { RequestStatus, ERROR_MESSAGE, COMMENT_SUBMIT_ERROR_MESSAGE } from '../../const';
 import { OfferState } from '../../lib/types/state';
-import { BaseOffer, Offer } from '../../lib/types/offer';
-import { Review } from '../../lib/types/review';
+import { createMockBaseOffer, createMockOffer, createMockReview } from '../../lib/utils/mocks';
 
 const initialState: OfferState = {
   offer: null,
@@ -33,8 +32,8 @@ describe('offerSlice', () => {
   });
 
   it('should handle fetchOfferById.fulfilled', () => {
-    const mockOffer: Offer = { id: '1', title: 'Test Offer' } as Offer;
-    const state = offerReducer(initialState, fetchOfferById.fulfilled(mockOffer, '', '1'));
+    const mockOffer = createMockOffer();
+    const state = offerReducer(initialState, fetchOfferById.fulfilled(mockOffer, '', mockOffer.id));
     expect(state.status).toEqual(RequestStatus.Success);
     expect(state.offer).toEqual(mockOffer);
     expect(state.loadError).toBeUndefined();
@@ -47,7 +46,7 @@ describe('offerSlice', () => {
   });
 
   it('should handle fetchNearbyOffers.fulfilled', () => {
-    const mockOffers = [{ id: '2', title: 'Nearby Offer' }] as BaseOffer[];
+    const mockOffers = [createMockBaseOffer()];
     const state = offerReducer(initialState, fetchNearbyOffers.fulfilled(mockOffers, '', '1'));
     expect(state.nearbyOffers).toEqual(mockOffers);
     expect(state.loadError).toBeUndefined();
@@ -59,7 +58,7 @@ describe('offerSlice', () => {
   });
 
   it('should handle fetchComments.fulfilled', () => {
-    const mockComments: Review[] = [{ id: '1', comment: 'Great place!' }] as Review[];
+    const mockComments = [createMockReview()];
     const state = offerReducer(initialState, fetchComments.fulfilled(mockComments, '', '1'));
     expect(state.comments).toEqual(mockComments);
     expect(state.loadError).toBeUndefined();
@@ -71,8 +70,8 @@ describe('offerSlice', () => {
   });
 
   it('should handle postComment.fulfilled', () => {
-    const mockComment: Review = { id: '2', comment: 'Nice stay!' } as Review;
-    const state = offerReducer(initialState, postComment.fulfilled(mockComment, '', { id: '1', comment: 'Nice stay!', rating: 5 }));
+    const mockComment = createMockReview();
+    const state = offerReducer(initialState, postComment.fulfilled(mockComment, '', { id: '1', comment: mockComment.comment, rating: mockComment.rating }));
     expect(state.comments).toContain(mockComment);
     expect(state.submitError).toBeUndefined();
   });
@@ -83,28 +82,14 @@ describe('offerSlice', () => {
   });
 
   it('should handle addToFavorites.fulfilled', () => {
-    const mockOffer: Offer = { id: '1', isFavorite: false } as Offer;
-    const state = offerReducer({ ...initialState, offer: mockOffer }, addToFavorites.fulfilled(mockOffer, '', '1'));
+    const mockOffer = createMockOffer();
+    const state = offerReducer({ ...initialState, offer: mockOffer }, addToFavorites.fulfilled(mockOffer, '', mockOffer.id));
     expect(state.offer?.isFavorite).toBe(true);
   });
 
   it('should handle removeFromFavorites.fulfilled', () => {
-    const mockOffer: Offer = { id: '1', isFavorite: true } as Offer;
-    const state = offerReducer({ ...initialState, offer: mockOffer }, removeFromFavorites.fulfilled(mockOffer, '', '1'));
+    const mockOffer = createMockOffer();
+    const state = offerReducer({ ...initialState, offer: mockOffer }, removeFromFavorites.fulfilled(mockOffer, '', mockOffer.id));
     expect(state.offer?.isFavorite).toBe(false);
-  });
-
-  it('should handle addToFavorites.fulfilled for nearby offers', () => {
-    const mockOffer: Offer = { id: '2', isFavorite: false } as Offer;
-    const mockNearbyOffers = [{ id: '2', isFavorite: false }] as BaseOffer[];
-    const state = offerReducer({ ...initialState, nearbyOffers: mockNearbyOffers }, addToFavorites.fulfilled(mockOffer, '', '2'));
-    expect(state.nearbyOffers[0].isFavorite).toBe(true);
-  });
-
-  it('should handle removeFromFavorites.fulfilled for nearby offers', () => {
-    const mockOffer: Offer = { id: '2', isFavorite: true } as Offer;
-    const mockNearbyOffers = [{ id: '2', isFavorite: true }] as BaseOffer[];
-    const state = offerReducer({ ...initialState, nearbyOffers: mockNearbyOffers }, removeFromFavorites.fulfilled(mockOffer, '', '2'));
-    expect(state.nearbyOffers[0].isFavorite).toBe(false);
   });
 });

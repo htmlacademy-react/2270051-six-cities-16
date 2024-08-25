@@ -3,7 +3,7 @@ import {Navigate} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {RootState} from '../../store';
 import {AppRoute, AuthorizationStatus} from '../../const';
-import {fetchFavorites} from '../../store/offers-slice';
+import {fetchFavorites} from '../../store/offers-slice/offers-slice';
 
 type PrivateRouteProps = {
   children: React.ReactNode;

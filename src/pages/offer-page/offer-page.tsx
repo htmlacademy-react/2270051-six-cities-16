@@ -12,7 +12,7 @@ import Spinner from '../../components/spinner/spinner';
 import NotFoundPage from '../not-found-page/not-found-page';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {RootState} from '../../store';
-import {fetchOfferById, fetchNearbyOffers, fetchComments} from '../../store/offer-slice';
+import {fetchOfferById, fetchNearbyOffers, fetchComments} from '../../store/offer-slice/offer-thunk';
 import {NEARBY_OFFERS_COUNT, RequestStatus} from '../../const';
 import {BaseOffer} from '../../lib/types/offer';
 import FavoritesButton from '../../components/favorites-button/favorites-button';

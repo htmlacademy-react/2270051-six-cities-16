@@ -4,7 +4,7 @@ import {useNavigate, Link} from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {isValidPassword} from './utils';
-import {login} from '../../store/user-slice';
+import {login} from '../../store/user-slice/user-thunk';
 import {AppRoute, AuthorizationStatus, CITY, PASSWORD_ERROR_MESSAGE} from '../../const';
 import {clearError, setError} from '../../store/actions';
 import {getRandomCity} from '../../lib/utils/utils';

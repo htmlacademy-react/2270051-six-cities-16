@@ -12,7 +12,7 @@ import {sortOffers} from '../../lib/utils/utils';
 import {City} from '../../lib/types/offer';
 import {RootState} from '../../store';
 import {setCity} from '../../store/actions';
-import {fetchAllOffers} from '../../store/offers-slice';
+import {fetchAllOffers} from '../../store/offers-slice/offers-slice';
 import useCityFilteredOffers from '../../hooks/use-city-filtered-offers';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {SortType, RequestStatus} from '../../const';

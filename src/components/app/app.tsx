@@ -9,7 +9,7 @@ import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {checkAuthorization} from '../../store/user-slice/user-thunk';
-import {fetchFavorites} from '../../store/offers-slice/offers-slice';
+import {fetchFavorites} from '../../store/offers-slice/offers-thunk';
 import {AppRoute, AuthorizationStatus, CITY} from '../../const';
 import Layout from '../layout/layout';
 

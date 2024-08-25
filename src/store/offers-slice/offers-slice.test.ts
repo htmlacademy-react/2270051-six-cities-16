@@ -1,10 +1,11 @@
 import { describe, it, expect } from 'vitest';
-import offersReducer, {
+import offersReducer from './offers-slice';
+import {
   fetchAllOffers,
   fetchFavorites,
   addToFavorites,
   removeFromFavorites,
-} from './offers-slice';
+} from './offers-thunk';
 import { AuthorizationStatus, DEFAULT_CITY, RequestStatus } from '../../const';
 import { State } from '../../lib/types/state';
 import { BaseOffer, City } from '../../lib/types/offer';

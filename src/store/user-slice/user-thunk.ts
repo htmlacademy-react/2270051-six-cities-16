@@ -4,7 +4,7 @@ import { dropToken, saveToken } from '../../services/token';
 import { AuthorizationUser } from '../../lib/types/user';
 import { AppDispatch, RootState } from '../index';
 import {clearFavorites, setAuthorizationStatus, setAuthorizationUser} from '../actions';
-import { fetchFavorites } from '../offers-slice/offers-slice';
+import { fetchFavorites } from '../offers-slice/offers-thunk';
 import { ApiRoute, AuthorizationStatus, LOGIN_FAILED_MESSAGE, ThunkAction } from '../../const';
 
 export const checkAuthorization = createAsyncThunk<

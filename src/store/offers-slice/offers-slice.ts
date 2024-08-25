@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { setCity, clearFavorites } from '../actions';
 import { fetchAllOffers, fetchFavorites, addToFavorites, removeFromFavorites } from './offers-thunk';
-import { AuthorizationStatus, DEFAULT_CITY, RequestStatus } from '../../const';
+import { AuthorizationStatus, DEFAULT_CITY, RequestStatus, ERROR_MESSAGE } from '../../const';
 import { State } from '../../lib/types/state';
-import {BaseOffer, City} from '../../lib/types/offer';
+import { BaseOffer, City } from '../../lib/types/offer';
 
 const initialState: State = {
   city: DEFAULT_CITY,
@@ -33,6 +33,7 @@ const offersSlice = createSlice({
       })
       .addCase(fetchAllOffers.rejected, (state) => {
         state.status = RequestStatus.Failed;
+        state.error = ERROR_MESSAGE;
       })
       .addCase(fetchFavorites.fulfilled, (state, action) => {
         state.favorites = action.payload;
@@ -42,17 +43,26 @@ const offersSlice = createSlice({
           isFavorite: favoriteIds.includes(offer.id),
         }));
       })
+      .addCase(fetchFavorites.rejected, (state) => {
+        state.error = ERROR_MESSAGE;
+      })
       .addCase(addToFavorites.fulfilled, (state, action: PayloadAction<BaseOffer>) => {
         state.favorites.push(action.payload);
         state.offers = state.offers.map((offer) =>
           offer.id === action.payload.id ? { ...offer, isFavorite: true } : offer
         );
       })
+      .addCase(addToFavorites.rejected, (state) => {
+        state.error = ERROR_MESSAGE;
+      })
       .addCase(removeFromFavorites.fulfilled, (state, action: PayloadAction<BaseOffer>) => {
         state.favorites = state.favorites.filter((offer) => offer.id !== action.payload.id);
         state.offers = state.offers.map((offer) =>
           offer.id === action.payload.id ? { ...offer, isFavorite: false } : offer
         );
+      })
+      .addCase(removeFromFavorites.rejected, (state) => {
+        state.error = ERROR_MESSAGE;
       })
       .addCase(clearFavorites, (state) => {
         state.favorites = [];

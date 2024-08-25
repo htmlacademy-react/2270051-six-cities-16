@@ -6,7 +6,7 @@ import {
   addToFavorites,
   removeFromFavorites,
 } from './offers-thunk';
-import { AuthorizationStatus, DEFAULT_CITY, RequestStatus } from '../../const';
+import { AuthorizationStatus, DEFAULT_CITY, RequestStatus, ERROR_MESSAGE } from '../../const';
 import { State } from '../../lib/types/state';
 import { BaseOffer, City } from '../../lib/types/offer';
 import { clearFavorites, setCity } from '../actions';
@@ -44,11 +44,22 @@ describe('offersSlice', () => {
     expect(state.offers).toEqual(mockOffers);
   });
 
+  it('should handle fetchAllOffers.rejected', () => {
+    const state = offersReducer(initialState, fetchAllOffers.rejected(null, '', undefined, new Error('Failed to load')));
+    expect(state.status).toEqual(RequestStatus.Failed);
+    expect(state.error).toEqual(ERROR_MESSAGE);
+  });
+
   it('should handle fetchFavorites.fulfilled', () => {
     const mockFavorites: BaseOffer[] = [{ id: '1', isFavorite: true }] as BaseOffer[];
     const state = offersReducer(initialState, fetchFavorites.fulfilled(mockFavorites, ''));
     expect(state.favorites).toEqual(mockFavorites);
     expect(state.offers.every((offer) => offer.isFavorite)).toBe(true);
+  });
+
+  it('should handle fetchFavorites.rejected', () => {
+    const state = offersReducer(initialState, fetchFavorites.rejected(null, '', undefined, new Error('Failed to load favorites')));
+    expect(state.error).toEqual(ERROR_MESSAGE);
   });
 
   it('should handle addToFavorites.fulfilled', () => {
@@ -58,11 +69,21 @@ describe('offersSlice', () => {
     expect(state.offers.find((offer) => offer.id === '1')?.isFavorite).toBe(true);
   });
 
+  it('should handle addToFavorites.rejected', () => {
+    const state = offersReducer(initialState, addToFavorites.rejected(null, '', '1', new Error('Failed to add to favorites')));
+    expect(state.error).toEqual(ERROR_MESSAGE);
+  });
+
   it('should handle removeFromFavorites.fulfilled', () => {
     const mockOffer: BaseOffer = { id: '1', isFavorite: true } as BaseOffer;
     const state = offersReducer({ ...initialState, offers: [mockOffer], favorites: [mockOffer] }, removeFromFavorites.fulfilled(mockOffer, '', '1'));
     expect(state.favorites).not.toContain(mockOffer);
     expect(state.offers.find((offer) => offer.id === '1')?.isFavorite).toBe(false);
+  });
+
+  it('should handle removeFromFavorites.rejected', () => {
+    const state = offersReducer(initialState, removeFromFavorites.rejected(null, '', '1', new Error('Failed to remove from favorites')));
+    expect(state.error).toEqual(ERROR_MESSAGE);
   });
 
   it('should handle clearFavorites', () => {

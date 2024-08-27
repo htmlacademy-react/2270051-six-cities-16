@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
-import {postComment} from '../../store/offer-slice';
+import {postComment} from '../../store/offer-slice/offer-thunk';
 import Rating from './rating';
 import {isValidCommentFormData} from './utils';
 import {AuthorizationStatus, MAX_COMMENT_LENGTH, MIN_COMMENT_LENGTH} from '../../const';

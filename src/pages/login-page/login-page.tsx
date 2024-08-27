@@ -4,7 +4,7 @@ import {useNavigate, Link} from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {isValidPassword} from './utils';
-import {login} from '../../store/user-slice';
+import {login} from '../../store/user-slice/user-thunk';
 import {AppRoute, AuthorizationStatus, CITY, PASSWORD_ERROR_MESSAGE} from '../../const';
 import {clearError, setError} from '../../store/actions';
 import {getRandomCity} from '../../lib/utils/utils';
@@ -16,13 +16,17 @@ function LoginPage() {
   const error = useAppSelector((state) => state.user.error);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const randomCity = getRandomCity(CITY);
+  const [randomCity, setRandomCity] = useState(getRandomCity(CITY));
 
   useEffect(() => {
     if (authorizationStatus === AuthorizationStatus.Auth) {
       navigate(AppRoute.Root);
     }
   }, [authorizationStatus, navigate]);
+
+  useEffect(() => {
+    setRandomCity(getRandomCity(CITY));
+  }, []);
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();

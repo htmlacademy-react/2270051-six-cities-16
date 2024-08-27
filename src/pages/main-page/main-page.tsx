@@ -12,7 +12,6 @@ import {sortOffers} from '../../lib/utils/utils';
 import {City} from '../../lib/types/offer';
 import {RootState} from '../../store';
 import {setCity} from '../../store/actions';
-import {fetchAllOffers} from '../../store/offers-slice';
 import useCityFilteredOffers from '../../hooks/use-city-filtered-offers';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {SortType, RequestStatus} from '../../const';
@@ -28,10 +27,6 @@ function MainPage({cities}: MainPageProps) {
   const [currentSortType, setCurrentSortType] = useState<SortType>(SortType.Popular);
   const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
   const location = useLocation();
-
-  useEffect(() => {
-    dispatch(fetchAllOffers());
-  }, [dispatch]);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);

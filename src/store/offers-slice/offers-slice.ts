@@ -1,10 +1,9 @@
-import {createSlice, PayloadAction, createAsyncThunk} from '@reduxjs/toolkit';
-import {AxiosInstance} from 'axios';
-import {clearFavorites, setCity} from './actions';
-import {AppDispatch, RootState} from '../store';
-import {BaseOffer, City} from '../lib/types/offer';
-import {State} from '../lib/types/state';
-import {ApiRoute, AuthorizationStatus, DEFAULT_CITY, RequestStatus, ThunkAction} from '../const';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { setCity, clearFavorites } from '../actions';
+import { fetchAllOffers, fetchFavorites, addToFavorites, removeFromFavorites } from './offers-thunk';
+import { AuthorizationStatus, DEFAULT_CITY, RequestStatus, ERROR_MESSAGE } from '../../const';
+import { State } from '../../lib/types/state';
+import { BaseOffer, City } from '../../lib/types/offer';
 
 const initialState: State = {
   city: DEFAULT_CITY,
@@ -15,62 +14,6 @@ const initialState: State = {
   authorizationStatus: AuthorizationStatus.Unknown,
   authorizationUser: null,
 };
-
-export const fetchAllOffers = createAsyncThunk<
-  BaseOffer[],
-  void,
-  {
-    dispatch: AppDispatch;
-    state: RootState;
-    extra: AxiosInstance;
-  }
-  >(ThunkAction.FetchOffers,
-    async (_, { extra: api }) => {
-      const response = await api.get<BaseOffer[]>(ApiRoute.Offers);
-      return response.data;
-    });
-
-export const fetchFavorites = createAsyncThunk<
-  BaseOffer[],
-  void,
-  {
-    dispatch: AppDispatch;
-    state: RootState;
-    extra: AxiosInstance;
-  }
-  >(ThunkAction.FetchFavorites,
-    async (_, { extra: api }) => {
-      const response = await api.get<BaseOffer[]>(ApiRoute.Favorite);
-      return response.data;
-    });
-
-export const addToFavorites = createAsyncThunk<
-  BaseOffer,
-  string,
-  {
-    dispatch: AppDispatch;
-    state: RootState;
-    extra: AxiosInstance;
-  }
-  >(ThunkAction.AddToFavorites,
-    async (id, { extra: api }) => {
-      const response = await api.post<BaseOffer>(`${ApiRoute.Favorite}/${id}/1`);
-      return response.data;
-    });
-
-export const removeFromFavorites = createAsyncThunk<
-  BaseOffer,
-  string,
-  {
-    dispatch: AppDispatch;
-    state: RootState;
-    extra: AxiosInstance;
-  }
-  >(ThunkAction.RemoveFromFavorites,
-    async (id, { extra: api }) => {
-      const response = await api.post<BaseOffer>(`${ApiRoute.Favorite}/${id}/0`);
-      return response.data;
-    });
 
 const offersSlice = createSlice({
   name: 'offers',
@@ -90,6 +33,7 @@ const offersSlice = createSlice({
       })
       .addCase(fetchAllOffers.rejected, (state) => {
         state.status = RequestStatus.Failed;
+        state.error = ERROR_MESSAGE;
       })
       .addCase(fetchFavorites.fulfilled, (state, action) => {
         state.favorites = action.payload;
@@ -99,17 +43,26 @@ const offersSlice = createSlice({
           isFavorite: favoriteIds.includes(offer.id),
         }));
       })
+      .addCase(fetchFavorites.rejected, (state) => {
+        state.error = ERROR_MESSAGE;
+      })
       .addCase(addToFavorites.fulfilled, (state, action: PayloadAction<BaseOffer>) => {
         state.favorites.push(action.payload);
         state.offers = state.offers.map((offer) =>
           offer.id === action.payload.id ? { ...offer, isFavorite: true } : offer
         );
       })
+      .addCase(addToFavorites.rejected, (state) => {
+        state.error = ERROR_MESSAGE;
+      })
       .addCase(removeFromFavorites.fulfilled, (state, action: PayloadAction<BaseOffer>) => {
         state.favorites = state.favorites.filter((offer) => offer.id !== action.payload.id);
         state.offers = state.offers.map((offer) =>
           offer.id === action.payload.id ? { ...offer, isFavorite: false } : offer
         );
+      })
+      .addCase(removeFromFavorites.rejected, (state) => {
+        state.error = ERROR_MESSAGE;
       })
       .addCase(clearFavorites, (state) => {
         state.favorites = [];

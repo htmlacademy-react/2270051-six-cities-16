@@ -1,6 +1,6 @@
 import {Link} from 'react-router-dom';
 import Logo from '../../components/logo/logo';
-import {logout} from '../../store/user-slice';
+import {logout} from '../../store/user-slice/user-thunk';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
 import {useUser} from '../../hooks/use-user';
 import {AppRoute, AuthorizationStatus} from '../../const';

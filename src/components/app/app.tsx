@@ -8,8 +8,8 @@ import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
-import {checkAuthorization} from '../../store/user-slice';
-import {fetchFavorites} from '../../store/offers-slice';
+import {checkAuthorization} from '../../store/user-slice/user-thunk';
+import {fetchAllOffers, fetchFavorites} from '../../store/offers-slice/offers-thunk';
 import {AppRoute, AuthorizationStatus, CITY} from '../../const';
 import Layout from '../layout/layout';
 
@@ -19,6 +19,7 @@ function App() {
 
   useEffect(() => {
     dispatch(checkAuthorization());
+    dispatch(fetchAllOffers());
   }, [dispatch]);
 
   useEffect(() => {

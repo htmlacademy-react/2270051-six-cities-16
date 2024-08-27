@@ -1,6 +1,6 @@
 import {useNavigate} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux-hooks';
-import {addToFavorites, removeFromFavorites} from '../../store/offers-slice';
+import {addToFavorites, removeFromFavorites} from '../../store/offers-slice/offers-thunk';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import classNames from 'classnames';
 

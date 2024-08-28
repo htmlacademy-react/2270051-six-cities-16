@@ -1,4 +1,5 @@
 import React from 'react';
+import {RATING_VALUES} from '../../const';
 
 type RatingProps = {
   rating: string;
@@ -9,7 +10,7 @@ type RatingProps = {
 function Rating({ rating, handleRatingChange, disabled }: RatingProps) {
   return (
     <div className="reviews__rating-form form__rating">
-      {[5, 4, 3, 2, 1].map((value) => (
+      {RATING_VALUES.map((value) => (
         <React.Fragment key={value}>
           <input
             className="form__rating-input visually-hidden"

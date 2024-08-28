@@ -7,6 +7,8 @@ export const REQUEST_TIMEOUT = 5000;
 
 export const AUTH_TOKEN_KEY = 'six-cities-token';
 
+export const RATING_VALUES = [5, 4, 3, 2, 1];
+
 export const ApiRoute = {
   Offers: '/offers',
   Favorite: '/favorite',
